@@ -1,11 +1,274 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>SECRET MYSTIQUE ET RITUEL</title>
-  </head>
-  <body>
-    <h1>Bienvenue le site web de notre application </h1>
-    <p>MUSLIM WALYY.</p>
-  </body>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secret Mystique & Rituel</title>
+  <style>
+:root {
+  --primary: #ffd700;
+  --bg-dark: #1a1a1a;
+  --bg: #222;
+  --text: #f5f5f5;
+  --muted: #bbb;
+  --highlight: #2e2e2e;
+  --active-link: #ffcc00;
+  --card-bg: #2b2b2b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a, #292929);
+  color: var(--text);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+header {
+  background-color: var(--bg);
+  padding: 30px 20px;
+  border-bottom: 2px solid var(--primary);
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+header div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+header img {
+  height: 80px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+header h1 {
+  color: var(--primary);
+  font-size: 2.4em;
+  letter-spacing: 1px;
+}
+
+header p {
+  color: var(--muted);
+  font-size: 1.1em;
+}
+
+nav {
+  background-color: #141414;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 2px solid var(--primary);
+  box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.4);
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 5px 12px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: 0.3s ease-in-out;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: var(--highlight);
+  color: var(--active-link);
+  font-weight: bold;
+  transform: translateY(-2px);
+}
+
+.sections-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px 25px;
+  gap: 40px;
+}
+
+.card-section {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  width: 320px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.card-section.active {
+  display: flex;
+}
+
+.card-section img {
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card-section h2 {
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.card-section p {
+  text-align: center;
+  color: var(--muted);
+}
+
+footer {
+  background-color: #141414;
+  color: var(--muted);
+  text-align: center;
+  padding: 35px 20px;
+  margin-top: 60px;
+  font-size: 0.95em;
+  border-top: 1px solid #333;
+}
+
+.btn {
+  display: inline-block;
+  margin: 15px 10px;
+  padding: 12px 25px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #fff;
+}
+
+.btn-email {
+  background-color: #4a4aff;
+  color: #fff;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+  </style>  	
+</he
+ad>
+<body>
+  <header>
+    <div>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/logo.jpg" alt="Logo">
+      <div>
+        <h1>Secret Mystique & Rituel</h1>
+        <p>Plongez dans les secrets de l’invisible</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a onclick="showSection('accueil', this)" class="active">Accueil</a>
+    <a onclick="showSection('apropos', this)">À propos</a>
+    <a onclick="showSection('secrets', this)">Secrets et Rituels</a>
+    <a onclick="showSection('galerie', this)">Galerie</a>
+    <a onclick="showSection('temoignages', this)">Témoignages</a>
+    <a onclick="showSection('contact', this)">Contact</a>
+  </nav>
+
+  <div class="sections-container">
+    <div id="accueil" class="card-section active">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/ACCEUIL.jpg" alt="Accueil">
+      <h2>Bienvenue</h2>
+      <p>Explorez les portes du monde mystique : rituels sacrés, secrets anciens, guidance spirituelle.</p>
+    </div>
+
+    <div id="apropos" class="card-section">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="À propos">
+      <h2>À propos</h2>
+      <p>Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées, et des secrets que peu osent révéler.
+Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes et messager du sacré.
+À travers mes rituels, mes talismans et les secrets du Coran mystique, j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin.
+Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l’heure est venue.
+Entre… et découvre ce que le monde t’a toujours caché.
+WhatsApp : +226 77020069</p>
+    </div>
+
+    <div id="secrets" class="card-section">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/Rituel.jpg" alt="Secrets">
+      <h2>Secrets et Rituels</h2>
+      <p>Découvrez les secrets coraniques, la géomancie, la magie spirituelle et les talismans.</p>
+    </div>
+
+    <div id="galerie" class="card-section">
+      <h2>Galerie</h2>
+      <p>Objets mystiques, encens rares, talismans anciens... Explorez l’univers visuel du sacré.</p>
+      <div class="gallery-grid">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745721840773.jpg" alt="Image 1">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745719684285.jpg" alt="Image 2">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="Image 3">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Image 4">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204568116.jpg" alt="Image 5">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204447790.jpg" alt="Image 6">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744199311390.jpg" alt="Image 7">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198635009.jpg" alt="Image 8">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198397725.jpg" alt="Image 9">
+      </div>
+    </div>
+
+    <div id="temoignages" class="card-section">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/T%C3%89MOIGNAGE.jpg" alt="Témoignages">
+      <h2>Témoignages</h2>
+      <p>Ceux qui ont franchi la porte témoignent de leur transformation intérieure.</p>
+    </div>
+
+    <div id="contact" class="card-section">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Contact">
+      <h2>Contact</h2>
+      <p>Contacte-moi sur WhatsApp ou par e-mail :</p>
+      <a href="https://wa.me/22677020069" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
+      <a href="mailto:muslimwalyy@gmail.com" class="btn btn-email">E-mail</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Secret Mystique & Rituel — Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function showSection(id, link) {
+      document.querySelectorAll('.card-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
 </html>

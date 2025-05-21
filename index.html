@@ -5,183 +5,214 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Secret Mystique & Rituel</title>
   <style>
-:root {
-  --primary: #ffd700;
-  --bg-dark: #1a1a1a;
-  --bg: #222;
-  --text: #f5f5f5;
-  --muted: #bbb;
-  --highlight: #2e2e2e;
-  --active-link: #ffcc00;
-  --card-bg: #2b2b2b;
-}
+    :root {
+      --primary: #ffd700;
+      --bg-dark: #1a1a1a;
+      --bg: #222;
+      --text: #f5f5f5;
+      --muted: #bbb;
+      --highlight: #2e2e2e;
+      --active-link: #ffcc00;
+      --card-bg: #2b2b2b;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1a1a1a, #292929);
-  color: var(--text);
-  line-height: 1.6;
-  scroll-behavior: smooth;
-}
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #292929);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
 
-header {
-  background-color: var(--bg);
-  padding: 30px 20px;
-  border-bottom: 2px solid var(--primary);
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-}
+    header {
+      background-color: var(--bg);
+      padding: 30px 20px;
+      border-bottom: 2px solid var(--primary);
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
 
-header div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+    header div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-header img {
-  height: 80px;
-  border-radius: 14px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-}
+    header img {
+      height: 80px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    }
 
-header h1 {
-  color: var(--primary);
-  font-size: 2.4em;
-  letter-spacing: 1px;
-}
+    header h1 {
+      color: var(--primary);
+      font-size: 2.4em;
+      letter-spacing: 1px;
+    }
 
-header p {
-  color: var(--muted);
-  font-size: 1.1em;
-}
+    header p {
+      color: var(--muted);
+      font-size: 1.1em;
+    }
 
-nav {
-  background-color: #141414;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 12px 0;
-  border-bottom: 2px solid var(--primary);
-  box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.4);
-}
+    nav {
+      background-color: #141414;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 12px 0;
+      border-bottom: 2px solid var(--primary);
+      box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.4);
+    }
 
-nav a {
-  color: var(--text);
-  text-decoration: none;
-  margin: 5px 12px;
-  padding: 10px 18px;
-  border-radius: 8px;
-  transition: 0.3s ease-in-out;
-}
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 5px 12px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: 0.3s ease-in-out;
+    }
 
-nav a:hover,
-nav a.active {
-  background-color: var(--highlight);
-  color: var(--active-link);
-  font-weight: bold;
-  transform: translateY(-2px);
-}
+    nav a:hover,
+    nav a.active {
+      background-color: var(--highlight);
+      color: var(--active-link);
+      font-weight: bold;
+      transform: translateY(-2px);
+    }
 
-.sections-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 50px 25px;
-  gap: 40px;
-}
+    .sections-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 50px 25px;
+      gap: 40px;
+    }
 
-.card-section {
-  background-color: var(--card-bg);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  width: 320px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.4s ease;
-}
+    .card-section {
+      background-color: var(--card-bg);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      width: 320px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.4s ease;
+    }
 
-.card-section.active {
-  display: flex;
-}
+    .card-section.active {
+      display: flex;
+    }
 
-.card-section img {
-  width: 100%;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
+    .card-section img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
 
-.card-section h2 {
-  color: var(--primary);
-  margin-bottom: 12px;
-}
+    .card-section h2 {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
 
-.card-section p {
-  text-align: center;
-  color: var(--muted);
-}
+    .card-section p {
+      text-align: center;
+      color: var(--muted);
+    }
 
-footer {
-  background-color: #141414;
-  color: var(--muted);
-  text-align: center;
-  padding: 35px 20px;
-  margin-top: 60px;
-  font-size: 0.95em;
-  border-top: 1px solid #333;
-}
+    footer {
+      background-color: #141414;
+      color: var(--muted);
+      text-align: center;
+      padding: 35px 20px;
+      margin-top: 60px;
+      font-size: 0.95em;
+      border-top: 1px solid #333;
+    }
 
-.btn {
-  display: inline-block;
-  margin: 15px 10px;
-  padding: 12px 25px;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
+    .btn {
+      display: inline-block;
+      margin: 15px 10px;
+      padding: 12px 25px;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
 
-.btn-whatsapp {
-  background-color: #25D366;
-  color: #fff;
-}
+    .btn-whatsapp {
+      background-color: #25D366;
+      color: #fff;
+    }
 
-.btn-email {
-  background-color: #4a4aff;
-  color: #fff;
-}
+    .btn-email {
+      background-color: #4a4aff;
+      color: #fff;
+    }
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-}
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
 
-.gallery-grid img {
-  width: 100%;
-  border-radius: 12px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
 
-.gallery-grid img:hover {
-  transform: scale(1.06);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-  </style>  	
-</he
-ad>
+    .gallery-grid img:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Styles pour la section témoignages */
+    .testimonial-card {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      width: 280px;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: scale(1.05);
+    }
+
+    .testimonial-card .icon {
+      font-size: 50px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .testimonial-card h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .testimonial-card .testimonial-text {
+      color: var(--muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+
 <body>
   <header>
     <div>
@@ -212,12 +243,7 @@ ad>
     <div id="apropos" class="card-section">
       <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="À propos">
       <h2>À propos</h2>
-      <p>Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées, et des secrets que peu osent révéler.
-Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes et messager du sacré.
-À travers mes rituels, mes talismans et les secrets du Coran mystique, j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin.
-Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l’heure est venue.
-Entre… et découvre ce que le monde t’a toujours caché.
-WhatsApp : +226 77020069</p>
+      <p>Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées, et des secrets que peu osent révéler. Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes et messager du sacré. À travers mes rituels, mes talismans et les secrets du Coran mystique, j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin. Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l’heure est venue. Entre… et découvre ce que le monde t’a toujours caché. WhatsApp : +226 77020069</p>
     </div>
 
     <div id="secrets" class="card-section">
@@ -243,9 +269,28 @@ WhatsApp : +226 77020069</p>
     </div>
 
     <div id="temoignages" class="card-section">
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/T%C3%89MOIGNAGE.jpg" alt="Témoignages">
       <h2>Témoignages</h2>
       <p>Ceux qui ont franchi la porte témoignent de leur transformation intérieure.</p>
+      <div class="gallery-grid">
+        <!-- Témoignage 1 -->
+        <div class="testimonial-card">
+          <div class="icon">👤</div>
+          <h3>Jean Dupont</h3>
+          <p class="testimonial-text">"Grâce aux rituels mystiques que j'ai appris, ma vie a complètement changé. J'ai trouvé la paix intérieure et une clarté mentale qui m'aide à avancer dans ma vie quotidienne."</p>
+        </div>
+        <!-- Témoignage 2 -->
+        <div class="testimonial-card">
+          <div class="icon">👤</div>
+          <h3>Marie Lefevre</h3>
+          <p class="testimonial-text">"Les rituels ont non seulement amélioré ma confiance en moi, mais m'ont aussi permis de surmonter des obstacles que je croyais insurmontables. Je suis reconnaissante de cette expérience transformative."</p>
+        </div>
+        <!-- Témoignage 3 -->
+        <div class="testimonial-card">
+          <div class="icon">👤</div>
+          <h3>Isabelle Roussel</h3>
+          <p class="testimonial-text">"Je n'aurais jamais cru que la mystique puisse changer ma perception de la vie. Les rituels m'ont aidé à me reconnecter à ma spiritualité et à trouver un véritable équilibre."</p>
+        </div>
+      </div>
     </div>
 
     <div id="contact" class="card-section">

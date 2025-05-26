@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page 2 - Rituel Mystique</title>
+</head>
+<body>
+    <header>
+        <h1>Rituel Mystique : Introduction</h1>
+    </header>
+
+    <section>
+        <p>
+            Un rituel mystique est une série d'actions symboliques effectuées dans un but spirituel ou magique. 
+            Il sert à invoquer des énergies, purifier l'esprit, ou encore attirer la chance et la protection.
+        </p>
+        <p>
+            Par exemple, un rituel peut inclure l'utilisation d'objets spécifiques comme des bougies, des encens, 
+            ou des symboles sacrés, ainsi que des prières ou des incantations particulières.
+        </p>
+        <p>
+            Ces pratiques ancestrales sont souvent réalisées avec concentration et respect, car elles visent à 
+            harmoniser le monde matériel avec des forces invisibles.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2025 Mystique et Rituel Officiel</p>
+    </footer>
+</body>
+</html>
+  

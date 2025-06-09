@@ -1,331 +1,477 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Secret Mystique & Rituel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secret Mystique & Rituel - Mise en Page Améliorée</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet" />
+
   <style>
+    /* === Variables couleur, typo === */
     :root {
-      --primary: #ffd700;
-      --bg-dark: #1a1a1a;
-      --bg: #222;
-      --text: #f5f5f5;
-      --muted: #bbb;
-      --highlight: #2e2e2e;
-      --active-link: #ffcc00;
-      --card-bg: #2b2b2b;
+      --primary-gradient: linear-gradient(180deg, #00e0ff, #0048a5);
+      --bg-dark: #121216;
+      --bg-light: #1e1e22;
+      --text-main: #e0e6f0;
+      --text-muted: #9aa8b5;
+      --shadow-glow: 0 0 14px 4px rgba(0, 224, 255, 0.45);
+      --radius: 14px;
+      --font-family: 'Inter', sans-serif;
+      --transition: 0.3s ease;
     }
-
-    * {
+    /* Reset & base */
+    *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1a1a1a, #292929);
-      color: var(--text);
-      line-height: 1.6;
+    body, html {
+      margin: 0; padding: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+      color: var(--text-main);
       scroll-behavior: smooth;
+      min-height: 100vh;
+      overflow-x: hidden; /* empêcher tout débordement horizontal */
+      word-wrap: break-word;
     }
-
-    header {
-      background-color: var(--bg);
-      padding: 30px 20px;
-      border-bottom: 2px solid var(--primary);
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    header div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    header img {
-      height: 80px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    }
-
-    header h1 {
-      color: var(--primary);
-      font-size: 2.4em;
-      letter-spacing: 1px;
-    }
-
-    header p {
-      color: var(--muted);
-      font-size: 1.1em;
-    }
-
-    nav {
-      background-color: #141414;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 12px 0;
-      border-bottom: 2px solid var(--primary);
-      box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.4);
-    }
-
-    nav a {
-      color: var(--text);
+    a {
+      color: #00e0ff;
       text-decoration: none;
-      margin: 5px 12px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      transition: 0.3s ease-in-out;
+    }
+    a:hover, a:focus-visible {
+      color: #0048a5;
+      text-decoration: underline;
+      outline-offset: 3px;
     }
 
-    nav a:hover,
-    nav a.active {
-      background-color: var(--highlight);
-      color: var(--active-link);
-      font-weight: bold;
-      transform: translateY(-2px);
-    }
-
-    .sections-container {
+    /* === Header === */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--bg-light);
+      box-shadow: 0 4px 18px rgba(0, 224, 255, 0.4);
+      padding: 14px 20px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 50px 25px;
-      gap: 40px;
-    }
-
-    .card-section {
-      background-color: var(--card-bg);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      width: 320px;
-      display: none;
       flex-direction: column;
       align-items: center;
-      transition: all 0.4s ease;
+      gap: 8px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      backdrop-filter: saturate(180%) blur(20px);
+      user-select: none;
+      text-align: center;
+    }
+    header img {
+      height: 56px;
+      border-radius: calc(var(--radius)/1.5);
+      user-select: none;
+      pointer-events: none;
+      margin-bottom: 8px;
     }
 
-    .card-section.active {
+    /* Titre sur 1 ou plusieurs lignes, centré avec dégradé couleur */
+    header h1 {
+      font-weight: 800;
+      font-size: 2.7rem;
+      line-height: 1.1;
+      margin: 0;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow:
+        0 0 10px rgba(0, 224, 255, 0.8),
+        0 0 18px rgba(0, 72, 165, 0.7);
+      max-width: 90vw;
+      word-break: break-word;
+      user-select: none;
+    }
+    
+    /* === Navigation principale === */
+    nav.main-nav {
+      background: var(--bg-light);
       display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 4px;
+      box-shadow: 0 3px 18px rgba(0,224,255,0.22);
+      padding: 14px 12px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      position: sticky;
+      top: calc(56px + 8px + 60px); /* header img height + gap + title approx */
+      z-index: 999;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+    nav.main-nav button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: var(--radius);
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+    nav.main-nav button:hover, nav.main-nav button:focus-visible {
+      outline-offset: 2px;
+      outline-color: #00e0ff;
+      outline-style: solid;
+      outline-width: 2px;
+      color: #00e0ff;
+      background: rgba(0,224,255,0.1);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-2px);
+    }
+    nav.main-nav button.active {
+      background: #00e0ff;
+      color: var(--bg-light);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-3px);
     }
 
-    .card-section img {
+    /* === Main container === */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 18px 80px;
+    }
+
+    /* Sections */
+    section {
+      margin-top: 48px;
+      max-width: 100%;
+      opacity: 0;
+      transform: translateY(30px);
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      display: none;
+      overflow: visible; /* s’assure pas de scroll interne ! */
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    section h2 {
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #00e0ff;
+      user-select: none;
+      text-shadow: 0 0 6px #00e0ffaa;
+    }
+    section p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      user-select: text;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    /* Images */
+    section img {
       width: 100%;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 34px rgba(0,224,255,0.35);
+      margin-bottom: 32px;
+      user-select: none;
+      cursor: default;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    section img:hover {
+      transform: scale(1.07);
+      filter: drop-shadow(0 0 20px #00e0ff);
     }
 
-    .card-section h2 {
-      color: var(--primary);
-      margin-bottom: 12px;
+    /* Texte long secrets : plus de scroll interne */
+    #secrets-rituel-text {
+      margin-top: 18px;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      max-height: none;
+      overflow: visible;
+    }
+    #secrets-rituel-text p {
+      margin-bottom: 1em;
     }
 
-    .card-section p {
-      text-align: center;
-      color: var(--muted);
-    }
-
-    footer {
-      background-color: #141414;
-      color: var(--muted);
-      text-align: center;
-      padding: 35px 20px;
-      margin-top: 60px;
-      font-size: 0.95em;
-      border-top: 1px solid #333;
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 15px 10px;
-      padding: 12px 25px;
-      font-weight: bold;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .btn-whatsapp {
-      background-color: #25D366;
-      color: #fff;
-    }
-
-    .btn-email {
-      background-color: #4a4aff;
-      color: #fff;
-    }
-
+    /* Galerie */
     .gallery-grid {
+      margin-top: 14px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
-
     .gallery-grid img {
-      width: 100%;
-      border-radius: 12px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 34px rgba(0,224,255,0.3);
+      cursor: default;
+      user-select: none;
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
-
     .gallery-grid img:hover {
-      transform: scale(1.06);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px #00e0ff);
     }
 
-    /* Styles pour la section témoignages */
+    /* Témoignages */
     .testimonial-card {
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-      text-align: center;
-      width: 280px;
-      transition: transform 0.3s ease;
+      background: rgba(0,224,255,0.12);
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(0,224,255,0.25);
+      margin-top: 20px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      user-select: text;
+      cursor: default;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
-
-    .testimonial-card:hover {
-      transform: scale(1.05);
+    .testimonial-card:hover, .testimonial-card:focus-within {
+      box-shadow: 0 8px 40px rgba(0,224,255,0.8);
+      color: #00e0ff;
+      transform: translateY(-5px);
     }
-
     .testimonial-card .icon {
-      font-size: 50px;
-      color: var(--primary);
-      margin-bottom: 15px;
+      font-size: 40px;
+      color: #00e0ff;
+      user-select: none;
+      margin-bottom: 12px;
     }
-
     .testimonial-card h3 {
-      color: var(--primary);
-      margin-bottom: 10px;
+      margin: 0 0 10px;
+      color: #00e0ff;
+    }
+    .testimonial-text {
+      font-style: italic;
+      font-size: 1rem;
     }
 
-    .testimonial-card .testimonial-text {
-      color: var(--muted);
-      font-style: italic;
+    /* Boutons */
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      font-weight: 600;
+      background-color: #00e0ff;
+      color: #121216;
+      border-radius: var(--radius);
+      box-shadow: 0 0 28px #00e0ffaa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+      border: none;
+      margin-right: 14px;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .btn:hover, .btn:focus {
+      background-color: #009bb3;
+      box-shadow: 0 0 40px #009bb3ee;
+      outline: none;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      padding: 28px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 40px;
+      user-select: none;
+      border-top: 1px solid rgba(0,224,255,0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      header {
+        padding: 16px 18px;
+        height: auto;
+        text-align: center;
+      }
+      header h1 {
+        font-size: 2.2rem;
+        white-space: normal;
+        line-height: 1.2;
+      }
+      nav.main-nav {
+        top: auto;
+        position: relative;
+        padding: 12px 10px;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      nav.main-nav button {
+        font-size: 0.95rem;
+        padding: 8px 14px;
+      }
+      .container {
+        padding: 20px 12px 70px;
+        max-width: 100%;
+      }
+      section {
+        margin-top: 36px;
+        padding: 0 12px;
+      }
     }
   </style>
 </head>
-
 <body>
   <header>
-    <div>
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/logo.jpg" alt="Logo">
-<div id="secrets" class="card-section">
-  <img #secrets img {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-}
-src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1748250895948.jpg" alt="Secret Al Somad">
-  <h2>POUR AVOIR TOUT CE QUE EN 14 JOURS PAR LE NOM PUISSANT الصمد</h2>
-  <p>Salam aleykoum warahamatoulaye chers frères et sœurs alhamdoulillah aujourd'hui je vais parlé de ce puissant nom que les grands marabout et cheick connaissent et pratique pour régler n'importe quel situation financière ou matériel.</p>
-  <p>Alhamdoulillah ce secret si tu le met en pratique je peut te dire que tu n'aura plus besoin d'aucun papier ou d'un rouhane parceque tu peut tout avoir avec ce nom puissant AL SOMAD (الصمد).</p>
-  <p>Si tu as besoin d'une voiture d'une valeur de 40 millions ou si tu as besoin d'une moto ou d'un terrain ou de l'argent n'importe quel somme, tu peut pas pratiquer ce secret pendant 16 jours et dire que tu n'a eu de résultat c'est impossible wly bly.</p>
-  <p>Avec ce secret tu peut appeler la clientèle vers ton lieux de travail ou boutique jusqu'à ce que tu sera fatigué kounfa yakoune.</p>
-  <p>Tu écrit en naci AL SOMAD (الصمد) 1111 fois en eau bénite (en naci) que tu va te flotter le corps pendant le zikre et écrire le hatim sur l'ardoise en fer une seule fois et c'est tout.</p>
-  <p>Tu fini le travail au 16 jours tu fait le sacrifice d'un coq blanc.</p>
-  <p>Si tu est en Europe tu appel quelqu'un en Afrique pour faire le sacrifice à ton nom.</p>
-</div>
-
+    <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/logo.jpg" alt="Logo" />
+    <h1>Secret Mystique &amp; Rituel</h1>
   </header>
 
-  <nav>
-    <a onclick="showSection('accueil', this)" class="active">Accueil</a>
-    <a onclick="showSection('apropos', this)">À propos</a>
-    <a onclick="showSection('secrets', this)">Secrets et Rituels</a>
-    <a onclick="showSection('galerie', this)">Galerie</a>
-    <a onclick="showSection('temoignages', this)">Témoignages</a>
-    <a onclick="showSection('contact', this)">Contact</a>
+  <nav class="main-nav" role="tablist" aria-label="Navigation principale">
+    <button aria-selected="true" role="tab" aria-controls="accueil" id="tab-accueil" class="active">Accueil</button>
+    <button aria-selected="false" role="tab" aria-controls="apropos" id="tab-apropos">À propos</button>
+    <button aria-selected="false" role="tab" aria-controls="secrets" id="tab-secrets">Secrets et Rituels</button>
+    <button aria-selected="false" role="tab" aria-controls="galerie" id="tab-galerie">Galerie</button>
+    <button aria-selected="false" role="tab" aria-controls="temoignages" id="tab-temoignages">Témoignages</button>
+    <button aria-selected="false" role="tab" aria-controls="contact" id="tab-contact">Contact</button>
   </nav>
 
-  <div class="sections-container">
-    <div id="accueil" class="card-section active">
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/ACCEUIL.jpg" alt="Accueil">
+  <main class="container">
+    <section id="accueil" role="tabpanel" aria-labelledby="tab-accueil" class="active">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/ACCEUIL.jpg" alt="Accueil" loading="lazy"/>
       <h2>Bienvenue</h2>
       <p>Explorez les portes du monde mystique : rituels sacrés, secrets anciens, guidance spirituelle.</p>
-    </div>
+    </section>
 
-    <div id="apropos" class="card-section">
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="À propos">
+    <section id="apropos" role="tabpanel" aria-labelledby="tab-apropos" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="À propos" loading="lazy"/>
       <h2>À propos</h2>
-      <p>Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées, et des secrets que peu osent révéler. Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes et messager du sacré. À travers mes rituels, mes talismans et les secrets du Coran mystique, j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin. Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l’heure est venue. Entre… et découvre ce que le monde t’a toujours caché. WhatsApp : +226 77020069</p>
-    </div>
+      <p>
+        Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées,
+        et des secrets que peu osent révéler. Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes
+        et messager du sacré. À travers mes rituels, mes talismans et les secrets du Coran mystique,
+        j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin.
+        Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l'heure est venue.
+        Entre... et découvre ce que le monde t’a toujours caché.<br />
+        <strong>WhatsApp :</strong> 
+        <a href="https://wa.me/22677020069" target="_blank" rel="noopener noreferrer">+226 77020069</a>
+      </p>
+    </section>
 
-    <div id="secrets" class="card-section">
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/Rituel.jpg" alt="Secrets">
+    <section id="secrets" role="tabpanel" aria-labelledby="tab-secrets" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/Rituel.jpg" alt="Secrets et Rituels" loading="lazy"/>
       <h2>Secrets et Rituels</h2>
       <p>Découvrez les secrets coraniques, la géomancie, la magie spirituelle et les talismans.</p>
-    </div>
+      <article id="secrets-rituel-text" aria-label="Description détaillée du rituel puissant">
+        <p>Salam aleykoum warahamatoulaye chers frères et sœurs alhamdoulillah aujourd'hui je vais parlé de ce puissant nom que les grands marabout et cheick connaissent et pratique pour régler n'importe quel situation financière ou matériel.</p>
+        <p>Alhamdoulillah ce secret si tu le met en pratique je peut te dire que tu n'aura plus besoin d'aucun papier ou d'un rouhane parceque tu peut tout avoir avec ce nom puissant AL SOMAD (الصمد).</p>
+        <p>Si tu as besoin d'une voiture d'une valeur de 40 millions ou si tu as besoin d'une moto ou d'un terrain ou de l'argent n'importe quel somme, tu peut pas pratiquer ce secret pendant 16 jours et dire que tu n'a eu de résultat c'est impossible wly bly.</p>
+        <p>Avec ce secret tu peut appeler la clientèle vers ton lieux de travail ou boutique jusqu'à ce que tu sera fatigué kounfa yakoune.</p>
+        <p>Tu écrit en naci AL SOMAD (الصمد) 1111 fois en eau bénite (en naci) que tu va te flotter le corps pendant le zikre et écrire le hatim sur l'ardoise en fer une seule fois et c'est tout.</p>
+        <p>Tu fini le travail au 16 jours tu fait le sacrifice d'un coq blanc.</p>
+        <p>Si tu est en Europe tu appel quelqu'un en Afrique pour faire le sacrifice à ton nom.</p>
+      </article>
+    </section>
 
-    <div id="galerie" class="card-section">
+    <section id="galerie" role="tabpanel" aria-labelledby="tab-galerie" hidden>
       <h2>Galerie</h2>
       <p>Objets mystiques, encens rares, talismans anciens... Explorez l’univers visuel du sacré.</p>
-      <div class="gallery-grid">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745721840773.jpg" alt="Image 1">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745719684285.jpg" alt="Image 2">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="Image 3">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Image 4">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204568116.jpg" alt="Image 5">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204447790.jpg" alt="Image 6">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744199311390.jpg" alt="Image 7">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198635009.jpg" alt="Image 8">
-        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198397725.jpg" alt="Image 9">
+      <div class="gallery-grid" role="list" aria-label="Galerie d’images mystiques">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745721840773.jpg" alt="Objet mystique 1" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745719684285.jpg" alt="Objet mystique 2" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="Objet mystique 3" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Objet mystique 4" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204568116.jpg" alt="Objet mystique 5" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204447790.jpg" alt="Objet mystique 6" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744199311390.jpg" alt="Objet mystique 7" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198635009.jpg" alt="Objet mystique 8" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198397725.jpg" alt="Objet mystique 9" role="listitem" loading="lazy"/>
       </div>
-    </div>
+    </section>
 
-    <div id="temoignages" class="card-section">
+    <section id="temoignages" role="tabpanel" aria-labelledby="tab-temoignages" hidden>
       <h2>Témoignages</h2>
       <p>Ceux qui ont franchi la porte témoignent de leur transformation intérieure.</p>
-      <div class="gallery-grid">
-        <!-- Témoignage 1 -->
-        <div class="testimonial-card">
-          <div class="icon">👤</div>
-          <h3>Jean Dupont</h3>
-          <p class="testimonial-text">"Grâce aux rituels mystiques que j'ai appris, ma vie a complètement changé. J'ai trouvé la paix intérieure et une clarté mentale qui m'aide à avancer dans ma vie quotidienne."</p>
-        </div>
-        <!-- Témoignage 2 -->
-        <div class="testimonial-card">
-          <div class="icon">👤</div>
-          <h3>Marie Lefevre</h3>
-          <p class="testimonial-text">"Les rituels ont non seulement amélioré ma confiance en moi, mais m'ont aussi permis de surmonter des obstacles que je croyais insurmontables. Je suis reconnaissante de cette expérience transformative."</p>
-        </div>
-        <!-- Témoignage 3 -->
-        <div class="testimonial-card">
-          <div class="icon">👤</div>
-          <h3>Isabelle Roussel</h3>
-          <p class="testimonial-text">"Je n'aurais jamais cru que la mystique puisse changer ma perception de la vie. Les rituels m'ont aidé à me reconnecter à ma spiritualité et à trouver un véritable équilibre."</p>
-        </div>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Jean Dupont</h3>
+        <p class="testimonial-text">"Grâce aux rituels mystiques que j'ai appris, ma vie a complètement changé. J'ai trouvé la paix intérieure et une clarté mentale qui m'aide à avancer dans ma vie quotidienne."</p>
       </div>
-    </div>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Marie Lefevre</h3>
+        <p class="testimonial-text">"Les rituels ont non seulement amélioré ma confiance en moi, mais m'ont aussi permis de surmonter des obstacles que je croyais insurmontables. Je suis reconnaissante de cette expérience transformative."</p>
+      </div>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Isabelle Roussel</h3>
+        <p class="testimonial-text">"Je n'aurais jamais cru que la mystique puisse changer ma perception de la vie. Les rituels m'ont aidé à me reconnecter à ma spiritualité et à trouver un véritable équilibre."</p>
+      </div>
+    </section>
 
-    <div id="contact" class="card-section">
-      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Contact">
+    <section id="contact" role="tabpanel" aria-labelledby="tab-contact" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Contact mystique" loading="lazy"/>
       <h2>Contact</h2>
       <p>Contacte-moi sur WhatsApp ou par e-mail :</p>
-      <a href="https://wa.me/22677020069" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
-      <a href="mailto:muslimwalyy@gmail.com" class="btn btn-email">E-mail</a>
-    </div>
-  </div>
+      <a href="https://wa.me/22677020069" target="_blank" rel="noopener noreferrer" class="btn" role="button">WhatsApp</a>
+      <a href="mailto:muslimwalyy@gmail.com" class="btn" role="button">E-mail</a>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Secret Mystique & Rituel — Tous droits réservés</p>
+    <p>© 2025 Secret Mystique & Rituel — Tous droits réservés</p>
   </footer>
 
   <script>
-    function showSection(id, link) {
-      document.querySelectorAll('.card-section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      link.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const tabs = document.querySelectorAll('nav.main-nav button[role="tab"]');
+    const sections = document.querySelectorAll('main.container > section[role="tabpanel"]');
+
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', e => {
+        activateTab(tab);
+      });
+      tab.addEventListener('keydown', e => {
+        let newIndex;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          newIndex = (idx + 1) % tabs.length;
+          tabs[newIndex].focus();
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          newIndex = (idx -1 + tabs.length) % tabs.length;
+          tabs[newIndex].focus();
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activateTab(tab);
+        }
+      });
+    });
+
+    function activateTab(tab){
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+      });
+      sections.forEach(sec => {
+        sec.setAttribute('hidden','true');
+        sec.classList.remove('active');
+      });
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      const id = tab.getAttribute('aria-controls');
+      const content = document.getElementById(id);
+      if(content){
+        content.removeAttribute('hidden');
+        content.classList.add('active');
+        content.focus();
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
     }
   </script>
 </body>
-</html>
+  </html>

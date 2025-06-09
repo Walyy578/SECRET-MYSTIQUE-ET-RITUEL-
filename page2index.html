@@ -1,32 +1,153 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page 2 - Rituel Mystique</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 2 - Rituel Mystique</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Variables */
+    :root {
+      --color-bg-start: #0c1218;
+      --color-bg-end: #1e293b;
+      --color-primary: #22d3ee;
+      --color-primary-dark: #0ea5e9;
+      --color-text-main: #e0e6f0;
+      --color-text-muted: #94a3b8;
+      --border-radius: 14px;
+      --font-family: 'Inter', sans-serif;
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+      color: var(--color-text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: text;
+    }
+
+    /* Header */
+    header {
+      background-color: rgba(12, 18, 24, 0.85);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(34, 211, 238, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-primary);
+      background-image: linear-gradient(180deg, #0ff 0%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
+      user-select: none;
+      line-height: 1.1;
+      max-width: 90vw;
+      margin-left: auto;
+      margin-right: auto;
+      word-wrap: break-word;
+    }
+
+    /* Main content */
+    main {
+      flex-grow: 1;
+      max-width: 720px;
+      margin: 2.5rem auto 4rem;
+      background: rgba(28, 40, 54, 0.65);
+      padding: 2rem 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 12px 40px rgba(34, 211, 238, 0.3);
+      user-select: text;
+      color: var(--color-text-main);
+    }
+
+    main p {
+      font-weight: 300;
+      font-size: 1.125rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      color: var(--color-text-muted);
+    }
+    main p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(12, 18, 24, 0.85);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      box-shadow: 0 -4px 15px rgba(34, 211, 238, 0.3);
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      main {
+        margin: 1.5rem 1rem 3rem;
+        padding: 1.5rem 1.5rem;
+      }
+      main p {
+        font-size: 1rem;
+      }
+      footer {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Rituel Mystique : Introduction</h1>
-    </header>
 
-    <section>
-        <p>
-            Un rituel mystique est une série d'actions symboliques effectuées dans un but spirituel ou magique. 
-            Il sert à invoquer des énergies, purifier l'esprit, ou encore attirer la chance et la protection.
-        </p>
-        <p>
-            Par exemple, un rituel peut inclure l'utilisation d'objets spécifiques comme des bougies, des encens, 
-            ou des symboles sacrés, ainsi que des prières ou des incantations particulières.
-        </p>
-        <p>
-            Ces pratiques ancestrales sont souvent réalisées avec concentration et respect, car elles visent à 
-            harmoniser le monde matériel avec des forces invisibles.
-        </p>
-    </section>
+  <header>
+    <h1>Rituel Mystique : Introduction</h1>
+  </header>
 
-    <footer>
-        <p>© 2025 Mystique et Rituel Officiel</p>
-    </footer>
+  <main>
+    <p>
+      Un rituel mystique est une série d'actions symboliques effectuées dans un but spirituel ou magique.
+      Il sert à invoquer des énergies, purifier l'esprit, ou encore attirer la chance et la protection.
+    </p>
+    <p>
+      Par exemple, un rituel peut inclure l'utilisation d'objets spécifiques comme des bougies, des encens,
+      ou des symboles sacrés, ainsi que des prières ou des incantations particulières.
+    </p>
+    <p>
+      Ces pratiques ancestrales sont souvent réalisées avec concentration et respect, car elles visent à
+      harmoniser le monde matériel avec des forces invisibles.
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 Mystique et Rituel Officiel</p>
+  </footer>
+
 </body>
 </html>

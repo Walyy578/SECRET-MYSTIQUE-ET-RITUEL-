@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" >
+<html lang="fr">
 <head>
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="google-adsense-account" content="ca-pub-5904049904040571">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="google-adsense-account" content="ca-pub-5904049904040571">
   <title>Secret Mystique & Rituel - Mise en Page Améliorée</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet" />
 
@@ -292,6 +291,65 @@
       border-top: 1px solid rgba(0,224,255,0.15);
     }
 
+    /* Bouton publicitaire - NOUVEAU DESIGN */
+    .ritual-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #ff9a00, #ff6a00, #ff3700);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 25px rgba(255, 106, 0, 0.6),
+                  0 0 15px rgba(255, 154, 0, 0.8),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: pulse-glow 2.5s infinite;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Inter', sans-serif;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .ritual-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(255, 106, 0, 0.8),
+                  0 0 25px rgba(255, 154, 0, 0.9),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      background: linear-gradient(135deg, #ffa600, #ff7e00, #ff4d00);
+      letter-spacing: 1.5px;
+    }
+    
+    .ritual-button:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 0 4px 15px rgba(255, 106, 0, 0.5),
+                  0 0 8px rgba(255, 154, 0, 0.6),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 8px 25px rgba(255, 106, 0, 0.6),
+                    0 0 15px rgba(255, 154, 0, 0.8),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+      50% {
+        box-shadow: 0 8px 30px rgba(255, 106, 0, 0.8),
+                    0 0 20px rgba(255, 200, 0, 0.9),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      }
+      100% {
+        box-shadow: 0 8px 25px rgba(255, 106, 0, 0.6),
+                    0 0 15px rgba(255, 154, 0, 0.8),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+    }
+
     /* Responsive */
     @media (max-width: 760px) {
       header {
@@ -323,6 +381,15 @@
       section {
         margin-top: 36px;
         padding: 0 12px;
+      }
+      
+      /* Adaptation du bouton pour mobile */
+      .ritual-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-radius: 40px;
       }
     }
   </style>
@@ -356,9 +423,9 @@
         Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées,
         et des secrets que peu osent révéler. Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes
         et messager du sacré. À travers mes rituels, mes talismans et les secrets du Coran mystique,
-        j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin.
-        Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l'heure est venue.
-        Entre... et découvre ce que le monde t’a toujours caché.<br />
+        j'ouvre les portes de l'invisible à ceux qui ont le courage de chercher plus loin.
+        Tu ne lis pas ceci par hasard. Si ton âme vibre, c'est que l'heure est venue.
+        Entre... et découvre ce que le monde t'a toujours caché.<br />
         <strong>WhatsApp :</strong> 
         <a href="https://wa.me/22677020069" target="_blank" rel="noopener noreferrer">+226 77020069</a>
       </p>
@@ -381,8 +448,8 @@
 
     <section id="galerie" role="tabpanel" aria-labelledby="tab-galerie" hidden>
       <h2>Galerie</h2>
-      <p>Objets mystiques, encens rares, talismans anciens... Explorez l’univers visuel du sacré.</p>
-      <div class="gallery-grid" role="list" aria-label="Galerie d’images mystiques">
+      <p>Objets mystiques, encens rares, talismans anciens... Explorez l'univers visuel du sacré.</p>
+      <div class="gallery-grid" role="list" aria-label="Galerie d'images mystiques">
         <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745721840773.jpg" alt="Objet mystique 1" role="listitem" loading="lazy"/>
         <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745719684285.jpg" alt="Objet mystique 2" role="listitem" loading="lazy"/>
         <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="Objet mystique 3" role="listitem" loading="lazy"/>
@@ -423,6 +490,9 @@
       <a href="mailto:muslimwalyy@gmail.com" class="btn" role="button">E-mail</a>
     </section>
   </main>
+
+  <!-- NOUVEAU BOUTON "Voir les rituels gratuit" -->
+  <button class="ritual-button" id="ritualButton">Voir les rituels gratuit</button>
 
   <footer>
     <p>© 2025 Secret Mystique & Rituel — Tous droits réservés</p>
@@ -474,6 +544,11 @@
       }
       window.scrollTo({top:0, behavior:'smooth'});
     }
+    
+    // Ajout de la fonctionnalité du bouton "Voir les rituels gratuit"
+    document.getElementById('ritualButton').addEventListener('click', function() {
+      window.location.href = 'pub.html';
+    });
   </script>
 </body>
-  </html>
+</html>

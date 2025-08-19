@@ -1,1158 +1,479 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret Mystique & Rituel</title>
-  <link rel="icon" type="image/png" href="logo.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-adsense-account" content="ca-pub-5904049904040571">
+  <title>Secret Mystique & Rituel - Mise en Page Améliorée</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet" />
+
   <style>
-    /* === Reset === */
-    * {
-      margin: 0;
-      padding: 0;
+    /* === Variables couleur, typo === */
+    :root {
+      --primary-gradient: linear-gradient(180deg, #00e0ff, #0048a5);
+      --bg-dark: #121216;
+      --bg-light: #1e1e22;
+      --text-main: #e0e6f0;
+      --text-muted: #9aa8b5;
+      --shadow-glow: 0 0 14px 4px rgba(0, 224, 255, 0.45);
+      --radius: 14px;
+      --font-family: 'Inter', sans-serif;
+      --transition: 0.3s ease;
+    }
+    /* Reset & base */
+    *, *::before, *::after {
       box-sizing: border-box;
     }
-
-    /* === Variables === */
-    :root {
-      --primary: #6a5acd;
-      --primary-dark: #5645c5;
-      --accent: #00e0ff;
-      --accent-dark: #00b8d9;
-      --bg: #121216;
-      --bg-card: #1e1e24;
-      --bg-light: #f7f9fc;
-      --bg-card-light: #ffffff;
-      --text: #e0e6f0;
-      --text-muted: #a0a6b0;
-      --text-dark: #222;
-      --text-muted-dark: #555;
-      --transition: all 0.3s ease;
-      --shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.1);
-      --radius: 12px;
-      --radius-sm: 6px;
+    body, html {
+      margin: 0; padding: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+      color: var(--text-main);
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      overflow-x: hidden; /* empêcher tout débordement horizontal */
+      word-wrap: break-word;
     }
-
-    /* === Thèmes === */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      transition: var(--transition);
-      overflow-x: hidden;
+    a {
+      color: #00e0ff;
+      text-decoration: none;
     }
-    
-    body.light {
-      background: var(--bg-light);
-      color: var(--text-dark);
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Cinzel', serif;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    /* === Loader === */
-    #loader {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      z-index: 9999;
-      transition: opacity 0.5s ease;
-    }
-    
-    .spinner {
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top: 4px solid var(--accent);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1rem;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .loader-text {
-      font-size: 1.2rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* === Barre de progression === */
-    #progressBar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      width: 0%;
-      z-index: 10000;
-      transition: width 0.2s ease;
+    a:hover, a:focus-visible {
+      color: #0048a5;
+      text-decoration: underline;
+      outline-offset: 3px;
     }
 
     /* === Header === */
     header {
-      padding: 20px 5%;
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(18, 18, 22, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-    
-    body.light header {
-      background: rgba(247, 249, 252, 0.95);
-    }
-    
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    .logo {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      transition: var(--transition);
-    }
-    
-    .logo:hover {
-      transform: rotate(10deg);
-    }
-    
-    .brand-text {
+      z-index: 1000;
+      background-color: var(--bg-light);
+      box-shadow: 0 4px 18px rgba(0, 224, 255, 0.4);
+      padding: 14px 20px;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      backdrop-filter: saturate(180%) blur(20px);
+      user-select: none;
+      text-align: center;
     }
-    
-    .brand-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
+    header img {
+      height: 56px;
+      border-radius: calc(var(--radius)/1.5);
+      user-select: none;
+      pointer-events: none;
+      margin-bottom: 8px;
+    }
+
+    /* Titre sur 1 ou plusieurs lignes, centré avec dégradé couleur */
+    header h1 {
+      font-weight: 800;
+      font-size: 2.7rem;
+      line-height: 1.1;
+      margin: 0;
+      background: var(--primary-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow:
+        0 0 10px rgba(0, 224, 255, 0.8),
+        0 0 18px rgba(0, 72, 165, 0.7);
+      max-width: 90vw;
+      word-break: break-word;
+      user-select: none;
     }
     
-    .brand-tagline {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 1.5px;
-    }
-    
-    body.light .brand-tagline {
-      color: var(--text-muted-dark);
-    }
-    
-    .header-actions {
+    /* === Navigation principale === */
+    nav.main-nav {
+      background: var(--bg-light);
       display: flex;
-      align-items: center;
-      gap: 15px;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 4px;
+      box-shadow: 0 3px 18px rgba(0,224,255,0.22);
+      padding: 14px 12px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      position: sticky;
+      top: calc(56px + 8px + 60px); /* header img height + gap + title approx */
+      z-index: 999;
+      flex-wrap: wrap;
+      user-select: none;
     }
-    
-    .header-actions button {
+    nav.main-nav button {
       background: none;
       border: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: var(--accent);
-      transition: var(--transition);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .header-actions button:hover {
-      background: rgba(0, 224, 255, 0.1);
-      transform: scale(1.1);
-    }
-
-    /* === Navigation === */
-    .main-nav {
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      margin: 30px 0;
-      flex-wrap: wrap;
-    }
-    
-    .main-nav button {
-      padding: 12px 25px;
-      border: 1px solid var(--accent);
-      border-radius: 30px;
-      background: transparent;
-      color: inherit;
-      cursor: pointer;
-      transition: var(--transition);
-      font-size: 0.9rem;
-      font-weight: 500;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    
-    .main-nav button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 224, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    
-    .main-nav button:hover::before {
-      left: 100%;
-    }
-    
-    .main-nav button:hover, .main-nav button.active {
-      background: var(--accent);
-      color: #121216;
-      box-shadow: 0 0 15px rgba(0, 224, 255, 0.5);
-    }
-    
-    /* Menu burger */
-    #menuToggle {
-      display: none;
-    }
-    
-    @media (max-width: 768px) {
-      .main-nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--bg-card);
-        padding: 20px;
-        box-shadow: var(--shadow);
-        z-index: 99;
-      }
-      
-      body.light .main-nav {
-        background: var(--bg-card-light);
-      }
-      
-      .main-nav.open {
-        display: flex;
-      }
-      
-      #menuToggle {
-        display: flex;
-      }
-      
-      .brand-name {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* === Sections === */
-    main {
-      padding: 20px 5%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    section {
-      margin: 80px 0;
-      padding: 40px 0;
-    }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 50px;
-      position: relative;
-    }
-    
-    .section-title h2 {
-      font-size: 2.5rem;
-      display: inline-block;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-    }
-    
-    .section-title h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius: 3px;
-    }
-    
-    .section-content {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      margin: 0;
-      padding: 60px 20px;
-    }
-    
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(106, 90, 205, 0.1) 0%, rgba(18, 18, 22, 0.9) 70%);
-      z-index: -1;
-    }
-    
-    body.light .hero::before {
-      background: radial-gradient(circle at center, rgba(106, 90, 205, 0.1) 0%, rgba(247, 249, 252, 0.9) 70%);
-    }
-    
-    .hero h1 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin-bottom: 30px;
       color: var(--text-muted);
-    }
-    
-    body.light .hero p {
-      color: var(--text-muted-dark);
-    }
-    
-    .cta-button {
-      padding: 15px 40px;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
-      color: white;
-      border: none;
-      border-radius: 30px;
+      font-weight: 600;
+      padding: 10px 18px;
       font-size: 1rem;
-      font-weight: 500;
+      border-radius: var(--radius);
+      transition: all var(--transition);
       cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 5px 15px rgba(106, 90, 205, 0.4);
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
     }
-    
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, var(--primary-dark), var(--accent-dark));
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: -1;
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(106, 90, 205, 0.6);
-    }
-    
-    .cta-button:hover::before {
-      opacity: 1;
-    }
-
-    /* Animations au scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: 0.8s ease;
-    }
-    
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* About Section */
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    
-    @media (max-width: 768px) {
-      .about-content {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    .about-text p {
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-    
-    .about-image {
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    
-    .about-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: var(--transition);
-    }
-    
-    .about-image:hover img {
-      transform: scale(1.03);
-    }
-
-    /* Secrets Section */
-    .secrets-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .secret-card {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: 30px;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border: 1px solid rgba(106, 90, 205, 0.1);
-      text-align: left;
-    }
-    
-    body.light .secret-card {
-      background: var(--bg-card-light);
-      border: 1px solid rgba(106, 90, 205, 0.1);
-    }
-    
-    .secret-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border-color: var(--accent);
-    }
-    
-    .secret-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: var(--accent);
-    }
-    
-    .secret-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      color: var(--accent);
-    }
-
-    /* === Galerie === */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    
-    .gallery-item {
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      aspect-ratio: 4/3;
-    }
-    
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-    
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-    
-    .gallery-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-      padding: 20px;
-      color: white;
-      transform: translateY(100%);
-      transition: var(--transition);
-    }
-    
-    .gallery-item:hover .gallery-overlay {
-      transform: translateY(0);
-    }
-
-    /* === Témoignages === */
-    .testimonial-carousel {
-      display: flex;
-      overflow-x: auto;
-      gap: 30px;
-      padding: 20px 0;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Firefox */
-    }
-    
-    .testimonial-carousel::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Edge */
-    }
-    
-    .testimonial {
-      min-width: 300px;
-      padding: 30px;
-      border-radius: var(--radius);
-      background: var(--bg-card);
-      scroll-snap-align: center;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-    
-    body.light .testimonial {
-      background: var(--bg-card-light);
-    }
-    
-    .testimonial::before {
-      content: '"';
-      font-family: 'Cinzel', serif;
-      font-size: 5rem;
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      opacity: 0.1;
-      line-height: 1;
-    }
-    
-    .testimonial-text {
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-    
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-    }
-    
-    .author-info h4 {
-      margin-bottom: 5px;
-      font-size: 1.1rem;
-    }
-    
-    .author-info p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    
-    body.light .author-info p {
-      color: var(--text-muted-dark);
-    }
-
-    /* === Formulaire === */
-    .form-container {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: 40px;
-      box-shadow: var(--shadow);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    body.light .form-container {
-      background: var(--bg-card-light);
-    }
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      text-align: left;
-    }
-    
-    form label {
-      font-weight: 500;
-      color: var(--accent);
-    }
-    
-    form input, form textarea {
-      padding: 15px;
-      border: 1px solid rgba(106, 90, 205, 0.2);
-      border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, 0.05);
-      color: inherit;
-      font-family: inherit;
-      transition: var(--transition);
-    }
-    
-    body.light form input, 
-    body.light form textarea {
-      background: rgba(106, 90, 205, 0.05);
-    }
-    
-    form input:focus, form textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(0, 224, 255, 0.2);
-    }
-    
-    form button {
-      padding: 15px;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-top: 10px;
-    }
-    
-    form button:hover {
-      background: linear-gradient(45deg, var(--primary-dark), var(--accent-dark));
+    nav.main-nav button:hover, nav.main-nav button:focus-visible {
+      outline-offset: 2px;
+      outline-color: #00e0ff;
+      outline-style: solid;
+      outline-width: 2px;
+      color: #00e0ff;
+      background: rgba(0,224,255,0.1);
+      box-shadow: var(--shadow-glow);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(106, 90, 205, 0.4);
     }
-
-    /* === Footer === */
-    footer {
-      background: var(--bg-card);
-      padding: 60px 5% 30px;
-      margin-top: 80px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    body.light footer {
-      background: var(--bg-card-light);
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-    
-    .footer-column h3 {
-      font-size: 1.3rem;
-      margin-bottom: 20px;
-      color: var(--accent);
-    }
-    
-    .footer-column p, .footer-column a {
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      display: block;
-      text-decoration: none;
-      transition: var(--transition);
-    }
-    
-    body.light .footer-column p, 
-    body.light .footer-column a {
-      color: var(--text-muted-dark);
-    }
-    
-    .footer-column a:hover {
-      color: var(--accent);
-      transform: translateX(5px);
-    }
-    
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text);
-      transition: var(--transition);
-    }
-    
-    body.light .social-links a {
-      background: rgba(106, 90, 205, 0.1);
-      color: var(--text-dark);
-    }
-    
-    .social-links a:hover {
-      background: var(--accent);
-      color: var(--bg);
+    nav.main-nav button.active {
+      background: #00e0ff;
+      color: var(--bg-light);
+      box-shadow: var(--shadow-glow);
       transform: translateY(-3px);
     }
-    
-    .copyright {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    
-    body.light .copyright {
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      color: var(--text-muted-dark);
+
+    /* === Main container === */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 18px 80px;
     }
 
-    /* Back to top button */
-    #backToTop {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--accent));
-      color: white;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
+    /* Sections */
+    section {
+      margin-top: 48px;
+      max-width: 100%;
       opacity: 0;
-      visibility: hidden;
-      z-index: 99;
+      transform: translateY(30px);
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      display: none;
+      overflow: visible; /* s’assure pas de scroll interne ! */
     }
-    
-    #backToTop.show {
+    section.active {
+      display: block;
       opacity: 1;
-      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
     }
-    
-    #backToTop:hover {
+    section h2 {
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #00e0ff;
+      user-select: none;
+      text-shadow: 0 0 6px #00e0ffaa;
+    }
+    section p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      user-select: text;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    /* Images */
+    section img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 34px rgba(0,224,255,0.35);
+      margin-bottom: 32px;
+      user-select: none;
+      cursor: default;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    section img:hover {
+      transform: scale(1.07);
+      filter: drop-shadow(0 0 20px #00e0ff);
+    }
+
+    /* Texte long secrets : plus de scroll interne */
+    #secrets-rituel-text {
+      margin-top: 18px;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      max-height: none;
+      overflow: visible;
+    }
+    #secrets-rituel-text p {
+      margin-bottom: 1em;
+    }
+
+    /* Galerie */
+    .gallery-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .gallery-grid img {
+      border-radius: var(--radius);
+      box-shadow: 0 8px 34px rgba(0,224,255,0.3);
+      cursor: default;
+      user-select: none;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px #00e0ff);
+    }
+
+    /* Témoignages */
+    .testimonial-card {
+      background: rgba(0,224,255,0.12);
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(0,224,255,0.25);
+      margin-top: 20px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      user-select: text;
+      cursor: default;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .testimonial-card:hover, .testimonial-card:focus-within {
+      box-shadow: 0 8px 40px rgba(0,224,255,0.8);
+      color: #00e0ff;
       transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(106, 90, 205, 0.5);
+    }
+    .testimonial-card .icon {
+      font-size: 40px;
+      color: #00e0ff;
+      user-select: none;
+      margin-bottom: 12px;
+    }
+    .testimonial-card h3 {
+      margin: 0 0 10px;
+      color: #00e0ff;
+    }
+    .testimonial-text {
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* Boutons */
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      font-weight: 600;
+      background-color: #00e0ff;
+      color: #121216;
+      border-radius: var(--radius);
+      box-shadow: 0 0 28px #00e0ffaa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+      border: none;
+      margin-right: 14px;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .btn:hover, .btn:focus {
+      background-color: #009bb3;
+      box-shadow: 0 0 40px #009bb3ee;
+      outline: none;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      padding: 28px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 40px;
+      user-select: none;
+      border-top: 1px solid rgba(0,224,255,0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      header {
+        padding: 16px 18px;
+        height: auto;
+        text-align: center;
+      }
+      header h1 {
+        font-size: 2.2rem;
+        white-space: normal;
+        line-height: 1.2;
+      }
+      nav.main-nav {
+        top: auto;
+        position: relative;
+        padding: 12px 10px;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      nav.main-nav button {
+        font-size: 0.95rem;
+        padding: 8px 14px;
+      }
+      .container {
+        padding: 20px 12px 70px;
+        max-width: 100%;
+      }
+      section {
+        margin-top: 36px;
+        padding: 0 12px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Loader -->
-  <div id="loader">
-    <div class="spinner"></div>
-    <p class="loader-text">Chargement des mystères...</p>
-  </div>
-
-  <!-- Barre de progression scroll -->
-  <div id="progressBar"></div>
-
-  <!-- Header -->
   <header>
-    <div class="header-container">
-      <div class="logo-container">
-        <img src="logo.jpg" alt="Logo Secret Mystique & Rituel" class="logo">
-        <div class="brand-text">
-          <h1 class="brand-name">Secret Mystique</h1>
-          <p class="brand-tagline">Rituels & Spiritualité</p>
-        </div>
-      </div>
-      
-      <div class="header-actions">
-        <button id="darkModeToggle" aria-label="Changer le thème">
-          <i class="fas fa-moon"></i>
-        </button>
-        <button id="menuToggle" aria-label="Ouvrir le menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
+    <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/logo.jpg" alt="Logo" />
+    <h1>Secret Mystique &amp; Rituel</h1>
   </header>
 
-  <!-- Navigation -->
-  <nav class="main-nav" id="mainNav">
-    <button class="active">Accueil</button>
-    <button>À propos</button>
-    <button>Secrets</button>
-    <button>Galerie</button>
-    <button>Témoignages</button>
-    <button>Contact</button>
+  <nav class="main-nav" role="tablist" aria-label="Navigation principale">
+    <button aria-selected="true" role="tab" aria-controls="accueil" id="tab-accueil" class="active">Accueil</button>
+    <button aria-selected="false" role="tab" aria-controls="apropos" id="tab-apropos">À propos</button>
+    <button aria-selected="false" role="tab" aria-controls="secrets" id="tab-secrets">Secrets et Rituels</button>
+    <button aria-selected="false" role="tab" aria-controls="galerie" id="tab-galerie">Galerie</button>
+    <button aria-selected="false" role="tab" aria-controls="temoignages" id="tab-temoignages">Témoignages</button>
+    <button aria-selected="false" role="tab" aria-controls="contact" id="tab-contact">Contact</button>
   </nav>
 
-  <!-- Sections -->
-  <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Plongez dans l'Univers Mystique</h1>
-      <p>Découvrez les secrets anciens et les rituels qui éveillent votre esprit et transforment votre existence.</p>
-      <button class="cta-button">Commencer le voyage</button>
+  <main class="container">
+    <section id="accueil" role="tabpanel" aria-labelledby="tab-accueil" class="active">
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/ACCEUIL.jpg" alt="Accueil" loading="lazy"/>
+      <h2>Bienvenue</h2>
+      <p>Explorez les portes du monde mystique : rituels sacrés, secrets anciens, guidance spirituelle.</p>
     </section>
 
-    <!-- About Section -->
-    <section class="reveal">
-      <div class="section-title">
-        <h2>À propos de nous</h2>
-      </div>
-      <div class="section-content about-content">
-        <div class="about-text">
-          <p>Secret Mystique & Rituel est un espace sacré dédié à l'exploration des connaissances anciennes et des pratiques spirituelles qui ont traversé les âges.</p>
-          <p>Notre mission est de vous guider à travers les mystères de l'univers, en vous fournissant les outils et la sagesse nécessaires pour transformer votre vie.</p>
-          <p>Fondé en 2010 par un groupe de passionnés de spiritualité, nous avons aidé des milliers de personnes à trouver leur chemin vers l'éveil intérieur.</p>
-        </div>
-        <div class="about-image">
-          <img src="image1.jpg" alt="Symboles mystiques" loading="lazy">
-        </div>
-      </div>
+    <section id="apropos" role="tabpanel" aria-labelledby="tab-apropos" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="À propos" loading="lazy"/>
+      <h2>À propos</h2>
+      <p>
+        Derrière le voile du monde visible, se cachent des vérités anciennes, des forces oubliées,
+        et des secrets que peu osent révéler. Je suis Muslim Walyy, initié aux mystères, maître des sciences occultes
+        et messager du sacré. À travers mes rituels, mes talismans et les secrets du Coran mystique,
+        j’ouvre les portes de l’invisible à ceux qui ont le courage de chercher plus loin.
+        Tu ne lis pas ceci par hasard. Si ton âme vibre, c’est que l'heure est venue.
+        Entre... et découvre ce que le monde t’a toujours caché.<br />
+        <strong>WhatsApp :</strong> 
+        <a href="https://wa.me/22677020069" target="_blank" rel="noopener noreferrer">+226 77020069</a>
+      </p>
     </section>
 
-    <!-- Secrets Section -->
-    <section class="reveal">
-      <div class="section-title">
-        <h2>Nos Secrets Révélés</h2>
-      </div>
-      <div class="section-content">
-        <div class="secrets-container">
-          <div class="secret-card">
-            <div class="secret-icon">
-              <i class="fas fa-moon"></i>
-            </div>
-            <h3>Rituels Lunaires</h3>
-            <p>Apprenez à harmoniser votre énergie avec les cycles de la lune pour amplifier vos intentions et manifestations.</p>
-          </div>
-          
-          <div class="secret-card">
-            <div class="secret-icon">
-              <i class="fas fa-hand-sparkles"></i>
-            </div>
-            <h3>Guérison Énergétique</h3>
-            <p>Découvrez les techniques ancestrales pour nettoyer, équilibrer et revitaliser votre champ énergétique.</p>
-          </div>
-          
-          <div class="secret-card">
-            <div class="secret-icon">
-              <i class="fas fa-scroll"></i>
-            </div>
-            <h3>Symboles Ancestraux</h3>
-            <p>Maîtrisez le pouvoir des symboles sacrés et leur utilisation dans la pratique quotidienne.</p>
-          </div>
-        </div>
+    <section id="secrets" role="tabpanel" aria-labelledby="tab-secrets" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/Rituel.jpg" alt="Secrets et Rituels" loading="lazy"/>
+      <h2>Secrets et Rituels</h2>
+      <p>Découvrez les secrets coraniques, la géomancie, la magie spirituelle et les talismans.</p>
+      <article id="secrets-rituel-text" aria-label="Description détaillée du rituel puissant">
+        <p>Salam aleykoum warahamatoulaye chers frères et sœurs alhamdoulillah aujourd'hui je vais parlé de ce puissant nom que les grands marabout et cheick connaissent et pratique pour régler n'importe quel situation financière ou matériel.</p>
+        <p>Alhamdoulillah ce secret si tu le met en pratique je peut te dire que tu n'aura plus besoin d'aucun papier ou d'un rouhane parceque tu peut tout avoir avec ce nom puissant AL SOMAD (الصمد).</p>
+        <p>Si tu as besoin d'une voiture d'une valeur de 40 millions ou si tu as besoin d'une moto ou d'un terrain ou de l'argent n'importe quel somme, tu peut pas pratiquer ce secret pendant 16 jours et dire que tu n'a eu de résultat c'est impossible wly bly.</p>
+        <p>Avec ce secret tu peut appeler la clientèle vers ton lieux de travail ou boutique jusqu'à ce que tu sera fatigué kounfa yakoune.</p>
+        <p>Tu écrit en naci AL SOMAD (الصمد) 1111 fois en eau bénite (en naci) que tu va te flotter le corps pendant le zikre et écrire le hatim sur l'ardoise en fer une seule fois et c'est tout.</p>
+        <p>Tu fini le travail au 16 jours tu fait le sacrifice d'un coq blanc.</p>
+        <p>Si tu est en Europe tu appel quelqu'un en Afrique pour faire le sacrifice à ton nom.</p>
+      </article>
+    </section>
+
+    <section id="galerie" role="tabpanel" aria-labelledby="tab-galerie" hidden>
+      <h2>Galerie</h2>
+      <p>Objets mystiques, encens rares, talismans anciens... Explorez l’univers visuel du sacré.</p>
+      <div class="gallery-grid" role="list" aria-label="Galerie d’images mystiques">
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745721840773.jpg" alt="Objet mystique 1" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745719684285.jpg" alt="Objet mystique 2" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1745522892700.jpg" alt="Objet mystique 3" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Objet mystique 4" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204568116.jpg" alt="Objet mystique 5" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744204447790.jpg" alt="Objet mystique 6" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744199311390.jpg" alt="Objet mystique 7" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198635009.jpg" alt="Objet mystique 8" role="listitem" loading="lazy"/>
+        <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744198397725.jpg" alt="Objet mystique 9" role="listitem" loading="lazy"/>
       </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="reveal">
-      <div class="section-title">
-        <h2>Galerie Mystique</h2>
+    <section id="temoignages" role="tabpanel" aria-labelledby="tab-temoignages" hidden>
+      <h2>Témoignages</h2>
+      <p>Ceux qui ont franchi la porte témoignent de leur transformation intérieure.</p>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Jean Dupont</h3>
+        <p class="testimonial-text">"Grâce aux rituels mystiques que j'ai appris, ma vie a complètement changé. J'ai trouvé la paix intérieure et une clarté mentale qui m'aide à avancer dans ma vie quotidienne."</p>
       </div>
-      <div class="section-content">
-        <div class="gallery">
-          <div class="gallery-item">
-            <img src="image1.jpg" alt="Rituel de pleine lune" loading="lazy">
-            <div class="gallery-overlay">
-              <h3>Rituel de Pleine Lune</h3>
-              <p>Célébration des énergies lunaires</p>
-            </div>
-          </div>
-          
-          <div class="gallery-item">
-            <img src="image2.jpg" alt="Cristaux énergétiques" loading="lazy">
-            <div class="gallery-overlay">
-              <h3>Cristaux Énergétiques</h3>
-              <p>Collection de pierres rares</p>
-            </div>
-          </div>
-          
-          <div class="gallery-item">
-            <img src="image3.jpg" alt="Temple sacré" loading="lazy">
-            <div class="gallery-overlay">
-              <h3>Temple Sacré</h3>
-              <p>Espace de méditation et recueillement</p>
-            </div>
-          </div>
-        </div>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Marie Lefevre</h3>
+        <p class="testimonial-text">"Les rituels ont non seulement amélioré ma confiance en moi, mais m'ont aussi permis de surmonter des obstacles que je croyais insurmontables. Je suis reconnaissante de cette expérience transformative."</p>
+      </div>
+      <div class="testimonial-card" tabindex="0">
+        <div class="icon" aria-hidden="true">👤</div>
+        <h3>Isabelle Roussel</h3>
+        <p class="testimonial-text">"Je n'aurais jamais cru que la mystique puisse changer ma perception de la vie. Les rituels m'ont aidé à me reconnecter à ma spiritualité et à trouver un véritable équilibre."</p>
       </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="reveal">
-      <div class="section-title">
-        <h2>Témoignages</h2>
-      </div>
-      <div class="section-content">
-        <div class="testimonial-carousel">
-          <div class="testimonial">
-            <p class="testimonial-text">"Une expérience incroyable, hors du temps. Les rituels m'ont aidée à retrouver un équilibre intérieur que je cherchais depuis des années."</p>
-            <div class="testimonial-author">
-              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sophie L." class="author-avatar">
-              <div class="author-info">
-                <h4>Sophie L.</h4>
-                <p>Participante depuis 2022</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="testimonial">
-            <p class="testimonial-text">"J'ai découvert une nouvelle énergie en moi. Les enseignements sont profonds et transformateurs, je me sens reconnecté à l'univers."</p>
-            <div class="testimonial-author">
-              <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Thomas M." class="author-avatar">
-              <div class="author-info">
-                <h4>Thomas M.</h4>
-                <p>Membre de la communauté</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="testimonial">
-            <p class="testimonial-text">"Un rituel qui a changé ma vie. L'accompagnement est personnalisé et bienveillant. Je recommande à tous ceux qui cherchent une transformation."</p>
-            <div class="testimonial-author">
-              <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Élodie P." class="author-avatar">
-              <div class="author-info">
-                <h4>Élodie P.</h4>
-                <p>Accompagnée lors d'un retrait</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="reveal">
-      <div class="section-title">
-        <h2>Contact</h2>
-      </div>
-      <div class="section-content">
-        <div class="form-container">
-          <form>
-            <div class="form-group">
-              <label for="name">Votre nom</label>
-              <input type="text" id="name" placeholder="Votre nom complet" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="email">Votre email</label>
-              <input type="email" id="email" placeholder="Votre adresse email" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="message">Votre message</label>
-              <textarea id="message" rows="5" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
-            </div>
-            
-            <button type="submit">Envoyer le message</button>
-          </form>
-        </div>
-      </div>
+    <section id="contact" role="tabpanel" aria-labelledby="tab-contact" hidden>
+      <img src="https://raw.githubusercontent.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/refs/heads/main/1744205160279.jpg" alt="Contact mystique" loading="lazy"/>
+      <h2>Contact</h2>
+      <p>Contacte-moi sur WhatsApp ou par e-mail :</p>
+      <a href="https://wa.me/22677020069" target="_blank" rel="noopener noreferrer" class="btn" role="button">WhatsApp</a>
+      <a href="mailto:muslimwalyy@gmail.com" class="btn" role="button">E-mail</a>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Secret Mystique</h3>
-        <p>Votre guide vers la spiritualité et l'éveil intérieur à travers les pratiques ancestrales et les rituels transformateurs.</p>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-pinterest"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Explorer</h3>
-        <a href="#">Accueil</a>
-        <a href="#">À propos</a>
-        <a href="#">Nos secrets</a>
-        <a href="#">Galerie</a>
-        <a href="#">Témoignages</a>
-        <a href="#">Contact</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Services</h3>
-        <a href="#">Consultations privées</a>
-        <a href="#">Ateliers</a>
-        <a href="#">Retraites spirituelles</a>
-        <a href="#">Formations</a>
-        <a href="#">Produits énergétiques</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Contact</h3>
-        <p><i class="fas fa-map-marker-alt"></i> 123 Rue Mystique, 75000 Paris</p>
-        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
-        <p><i class="fas fa-envelope"></i> contact@secret-mystique.fr</p>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      <p>&copy; 2025 Secret Mystique & Rituel. Tous droits réservés.</p>
-    </div>
+    <p>© 2025 Secret Mystique & Rituel — Tous droits réservés</p>
   </footer>
 
-  <!-- Back to top button -->
-  <button id="backToTop">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-
   <script>
-    // Loader
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("loader");
-      loader.style.opacity = "0";
-      setTimeout(() => {
-        loader.style.display = "none";
-      }, 500);
-    });
+    const tabs = document.querySelectorAll('nav.main-nav button[role="tab"]');
+    const sections = document.querySelectorAll('main.container > section[role="tabpanel"]');
 
-    // Dark mode
-    const darkToggle = document.getElementById("darkModeToggle");
-    darkToggle.addEventListener("click", () => {
-      document.body.classList.toggle("light");
-      const icon = darkToggle.querySelector("i");
-      if (document.body.classList.contains("light")) {
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
-      } else {
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-      }
-    });
-
-    // Menu burger
-    const menuToggle = document.getElementById("menuToggle");
-    const mainNav = document.getElementById("mainNav");
-    menuToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("open");
-      const icon = menuToggle.querySelector("i");
-      if (mainNav.classList.contains("open")) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-times");
-      } else {
-        icon.classList.remove("fa-times");
-        icon.classList.add("fa-bars");
-      }
-    });
-
-    // Scroll progress bar
-    window.addEventListener("scroll", () => {
-      const scrollTop = window.scrollY;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / height) * 100;
-      document.getElementById("progressBar").style.width = progress + "%";
-    });
-
-    // Révélation progressive des sections
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', e => {
+        activateTab(tab);
       });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll(".reveal").forEach(sec => observer.observe(sec));
-
-    // Back to top button
-    const backToTopBtn = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 500) {
-        backToTopBtn.classList.add("show");
-      } else {
-        backToTopBtn.classList.remove("show");
-      }
-    });
-    
-    backToTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // Navigation buttons
-    const navButtons = document.querySelectorAll(".main-nav button");
-    navButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        navButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-        
-        // On mobile, close menu after selection
-        if (window.innerWidth <= 768) {
-          mainNav.classList.remove("open");
-          menuToggle.querySelector("i").classList.remove("fa-times");
-          menuToggle.querySelector("i").classList.add("fa-bars");
+      tab.addEventListener('keydown', e => {
+        let newIndex;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          newIndex = (idx + 1) % tabs.length;
+          tabs[newIndex].focus();
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          newIndex = (idx -1 + tabs.length) % tabs.length;
+          tabs[newIndex].focus();
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activateTab(tab);
         }
       });
     });
+
+    function activateTab(tab){
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+      });
+      sections.forEach(sec => {
+        sec.setAttribute('hidden','true');
+        sec.classList.remove('active');
+      });
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      const id = tab.getAttribute('aria-controls');
+      const content = document.getElementById(id);
+      if(content){
+        content.removeAttribute('hidden');
+        content.classList.add('active');
+        content.focus();
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
   </script>
 </body>
-</html>
+  </html>

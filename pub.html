@@ -1,1 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rituels Spirituels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .rituals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .ritual-btn {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+        }
+        
+        .ritual-btn i {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        
+        .ritual-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(to right, #2c3e50, #3498db);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 40px auto;
+            padding: 35px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: #e74c3c;
+        }
+        
+        .ritual-title {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        .ritual-details {
+            margin-bottom: 25px;
+            font-size: 17px;
+        }
+        
+        .ritual-details p {
+            margin-bottom: 15px;
+        }
+        
+        .arabic-text {
+            direction: rtl;
+            font-family: 'Traditional Arabic', 'Scheherazade New', serif;
+            font-size: 24px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-right: 5px solid #3498db;
+            line-height: 2;
+        }
+        
+        .contact-section {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            border-left: 5px solid #2ecc71;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .talisman-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+        
+        .important-note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .steps {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .steps li {
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .rituals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+                padding: 25px;
+            }
+            
+            .ritual-title {
+                font-size: 24px;
+            }
+            
+            .ritual-btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rituels Spirituels</h1>
+            <p class="subtitle">Découvrez des pratiques spirituelles puissantes pour diverses intentions</p>
+        </header>
+        
+        <div class="rituals-grid">
+            <button class="ritual-btn" onclick="openModal('modal1')">
+                <i class="fas fa-money-bill-wave"></i>
+                Rituel pour la Prospérité Financière
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal2')">
+                <i class="fas fa-pray"></i>
+                Zikr de Yâ Allâh, Yâ Houwa
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal3')">
+                <i class="fas fa-heart"></i>
+                Rituel pour le Retour d'Amour
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal4')">
+                <i class="fas fa-star"></i>
+                Secret Kounfayakoune pour l'Exaucement des Vœux
+            </button>
+        </div>
+        
+        <!-- Modal 1: Rituel pour la Prospérité Financière -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal1')">&times;</span>
+                <h2 class="ritual-title">Rituel pour la Prospérité Financière</h2>
+                <div class="ritual-details">
+                    <p>Voilà une petite astuce mais très puissante si tu as un salaire ou même si tu travailles tu gagnes de l'argent mais l'argent ne reste pas dans ta main ne dure pas dans ta main d'ici l'argent va finir inchallah ça va revenir encore.</p>
+                    <p><strong>Sourate 16 verset 96 du saint coran.</strong> À le lire sur l'argent n'importe quelle somme d'argent.</p>
+                    <p>Tu as un nouveau téléphone ou n'importe quoi si c'est nouveau à le lire dessus d'ici cette chose va partir où abîmé l'autre vas revenir inch'allah.</p>
+                    
+                    <div class="arabic-text">
+                        مَا عِندَكُمْ يَنفَدُ ۖ وَمَا عِندَ ٱللَّهِ بَاقٍۢ 
+                    </div>
+                    
+                    <p><strong>Transcription:</strong> Mā `Indakum Yanfadu Wa Mā `Inda Allāhi Bāqin</p>
+                    
+                    <p><strong>Instructions:</strong> 3 fois où 7 fois où 9 fois sur l'argent.</p>
+                    <p>Inch'Allah d'ici l'argent vas finir Allah le remplacera à un autre.</p>
+                    <p>C'est ce secret on travaille sur un billet d'argent avec un portefeuille l'argent qui a été travaillé on ne le touche pas dans le portefeuille l'argent ne manquera jamais dans ton portefeuille.</p>
+                    <p>Un autre manière avec la sourate Fatiha. Prochainement inch'allah.</p>
+                    
+                    <div class="contact-section">
+                        <p class="contact-title">Pour plus d'informations, contactez-moi sur WhatsApp:</p>
+                        <p><strong>+226 77020069</strong></p>
+                        <a href="https://wa.me/22677020069" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal 2: Zikr de Yâ Allâh, Yâ Houwa -->
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal2')">&times;</span>
+                <h2 class="ritual-title">Zikr de Yâ Allâh, Yâ Houwa</h2>
+                <div class="ritual-details">
+                    <p>Assalamou aleykoum à tous les membres du groupe. YA ALLAH YA HOUWA.</p>
+                    <p>Si une personne fait ce zikr chaque jour en une seule séance 12 000 fois : <strong>Yâ Allâh, Yâ Houwa</strong></p>
+                    <p>Alors Dieu Tout-Puissant lui soumettra : les djinns, les humains, les oiseaux, et les bêtes sauvages. Ils lui obéiront, et les secrets cachés, les sciences mystérieuses et les symboles des connaissances lui seront révélés.</p>
+                    
+                    <p>Celui qui après la prière du Fajr récite 1 000 fois : <strong>Yâ Allâh, Yâ Houwa</strong></p>
+                    <p>Deviendra propriétaire de la certitude spirituelle (صاحب اليقين / ṣâḥib al-yaqîn), et les lumières du monde invisible (أنوار غيبية / anwâr ghaybiyya) se manifesteront à lui. Les inspirations et révélations spirituelles lui apparaîtront.</p>
+                    
+                    <p>Quiconque au milieu de la nuit, en état de pureté rituelle (طهارة / ṭahâra), tourné vers la Qibla, récite 1 000 fois : <strong>Yâ Allâh, Yâ Houwa</strong></p>
+                    <p>Alors, il sera comblé des sciences religieuses (علوم الدين / 'ulûm ad-dîn) et comptera parmi les gens de la Connaissance spirituelle (أهل المعرفة / ahl al-ma'rifa).</p>
+                    
+                    <div class="important-note">
+                        <p><strong>Note importante:</strong> La première pratique (12 000 répétitions) nécessite l'autorisation d'un maître spirituel (إذن الأستاذ / idhn al-ustâdh).</p>
+                    </div>
+                    
+                    <div class="contact-section">
+                        <p class="contact-title">Pour plus d'informations, contactez-moi sur WhatsApp:</p>
+                        <p><strong>+226 77020069</strong></p>
+                        <a href="https://wa.me/22677020069" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal 3: Rituel pour le Retour d'Amour -->
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal3')">&times;</span>
+                <h2 class="ritual-title">Rituel pour le Retour d'Amour</h2>
+                <div class="ritual-details">
+                    <p>Salam anlaykum wa rahamatullah wa barakatuh à tout les membres du groupe</p>
+                    <p>Aujourd'hui vendredi je viens partager avec vous un bon rituel pour retour d'amour d'une femme ou homme qui t'a quitté en amour.</p>
+                    <p>Avec ce secret mystique (magique) même si elle t'avait bloqué partout bi-iznillah elle vas te débloquer et t'appeler pour te supplier Insh'Allah.</p>
+                    
+                    <p><strong>Instructions:</strong></p>
+                    <p>Écrivez ce talsam magique sur un papier de couleur blanche à l'aide de l'encre spirituelle (zaffran) et vous évaporé sur le talisman avec l'ouban zakar, kazbar.</p>
+                    <p>Après avoir écrire fermer le talisman avec le fil rouge et blanc et vous le suspendé en l'air (sur un arbre).</p>
+                    
+                    <p>Écrivez son nom a la place que j'ai écrit 1 et de sa mère a la place de 2 et votre nom sur la place de 3 et de ta mère sur 4.</p>
+                    
+                    <img src="https://github.com/Walyy578/SECRET-MYSTIQUE-ET-RITUEL-/raw/main/1755695018562.jpg" alt="Talisman pour retour d'amour" class="talisman-image">
+                    
+                    <p>Insh'Allah ce secret marche même si la personne à déjà quitté le pays elle serait envoûté par les esprits qui est dans l'air, terre, dans la soleil ⛅, étoiles.....</p>
+                    <p>Wallahi partout où il serait ces esprits vont l'atteindre car l'air souffle partout et le soleil éclaire partout......</p>
+                    
+                    <div class="contact-section">
+                        <p class="contact-title">Pour plus d'informations, contactez-moi sur WhatsApp:</p>
+                        <p><strong>+226 77020069</strong></p>
+                        <a href="https://wa.me/22677020069" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal 4: Secret Kounfayakoune pour l'Exaucement des Vœux -->
+        <div id="modal4" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal4')">&times;</span>
+                <h2 class="ritual-title">Secret Kounfayakoune pour l'Exaucement des Vœux</h2>
+                <div class="ritual-details">
+                    <p>Un Grand Secret: 👉 Pour exaucer le Voeu le plus Chère, que tous les mondes imaginaient impossible à réaliser, Pour la réalisation rapide de tous voeux désirés par la baraka du coran, Pour éloigner tous ce que vous craignez entre les cieux et la terre, Pour résoudre les problèmes difficiles par Allah le Maître Suprême, Pour réaliser tous ce que vous souhaitez entre les cieux et la terre ce Kounfayakoune.</p>
+                    
+                    <p><strong>Comment ça marche:</strong> Fait un Kaloua le jour de jeudi, jeûner et donner sacrefice ce même jour en formulant vos intentions.</p>
+                    <p>Arrivé la nuit après la prière de icha-i (c'est à dire la prière de la nuit).</p>
+                    
+                    <p><strong>Fait 2 Rakats:</strong></p>
+                    <ol class="steps">
+                        <li>1ére rakat: Fatiha 1fois et sourate Charhi (Alam nachra) 7fois s'il s'agit attiré d'un bien, mais s'il s'agit repousser un mal remplacer par la sourate Qouraych (li ilafi qouraych) 7fois.</li>
+                        <li>2ème rakat: Fatiha 1fois et sourate Narri (Izadja-a nasroulah) 7fois s'il s'agit attiré d'un bien, mais s'il s'agit repousser un mal remplacer par la sourate Kafiroûne 7fois.</li>
+                    </ol>
+                    
+                    <p>Formulé vos Voeux à la dernière Soudjoud(protestation). Fait le salam.</p>
+                    
+                    <p><strong>Après:</strong></p>
+                    <ul class="steps">
+                        <li>Zikr la sourate fatiha 70fois.</li>
+                        <li>Astakhfiroulah 100fois et sallat fatihi 100fois.</li>
+                        <li>Récité la sourate Charhi (Alam nachra) 79fois ensuite récite la sourate de la pureté (sourate ikhlass) 1001fois mais la dernière récitation de 1001fois c'est à dire à la dernière Iskhlass arrêté au niveau de ALLAHOU ÇAMADOU et répété Allahou çamadou 1001fois et à la fin terminée la sourate ikhlass et prosterner vous (Soudjoud) demander tous ce que vous voulez je dis tous ce que vous voulez, vos Voeux le plus Chère à Allah le Maître de tout l'univers ce Kounfayakoune InchaAllah.</li>
+                    </ul>
+                    
+                    <p>Peut être le Khoudam de cette sourate viendra dans le rêve pour te dire le sacrifice à faire pour exaucement. Ou bien si vous voyez le sacrifice dans le rêve, faite lé pour voir exaucement de ton souhaits le plus rapidement que possible.</p>
+                    
+                    <div class="important-note">
+                        <p><strong>Conseil:</strong> C'est un Secret bien gardé négliger pas, Allah est miséricordieux. Un petit conseil arrêté de faire les petites trucs des domptages car sa vas influencé pour énergie comme réciter les choses pour dompter inutilement; ne joué pas à la spiritualité.</p>
+                    </div>
+                    
+                    <div class="contact-section">
+                        <p class="contact-title">Pour plus d'informations, contactez-moi sur WhatsApp:</p>
+                        <p><strong>+226 77020069</strong></p>
+                        <a href="https://wa.me/22677020069" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <footer>
+        <p>© 2023 Rituels Spirituels - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Fonction pour ouvrir le modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Empêche le défilement de la page
+        }
+        
+        // Fonction pour fermer le modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Rétablit le défilement
+        }
+        
+        // Fermer le modal en cliquant en dehors du contenu
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+        
+        // Fermer avec la touche Échap
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.keyCode === 27) {
+                const modals = document.getElementsByClassName('modal');
+                for (let i = 0; i < modals.length; i++) {
+                    if (modals[i].style.display === 'block') {
+                        modals[i].style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>

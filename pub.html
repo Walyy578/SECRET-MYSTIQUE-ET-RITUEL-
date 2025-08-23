@@ -227,144 +227,6 @@
             margin-bottom: 10px;
         }
         
-        /* Styles pour le système de crédits */
-        .credits-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-        }
-        
-        .credits-icon {
-            color: #3498db;
-            margin-right: 8px;
-            font-size: 18px;
-        }
-        
-        .ad-container {
-            margin: 20px 0;
-            text-align: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px dashed #ddd;
-        }
-        
-        .ad-watch-counter {
-            text-align: center;
-            margin: 15px 0;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .ad-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            padding: 20px;
-        }
-        
-        .ad-modal-content {
-            background-color: #fff;
-            margin: 40px auto;
-            padding: 20px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            position: relative;
-            text-align: center;
-        }
-        
-        .ad-title {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .ad-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-        }
-        
-        .ad-close:hover {
-            color: #e74c3c;
-        }
-        
-        .ad-action-btn {
-            background: linear-gradient(to right, #3498db, #2c3e50);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .ad-action-btn:hover {
-            background: linear-gradient(to right, #2c3e50, #3498db);
-            transform: scale(1.05);
-        }
-        
-        .ad-complete-message {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #d4edda;
-            color: #155724;
-            border-radius: 8px;
-            border-left: 5px solid #28a745;
-        }
-        
-        .ritual-locked {
-            position: relative;
-        }
-        
-        .ritual-locked::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 40px;
-        }
-        
-        .ritual-cost {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #e74c3c;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
         @media (max-width: 768px) {
             .rituals-grid {
                 grid-template-columns: 1fr;
@@ -384,12 +246,6 @@
                 padding: 15px;
                 font-size: 16px;
             }
-            
-            .credits-container {
-                top: 10px;
-                right: 10px;
-                font-size: 14px;
-            }
         }
         
         footer {
@@ -400,69 +256,32 @@
             font-size: 14px;
         }
     </style>
+    <script type='text/javascript' src='//hedwigflooredventure.com/0f/b6/1d/0fb61ddf9eda965c255b99f4a4067be6.js'></script>
 </head>
 <body>
     <div class="container">
-        <!-- Indicateur de crédits -->
-        <div class="credits-container">
-            <i class="fas fa-coins credits-icon"></i>
-            <span id="credits-count">0</span> crédits
-        </div>
-        
         <header>
             <h1>Rituels Spirituels</h1>
             <p class="subtitle">Découvrez des pratiques spirituelles puissantes pour diverses intentions</p>
         </header>
         
         <div class="rituals-grid">
-            <div class="ritual-locked">
-                <button class="ritual-btn" onclick="checkCredits('modal1')">
-                    <i class="fas fa-money-bill-wave"></i>
-                    Rituel pour la Prospérité Financière
-                    <span class="ritual-cost">20 crédits</span>
-                </button>
-            </div>
-            <div class="ritual-locked">
-                <button class="ritual-btn" onclick="checkCredits('modal2')">
-                    <i class="fas fa-pray"></i>
-                    Zikr de Yâ Allâh, Yâ Houwa
-                    <span class="ritual-cost">20 crédits</span>
-                </button>
-            </div>
-            <div class="ritual-locked">
-                <button class="ritual-btn" onclick="checkCredits('modal3')">
-                    <i class="fas fa-heart"></i>
-                    Rituel pour le Retour d'Amour
-                    <span class="ritual-cost">20 crédits</span>
-                </button>
-            </div>
-            <div class="ritual-locked">
-                <button class="ritual-btn" onclick="checkCredits('modal4')">
-                    <i class="fas fa-star"></i>
-                    Secret Kounfayakoune pour l'Exaucement des Vœux
-                    <span class="ritual-cost">20 crédits</span>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Modal pour regarder des publicités -->
-        <div id="adModal" class="ad-modal">
-            <div class="ad-modal-content">
-                <span class="ad-close" onclick="closeAdModal()">&times;</span>
-                <h2 class="ad-title">Regardez une publicité pour gagner des crédits</h2>
-                <p>Chaque publicité regardée vous rapporte 5 crédits.</p>
-                <p>Vous avez besoin de 20 crédits pour débloquer un rituel.</p>
-                
-                <div id="adContainer">
-                    <!-- L'annonce Adstera sera intégrée ici -->
-                </div>
-                
-                <div class="ad-watch-counter" id="adWatchCounter">
-                    Publicités regardées: <span id="ads-watched">0</span>/4
-                </div>
-                
-                <button class="ad-action-btn" onclick="completeAdView()">J'ai regardé la publicité</button>
-            </div>
+            <button class="ritual-btn" onclick="openModal('modal1')">
+                <i class="fas fa-money-bill-wave"></i>
+                Rituel pour la Prospérité Financière
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal2')">
+                <i class="fas fa-pray"></i>
+                Zikr de Yâ Allâh, Yâ Houwa
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal3')">
+                <i class="fas fa-heart"></i>
+                Rituel pour le Retour d'Amour
+            </button>
+            <button class="ritual-btn" onclick="openModal('modal4')">
+                <i class="fas fa-star"></i>
+                Secret Kounfayakoune pour l'Exaucement des Vœux
+            </button>
         </div>
         
         <!-- Modal 1: Rituel pour la Prospérité Financière -->
@@ -609,168 +428,16 @@
     </footer>
 
     <script>
-        // Variables globales
-        let userCredits = 0;
-        let adsWatched = 0;
-        let currentRitualToUnlock = null;
-        let adInterval;
-        
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Charger les crédits depuis le stockage local si disponibles
-            const savedCredits = localStorage.getItem('spiritualCredits');
-            if (savedCredits) {
-                userCredits = parseInt(savedCredits);
-                updateCreditsDisplay();
-            }
-            
-            // Charger le nombre de publicités regardées
-            const savedAdsWatched = localStorage.getItem('adsWatched');
-            if (savedAdsWatched) {
-                adsWatched = parseInt(savedAdsWatched);
-                document.getElementById('ads-watched').textContent = adsWatched;
-            }
-            
-            // Vérifier si les rituels doivent être débloqués
-            checkRitualsUnlockStatus();
-        });
-        
-        // Mettre à jour l'affichage des crédits
-        function updateCreditsDisplay() {
-            document.getElementById('credits-count').textContent = userCredits;
-        }
-        
-        // Vérifier si l'utilisateur a assez de crédits pour voir un rituel
-        function checkCredits(modalId) {
-            if (userCredits >= 20) {
-                // Déduire 20 crédits et ouvrir le modal
-                userCredits -= 20;
-                localStorage.setItem('spiritualCredits', userCredits);
-                updateCreditsDisplay();
-                openModal(modalId);
-            } else {
-                // Montrer le modal pour regarder des publicités
-                currentRitualToUnlock = modalId;
-                openAdModal();
-            }
-        }
-        
-        // Ouvrir le modal des publicités
-        function openAdModal() {
-            // Réinitialiser le compteur de publicités
-            adsWatched = 0;
-            document.getElementById('ads-watched').textContent = adsWatched;
-            
-            // Charger la première publicité
-            loadAd();
-            
-            // Afficher le modal
-            document.getElementById('adModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Fermer le modal des publicités
-        function closeAdModal() {
-            document.getElementById('adModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            
-            // Nettoyer le conteneur de publicités
-            document.getElementById('adContainer').innerHTML = '';
-            
-            // Arrêter tout intervalle en cours
-            if (adInterval) {
-                clearInterval(adInterval);
-            }
-        }
-        
-        // Charger une publicité
-        function loadAd() {
-            const adContainer = document.getElementById('adContainer');
-            adContainer.innerHTML = '';
-            
-            // Créer et ajouter le script de publicité Adstera
-            const adScript = document.createElement('script');
-            adScript.type = 'text/javascript';
-            adScript.text = `
-                atOptions = {
-                    'key' : 'd5f9d382d8a2e0c5a80f17bed210222b',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                };
-            `;
-            
-            const invokeScript = document.createElement('script');
-            invokeScript.type = 'text/javascript';
-            invokeScript.src = '//hedwigflooredventure.com/d5f9d382d8a2e0c5a80f17bed210222b/invoke.js';
-            
-            adContainer.appendChild(adScript);
-            adContainer.appendChild(invokeScript);
-            
-            // Simuler un minuteur pour la publicité (en réalité, vous devriez utiliser des callbacks d'API publicitaires)
-            if (adInterval) {
-                clearInterval(adInterval);
-            }
-            
-            // Cette partie serait normalement gérée par des callbacks de la publicité
-            // Pour cet exemple, nous simulons simplement le processus
-            adInterval = setInterval(() => {
-                // Normalement, vous vérifieriez si la publicité a été complétement visionnée
-                // Ici, nous simulons juste avec un intervalle
-            }, 1000);
-        }
-        
-        // Lorsque l'utilisateur a regardé une publicité
-        function completeAdView() {
-            adsWatched++;
-            document.getElementById('ads-watched').textContent = adsWatched;
-            localStorage.setItem('adsWatched', adsWatched);
-            
-            // Ajouter 5 crédits pour chaque publicité regardée
-            userCredits += 5;
-            localStorage.setItem('spiritualCredits', userCredits);
-            updateCreditsDisplay();
-            
-            if (adsWatched >= 4) {
-                // L'utilisateur a regardé 4 publicités et gagné 20 crédits
-                document.getElementById('adContainer').innerHTML = 
-                    '<div class="ad-complete-message">Félicitations! Vous avez gagné 20 crédits. Vous pouvez maintenant débloquer le rituel.</div>';
-                
-                // Arrêter l'intervalle
-                if (adInterval) {
-                    clearInterval(adInterval);
-                }
-                
-                // Mettre à jour l'état des rituels
-                checkRitualsUnlockStatus();
-            } else {
-                // Charger la prochaine publicité
-                loadAd();
-            }
-        }
-        
-        // Vérifier quels rituels peuvent être débloqués
-        function checkRitualsUnlockStatus() {
-            const ritualButtons = document.querySelectorAll('.ritual-locked');
-            
-            if (userCredits >= 20) {
-                ritualButtons.forEach(button => {
-                    button.classList.remove('ritual-locked');
-                });
-            }
-        }
-        
         // Fonction pour ouvrir le modal
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Empêche le défilement de la page
         }
         
         // Fonction pour fermer le modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; // Rétablit le défilement
         }
         
         // Fermer le modal en cliquant en dehors du contenu
@@ -781,11 +448,6 @@
                     modals[i].style.display = 'none';
                     document.body.style.overflow = 'auto';
                 }
-            }
-            
-            const adModal = document.getElementById('adModal');
-            if (event.target == adModal) {
-                closeAdModal();
             }
         }
         
@@ -800,13 +462,9 @@
                         document.body.style.overflow = 'auto';
                     }
                 }
-                
-                const adModal = document.getElementById('adModal');
-                if (adModal.style.display === 'block') {
-                    closeAdModal();
-                }
             }
         };
     </script>
+    <script type='text/javascript' src='//hedwigflooredventure.com/ca/90/a6/ca90a66426e526cb55926c5c724bc714.js'></script>
 </body>
 </html>

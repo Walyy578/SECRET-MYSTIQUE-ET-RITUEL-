@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Latrou</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #34495e;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: #34495e;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .tab-button.active {
+            background: #1abc9c;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background: #2c3e50;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .admin-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #1abc9c;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #16a085;
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 2px dashed #1abc9c;
+            padding: 5px;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 15px;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .post-description {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .post-id {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            font-family: monospace;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Latrou - Administration</h1>
+            <p>Gérez vos publications en temps réel avec Firebase</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('admin')">Administration</button>
+            <button class="tab-button" onclick="showTab('public')">Aperçu Public</button>
+        </div>
+
+        <div id="admin" class="tab-content active">
+            <div class="admin-section">
+                <h2>Nouvelle Publication</h2>
+                <form id="postForm">
+                    <div class="form-group">
+                        <label for="title">Titre:</label>
+                        <input type="text" id="title" required placeholder="Entrez un titre attractif">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" required placeholder="Décrivez le contenu de votre publication"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image (URL):</label>
+                        <input type="text" id="image" placeholder="Collez l'URL de votre image">
+                    </div>
+                    <div class="image-preview" id="imagePreview">
+                        <img id="preview" src="" alt="Aperçu de l'image">
+                    </div>
+                    <button type="submit">Publier <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+
+            <h2>Publications Récentes</h2>
+            <div id="adminPostsContainer" class="posts-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des publications...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="public" class="tab-content">
+            <h2>Aperçu du Site Public</h2>
+            <div id="publicPostsContainer" class="posts-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des publications...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        Publication créée avec succès!
+    </div>
+
+    <!-- Firebase App (core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Configuration Firebase avec vos informations
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0NRSzHWFd6e2KS8u2it0dP0Y44Dzg4n4",
+            authDomain: "latrou.firebaseapp.com",
+            projectId: "latrou",
+            storageBucket: "latrou.appspot.com",
+            messagingSenderId: "320805997315",
+            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff" // Vous devrez ajouter cette valeur depuis la console Firebase
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Références aux éléments du DOM
+        const postForm = document.getElementById('postForm');
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
+        const imageInput = document.getElementById('image');
+        const previewImage = document.getElementById('preview');
+        const adminPostsContainer = document.getElementById('adminPostsContainer');
+        const publicPostsContainer = document.getElementById('publicPostsContainer');
+        const notification = document.getElementById('notification');
+
+        // Afficher l'aperçu de l'image
+        imageInput.addEventListener('input', function() {
+            if (imageInput.value) {
+                previewImage.src = imageInput.value;
+                document.getElementById('imagePreview').style.display = 'block';
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+        });
+
+        // Gestion de la soumission du formulaire
+        postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = titleInput.value;
+            const description = descriptionInput.value;
+            const imageUrl = imageInput.value;
+
+            try {
+                // Ajouter le document à Firestore
+                const docRef = await db.collection('posts').add({
+                    titre: title,
+                    description: description,
+                    image: imageUrl,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                console.log('Document écrit avec ID: ', docRef.id);
+                
+                // Réinitialiser le formulaire
+                postForm.reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                
+                // Afficher la notification
+                showNotification('Publication créée avec succès!');
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'ajout du document: ', error);
+                showNotification('Une erreur s\'est produite: ' + error.message, true);
+            }
+        });
+
+        // Fonction pour afficher les posts dans l'interface d'administration
+        function renderAdminPosts(posts) {
+            if (posts.length === 0) {
+                adminPostsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Aucune publication</h3>
+                        <p>Créez votre première publication en utilisant le formulaire ci-dessus.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            adminPostsContainer.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    ${post.image ? `<img src="${post.image}" alt="${post.titre}" class="post-image">` : 
+                      `<div class="post-image" style="background:#eee;display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-image" style="font-size:3rem;color:#ccc;"></i>
+                       </div>`}
+                    <div class="post-content">
+                        <h3 class="post-title">${post.titre}</h3>
+                        <p class="post-description">${post.description}</p>
+                        <div class="post-id">ID: ${post.id}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonction pour afficher les posts dans l'aperçu public
+        function renderPublicPosts(posts) {
+            if (posts.length === 0) {
+                publicPostsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Aucune publication</h3>
+                        <p>Les publications apparaîtront ici une fois créées.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            publicPostsContainer.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    ${post.image ? `<img src="${post.image}" alt="${post.titre}" class="post-image">` : 
+                      `<div class="post-image" style="background:#eee;display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-image" style="font-size:3rem;color:#ccc;"></i>
+                       </div>`}
+                    <div class="post-content">
+                        <h3 class="post-title">${post.titre}</h3>
+                        <p class="post-description">${post.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Écouter les publications en temps réel pour l'administration
+        db.collection('posts')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot((snapshot) => {
+                const posts = [];
+                snapshot.forEach((doc) => {
+                    posts.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                renderAdminPosts(posts);
+                renderPublicPosts(posts);
+            }, (error) => {
+                console.error('Erreur lors de la récupération des documents: ', error);
+                adminPostsContainer.innerHTML = '<p>Une erreur s\'est produite lors du chargement des publications.</p>';
+                publicPostsContainer.innerHTML = '<p>Une erreur s\'est produite lors du chargement des publications.</p>';
+            });
+
+        // Fonction pour afficher les onglets
+        function showTab(tabName) {
+            // Cacher tous les onglets
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Désactiver tous les boutons d'onglet
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Activer l'onglet sélectionné
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activer le bouton correspondant
+            document.querySelector(`.tab-button[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // Fonction pour afficher les notifications
+        function showNotification(message, isError = false) {
+            notification.textContent = message;
+            notification.style.background = isError ? '#e74c3c' : '#2ecc71';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Masquer l'aperçu d'image au chargement initial
+        document.getElementById('imagePreview').style.display = 'none';
+    </script>
+</body>
+</html>

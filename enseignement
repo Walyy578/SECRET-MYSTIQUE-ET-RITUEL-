@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Espace Rituels Spirituels | Professeur Muslim Walyy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 80px;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #0f3460, #1a1a2e);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #e94560;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .welcome-section {
+            padding: 30px;
+            text-align: center;
+            background: rgba(26, 26, 46, 0.7);
+        }
+        
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4fc3f7;
+        }
+        
+        .professor {
+            color: #e94560;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+        
+        .auth-section {
+            padding: 0 30px 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4fc3f7;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: #4fc3f7;
+            outline: none;
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+        }
+        
+        button {
+            background: linear-gradient(to right, #e94560, #c2185b);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        .rituals-container {
+            display: none;
+            padding: 30px;
+        }
+        
+        .ritual {
+            background: rgba(15, 52, 96, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid #e94560;
+        }
+        
+        .ritual h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ritual h3 i {
+            margin-right: 10px;
+        }
+        
+        .ritual p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .ritual .note {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .ritual .reaction {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(26, 26, 46, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .error {
+            color: #ff3860;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+        }
+        
+        /* Bouton WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        
+        .whatsapp-float:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.7);
+        }
+        
+        .whatsapp-icon {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-message {
+                font-size: 20px;
+            }
+            
+            .ritual {
+                padding: 20px;
+            }
+            
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 18px;
+            }
+            
+            .whatsapp-text {
+                font-size: 14px;
+            }
+        }
+        
+        /* Désactiver le zoom */
+        @viewport {
+            zoom: 1.0;
+            user-zoom: fixed;
+            max-zoom: 1.0;
+            min-zoom: 1.0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Espace Rituels Spirituels</h1>
+            <p>Enseigné par le Professeur Muslim Walyy</p>
+        </div>
+        
+        <div class="welcome-section">
+            <div class="welcome-message" id="welcomeMessage">Bienvenue, Kadi Rakam !</div>
+            <p class="professor">Connaissances ancestrales pour protection et bien-être</p>
+        </div>
+        
+        <div class="auth-section">
+            <div class="input-group">
+                <label for="password"><i class="fas fa-lock"></i> Mot de passe</label>
+                <input type="password" id="password" placeholder="Entrez le mot de passe pour accéder aux rituels">
+                <div class="error" id="errorMessage">Mot de passe incorrect. Veuillez réessayer.</div>
+            </div>
+            
+            <button onclick="checkPassword()">
+                <i class="fas fa-key"></i> Accéder aux Rituels
+            </button>
+        </div>
+        
+        <div class="rituals-container" id="ritualsContainer">
+            <div class="ritual">
+                <h3><i class="fas fa-bath"></i> BAIN DE DÉBLOCAGE, DÉSENVOUTEMENT ET RECOUVREMENT D'ÉNERGIE</h3>
+                <p>Ceci est un bain banale mais très puissant aussi, il est simple et ne demande pas beaucoup d'effort.</p>
+                <p>Cherchez juste une brindille de balai sur un balai déjà utilisé à maintes reprises, cherchez un sceau d'eau et mettez à l'intérieur la brindille et 04 morceaux de sucre en carreau.</p>
+                <p>Principalement les préparatifs doivent se faire vers 23h et après vous laissez le sceau d'eau a la rosée et le matin très tôt 05 h sans parler a personne vous prenez votre bain avec cette eau sans parler a personne.</p>
+                <div class="note">
+                    <p><strong>NB:</strong> On fait le bain avec ses vœux à l'appuie. Ça ne vous coûte rien d'essayer et non plus rien de dire merci avant de le faire.</p>
+                </div>
+                <p class="reaction">Bonne chance à ceux qui le feront</p>
+                <div class="note">
+                    <p><strong>NOTRE CONSEIL:</strong> Mon frère ma sœur si tu fais ce bain et ta vie est toujours un genre et que tu es en ville s'il te plaît envoie simplement le mot 👹Village👹</p>
+                </div>
+                <p>Testé et approuvé ✌️ Inchallah ✌️</p>
+            </div>
+            
+            <div class="ritual">
+                <h3><i class="fas fa-shield-alt"></i> PROTECTION DE LIEU D'HABITATION</h3>
+                <p>Pour faire peur et détourner les mauvaises intentions de votre lieu d'habitation.</p>
+                <p>Chercher une ancienne enveloppe de serpent cobra noir et mettez dans un tissu noir pour attacher simplement. Enterrez le tout à l'entrée de votre maison ou cour un jeudi lorsqu'il fait très chaud, entre 12 et 14h par exemple loin des regards des gens. C'est fini...</p>
+                <div class="note">
+                    <p><strong>RÉACTION:</strong> Lorsqu'un sorcier, jaloux ou malfaiteur voudra rentrez chez vous pour un sale besogne, il verra comme flash dans son esprit un grand serpent à la taille humaine lui bloquer le passage. Il sera pris de peur et retournera d'où il vient !</p>
+                </div>
+                <p><strong>NB:</strong> tout le monde peut le faire sauf une femme enceinte. La recette est renouvelable après 9 ans.</p>
+                <p><strong>OBJECTIF:</strong> créer l'illusion de serpent géant dans l'esprit du méchant pour le faire fuir...</p>
+            </div>
+            
+            <div class="ritual">
+                <h3><i class="fas fa-ban"></i> POUR ANNULER QUELQUE CHOSE QUI SE PROMÈNE DANS LE CORPS</h3>
+                <p>Pour quelqu'un qui maigrit et un retour d'envoyeur et protection puissante:</p>
+                <p>Suivez attentivement svp. Dans la soirée allez en brousse avec une cauris femelle et du to (nourriture faite à base de maïs ou autre céréales c'est une nourriture occidentale) auprès d'un arbre au choix. Alors déshabillez vous complètement (bague.. Habit.. Boucle d'oreille etc...) et mettez la cauris dans le to, ensuite adossez vous sur l'arbre et avaler le tout ensuite mettez l'un de vos doigts de la main gauche sur votre nombril et restez ainsi en fermant les yeux pendant 20 Mn. Après rhabillez vous et rentrer directement chez vous.</p>
+                <p>Après ce rituel mettez un crapeau vivant dans un sceau d'eau et fermer jusqu'au matin et prenez votre bain.</p>
+                <div class="note">
+                    <p><strong>RÉACTION:</strong> d'ici une semaine tu recouvras la santé et le sort retournera sur l'envoyeur et tu sera protéger contre tout.</p>
+                </div>
+                <p><strong>NB:</strong> si le rituel à marché d'ici une semaine allez revoir l'arbre où vous aviez fait le rituel car l'arbre va mourir. C'est la cauris non percée.</p>
+            </div>
+            
+            <div class="ritual">
+                <h3><i class="fas fa-scale-balanced"></i> POUR AVOIR RAISON PARTOUT (JUSTICE, FAMILLE)</h3>
+                <p>Coupez un peu de la feuille de chiendent (lolén en bambara, c'est la feuille qu'on prend pour faire les chaumes des cases) très tôt le matin et mangez avec 9 ou 7 graines de piment de Guinée selon le sexe de la personne (7 pour homme et 9 pour femme) en disant: "j'aurai raison. C'est a moi qu'on va donner raison" et manger là.</p>
+                <div class="note">
+                    <p><strong>RÉACTION:</strong> on vous donnera raison.</p>
+                </div>
+                <p><strong>NB:</strong> l'effet dure une journée. Que celui qui l'utilise pour faire du mal que Dieu fasse qu'il ai tort jusqu'à la fin de sa vie.</p>
+                <p>C'est Dieu qui sauve</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Réservé à KADIMA KAMBA (kadi rakam) | © 2023 Tous droits réservés</p>
+        </div>
+    </div>
+
+    <!-- Bouton WhatsApp flottant -->
+    <a href="https://wa.me/22677020069?text=Bonjour%20Professeur,%20j'ai%20une%20question%20sur%20les%20rituels" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+        <span class="whatsapp-text">Poser une question</span>
+    </a>
+
+    <script>
+        // Afficher le message de bienvenue avec le nom
+        document.getElementById('welcomeMessage').textContent = "Bienvenue, Kadi Rakam !";
+        
+        // Fonction pour vérifier le mot de passe
+        function checkPassword() {
+            const passwordInput = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const ritualsContainer = document.getElementById('ritualsContainer');
+            
+            // Vérifier si le mot de passe est correct
+            if (passwordInput === "KADIMA1789") {
+                // Afficher le contenu des rituels
+                ritualsContainer.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Faire défiler jusqu'au contenu
+                ritualsContainer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Afficher un message d'erreur
+                errorMessage.style.display = 'block';
+                ritualsContainer.style.display = 'none';
+            }
+        }
+        
+        // Permettre de soumettre avec la touche Entrée
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>

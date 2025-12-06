@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppression des données - Secret Mystique et Rituel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a1f3c;
+            --secondary-color: #2d3560;
+            --accent-color: #6c63ff;
+            --light-color: #f8f9ff;
+            --text-color: #33334e;
+            --danger-color: #ff4757;
+            --success-color: #2ed573;
+            --warning-color: #ffa502;
+            --border-color: #e0e4ff;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef1ff 50%, #e6eaff 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(108, 99, 255, 0.1),
+                        0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 25px 50px rgba(108, 99, 255, 0.15),
+                        0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent-color), #8a84ff, var(--accent-color));
+            z-index: 2;
+        }
+
+        .header {
+            padding: 45px 40px 25px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-bottom: 1px solid rgba(224, 228, 255, 0.3);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5));
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 45px 40px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            border-radius: 0 16px 16px 0;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.08);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateX(5px);
+        }
+
+        .info-box p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .info-box ul {
+            padding-left: 24px;
+            margin-top: 15px;
+        }
+
+        .info-box li {
+            margin-bottom: 10px;
+            color: #55556e;
+            position: relative;
+        }
+
+        .info-box li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            font-size: 1.2em;
+        }
+
+        .form-container {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            background: #f8f9ff;
+            border: 2px solid #e0e4ff;
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 8px;
+            margin-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--danger-color), #ff6b81);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.25);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #ff6b81, var(--danger-color));
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 71, 87, 0.35);
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .confirmation-message {
+            display: none;
+            background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
+            border: 2px solid var(--success-color);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 35px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+            box-shadow: 0 10px 25px rgba(46, 213, 115, 0.1);
+        }
+
+        .confirmation-message i {
+            font-size: 3.5rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(46, 213, 115, 0.3));
+        }
+
+        .confirmation-message h3 {
+            color: var(--success-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .confirmation-message p {
+            line-height: 1.6;
+            color: #2d5739;
+            margin-bottom: 15px;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .footer {
+            padding: 30px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            border-top: 1px solid var(--border-color);
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Effets décoratifs */
+        .decoration {
+            position: absolute;
+            z-index: 0;
+            border-radius: 50%;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.05) 0%, transparent 70%);
+            top: 5%;
+            left: 5%;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 71, 87, 0.05) 0%, transparent 70%);
+            bottom: 10%;
+            right: 5%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 20px;
+                max-width: 95%;
+            }
+            
+            .header, .content, .footer {
+                padding: 30px 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header, .content, .footer {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .info-box {
+                padding: 20px;
+            }
+            
+            input[type="email"],
+            input[type="password"] {
+                padding: 16px 20px 16px 50px;
+            }
+            
+            .btn-submit {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Effets décoratifs -->
+    <div class="decoration circle-1"></div>
+    <div class="decoration circle-2"></div>
+    
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h1>Suppression des données personnelles</h1>
+            <p class="subtitle">Pour l'application <strong>Secret Mystique et Rituel</strong></p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <p>Cette page vous permet de demander la suppression définitive de vos données personnelles associées à votre compte sur l'application <strong>Secret Mystique et Rituel</strong>.</p>
+                <p>Pour des raisons de sécurité, vous devez confirmer votre identité en saisissant votre adresse email et votre mot de passe.</p>
+                <p>Une fois votre demande soumise :</p>
+                <ul>
+                    <li>Vous recevrez un email de confirmation</li>
+                    <li>Vos données seront supprimées dans un délai de 30 jours</li>
+                    <li>Vous perdrez l'accès à tous vos rituels et historiques</li>
+                    <li>Cette action est irréversible</li>
+                </ul>
+            </div>
+            
+            <div class="form-container">
+                <form id="deletion-form">
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Adresse email associée à votre compte
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-at"></i>
+                            <input type="email" id="email" placeholder="exemple@email.com" required>
+                        </div>
+                        <div class="input-hint">
+                            <i class="fas fa-info-circle"></i> L'adresse email que vous utilisez pour vous connecter
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Mot de passe de votre compte
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="password" placeholder="Votre mot de passe" required>
+                            <span class="password-toggle" id="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        <div class="input-hint">
+                            <i class="fas fa-info-circle"></i> Pour des raisons de sécurité, nous devons vérifier votre identité
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn-submit" id="submit-btn">
+                        <i class="fas fa-trash-alt"></i> Demander la suppression définitive
+                    </button>
+                </form>
+                
+                <div class="confirmation-message" id="confirmation">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Demande reçue avec succès</h3>
+                    <p>Nous avons bien reçu votre demande de suppression de données personnelles pour l'adresse <strong id="confirmed-email"></strong>.</p>
+                    <p>Vous allez recevoir un email de confirmation dans les prochaines minutes. Notre équipe traitera votre demande dans un délai maximum de 30 jours.</p>
+                    <p>Merci d'avoir utilisé <strong>Secret Mystique et Rituel</strong>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Secret Mystique et Rituel. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-shield-alt"></i> Politique de confidentialité</a>
+                <a href="#"><i class="fas fa-file-contract"></i> Conditions d'utilisation</a>
+                <a href="mailto:privacy@secret-mystique-rituel.com"><i class="fas fa-envelope"></i> Contact RGPD</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Centre d'aide</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Fonction pour basculer la visibilité du mot de passe
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Gestion de la soumission du formulaire
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const confirmationDiv = document.getElementById('confirmation');
+            const confirmedEmailSpan = document.getElementById('confirmed-email');
+            
+            // Validation basique de l'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            // Validation des champs
+            let isValid = true;
+            let errorMessage = "";
+            
+            if (!email) {
+                isValid = false;
+                errorMessage = "Veuillez saisir votre adresse email.";
+                emailInput.focus();
+            } else if (!emailRegex.test(email)) {
+                isValid = false;
+                errorMessage = "Veuillez saisir une adresse email valide.";
+                emailInput.focus();
+            } else if (!password) {
+                isValid = false;
+                errorMessage = "Veuillez saisir votre mot de passe.";
+                passwordInput.focus();
+            } else if (password.length < 6) {
+                isValid = false;
+                errorMessage = "Votre mot de passe doit contenir au moins 6 caractères.";
+                passwordInput.focus();
+            }
+            
+            if (!isValid) {
+                // Animation d'erreur sur le champ concerné
+                const invalidField = !email ? emailInput : passwordInput;
+                invalidField.style.borderColor = "var(--danger-color)";
+                invalidField.style.boxShadow = "0 0 0 4px rgba(255, 71, 87, 0.15)";
+                
+                setTimeout(() => {
+                    invalidField.style.borderColor = "";
+                    invalidField.style.boxShadow = "";
+                }, 2000);
+                
+                // Afficher une alerte stylisée
+                alert(errorMessage);
+                return;
+            }
+            
+            // Afficher le message de confirmation
+            confirmedEmailSpan.textContent = email;
+            confirmationDiv.style.display = 'block';
+            
+            // Faire défiler jusqu'au message de confirmation
+            confirmationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Effet visuel de soumission
+            const originalText = this.innerHTML;
+            const originalBg = this.style.background;
+            
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification en cours...';
+            this.disabled = true;
+            
+            // Simuler un traitement (dans un cas réel, on enverrait les données au serveur)
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Demande envoyée avec succès !';
+                this.style.background = 'linear-gradient(135deg, var(--success-color), #2ed573)';
+                
+                // Réinitialiser le formulaire après 5 secondes
+                setTimeout(() => {
+                    emailInput.value = '';
+                    passwordInput.value = '';
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                    this.style.background = originalBg;
+                }, 5000);
+            }, 1500);
+        });
+        
+        // Permettre la soumission avec la touche Entrée
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('submit-btn').click();
+            }
+        });
+        
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('submit-btn').click();
+            }
+        });
+        
+        // Animation d'entrée pour le conteneur
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

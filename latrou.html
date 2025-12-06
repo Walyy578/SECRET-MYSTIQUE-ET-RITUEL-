@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Suppression des données - Secret Mystique et Rituel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -10,285 +10,279 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --primary-color: #1a1f3c;
-            --secondary-color: #2d3560;
-            --accent-color: #6c63ff;
-            --light-color: #f8f9ff;
-            --text-color: #33334e;
-            --danger-color: #ff4757;
-            --success-color: #2ed573;
-            --warning-color: #ffa502;
-            --border-color: #e0e4ff;
+            --primary: #2d3250;
+            --secondary: #424769;
+            --accent: #676fa3;
+            --accent-light: #7b83c0;
+            --light: #f8f9ff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --danger: #e63946;
+            --danger-light: #ef767a;
+            --success: #2a9d8f;
+            --warning: #e9c46a;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius: 16px;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7ff 0%, #eef1ff 50%, #e6eaff 100%);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7ff 0%, #edf0ff 100%);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            position: relative;
             overflow-x: hidden;
+        }
+
+        /* Désactiver le zoom */
+        @media (max-width: 768px) {
+            body {
+                touch-action: manipulation;
+            }
+            
+            input, textarea {
+                font-size: 16px !important;
+            }
         }
 
         .container {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             background: white;
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(108, 99, 255, 0.1),
-                        0 8px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .container:hover {
-            box-shadow: 0 25px 50px rgba(108, 99, 255, 0.15),
-                        0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--accent-color), #8a84ff, var(--accent-color));
-            z-index: 2;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            overflow: visible;
+            margin: 20px auto;
         }
 
         .header {
-            padding: 45px 40px 25px;
+            padding: 40px 30px 30px;
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            border-bottom: 1px solid rgba(224, 228, 255, 0.3);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
+            border-radius: var(--radius) var(--radius) 0 0;
             position: relative;
-            overflow: hidden;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
-            z-index: 0;
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .logo {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: white;
-            position: relative;
-            z-index: 1;
-            filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5));
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         h1 {
             font-size: 2.4rem;
             margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
             font-size: 1.15rem;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.6;
-            max-width: 650px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.5;
+            max-width: 700px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .content {
-            padding: 45px 40px;
+            padding: 40px 30px;
         }
 
         .info-box {
-            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
-            border-left: 5px solid var(--accent-color);
+            background: #f8f9ff;
+            border-radius: var(--radius);
             padding: 25px;
-            border-radius: 0 16px 16px 0;
-            margin-bottom: 35px;
-            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.08);
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
         }
 
-        .info-box:hover {
-            transform: translateX(5px);
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-header i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .info-header h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .info-box p {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             line-height: 1.6;
-            color: var(--text-color);
+            color: var(--text);
         }
 
-        .info-box ul {
-            padding-left: 24px;
-            margin-top: 15px;
+        .info-list {
+            list-style: none;
+            margin-top: 20px;
         }
 
-        .info-box li {
-            margin-bottom: 10px;
-            color: #55556e;
-            position: relative;
+        .info-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--text-light);
         }
 
-        .info-box li::before {
-            content: '•';
-            color: var(--accent-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-            font-size: 1.2em;
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list i {
+            color: var(--accent);
+            margin-top: 3px;
         }
 
         .form-container {
             background: white;
-            padding: 35px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
         }
 
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        label {
+        .form-label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
-            color: var(--primary-color);
-            font-size: 1.1rem;
+            color: var(--primary);
+            font-size: 1.05rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .input-wrapper {
+        .input-container {
             position: relative;
         }
 
-        .input-wrapper i {
+        .input-icon {
             position: absolute;
-            left: 20px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--accent-color);
-            font-size: 1.2rem;
+            color: var(--accent);
+            font-size: 1.1rem;
             z-index: 2;
         }
 
         .password-toggle {
             position: absolute;
-            right: 20px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #999;
-            font-size: 1.2rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
             cursor: pointer;
             z-index: 2;
-            transition: color 0.3s;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.2s;
         }
 
         .password-toggle:hover {
-            color: var(--accent-color);
+            color: var(--accent);
+            background: #f8f9ff;
         }
 
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 18px 20px 18px 55px;
+            padding: 16px 16px 16px 50px;
             background: #f8f9ff;
-            border: 2px solid #e0e4ff;
+            border: 2px solid var(--border);
             border-radius: 12px;
-            color: var(--text-color);
-            font-size: 1.05rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
         input[type="email"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: var(--accent);
             background: white;
-            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(103, 111, 163, 0.1);
         }
 
         .input-hint {
             font-size: 0.9rem;
-            color: #777;
+            color: var(--text-light);
             margin-top: 8px;
             margin-left: 5px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--danger-color), #ff6b81);
+            padding: 18px;
+            background: linear-gradient(135deg, var(--danger), var(--danger-light));
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             letter-spacing: 0.5px;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.25);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.2);
             margin-top: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s;
         }
 
         .btn-submit:hover {
-            background: linear-gradient(135deg, #ff6b81, var(--danger-color));
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 71, 87, 0.35);
-        }
-
-        .btn-submit:hover::before {
-            left: 100%;
+            background: linear-gradient(135deg, #d32f2f, var(--danger));
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(230, 57, 70, 0.3);
         }
 
         .btn-submit:active {
@@ -297,123 +291,120 @@
 
         .confirmation-message {
             display: none;
-            background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
-            border: 2px solid var(--success-color);
+            background: linear-gradient(135deg, #f0fff9 0%, #e6fff3 100%);
+            border-radius: var(--radius);
             padding: 30px;
-            border-radius: 20px;
-            margin-top: 35px;
-            text-align: center;
-            animation: fadeInUp 0.8s ease;
-            box-shadow: 0 10px 25px rgba(46, 213, 115, 0.1);
+            margin-top: 30px;
+            border: 2px solid var(--success);
+            animation: fadeInUp 0.5s ease-out;
         }
 
-        .confirmation-message i {
-            font-size: 3.5rem;
-            color: var(--success-color);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confirmation-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: var(--success);
+            border-radius: 50%;
             margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(46, 213, 115, 0.3));
+        }
+
+        .confirmation-icon i {
+            font-size: 2.2rem;
+            color: white;
         }
 
         .confirmation-message h3 {
-            color: var(--success-color);
-            margin-bottom: 20px;
-            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
             font-weight: 700;
         }
 
         .confirmation-message p {
             line-height: 1.6;
-            color: #2d5739;
+            color: #0d5742;
             margin-bottom: 15px;
         }
 
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+        .confirmation-details {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 20px 0;
+            border: 1px solid rgba(42, 157, 143, 0.2);
         }
 
         .footer {
-            padding: 30px 40px;
+            padding: 30px;
             text-align: center;
-            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
-            border-top: 1px solid var(--border-color);
-            color: #666;
-            font-size: 0.95rem;
+            background: #f8f9ff;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            border-radius: 0 0 var(--radius) var(--radius);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 15px;
+            gap: 25px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .footer a {
-            color: var(--accent-color);
+            color: var(--accent);
             text-decoration: none;
-            transition: all 0.3s;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
         }
 
         .footer a:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
+            color: var(--primary);
         }
 
-        /* Effets décoratifs */
-        .decoration {
-            position: absolute;
-            z-index: 0;
-            border-radius: 50%;
-        }
-
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.05) 0%, transparent 70%);
-            top: 5%;
-            left: 5%;
-        }
-
-        .circle-2 {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 71, 87, 0.05) 0%, transparent 70%);
-            bottom: 10%;
-            right: 5%;
+        .copyright {
+            font-size: 0.9rem;
+            color: #94a3b8;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .container {
-                border-radius: 20px;
+                margin: 10px auto;
                 max-width: 95%;
             }
             
-            .header, .content, .footer {
-                padding: 30px 25px;
+            .header, .content {
+                padding: 30px 20px;
             }
             
             h1 {
                 font-size: 2rem;
             }
             
-            .logo {
-                font-size: 2.5rem;
+            .subtitle {
+                font-size: 1.05rem;
             }
             
             .form-container {
-                padding: 25px;
+                padding: 25px 20px;
             }
             
             .footer-links {
@@ -423,39 +414,32 @@
         }
 
         @media (max-width: 480px) {
-            .header, .content, .footer {
-                padding: 25px 20px;
+            .header, .content {
+                padding: 25px 15px;
             }
             
             h1 {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
             
-            .info-box {
-                padding: 20px;
+            .logo-container {
+                width: 60px;
+                height: 60px;
             }
             
-            input[type="email"],
-            input[type="password"] {
-                padding: 16px 20px 16px 50px;
-            }
-            
-            .btn-submit {
-                padding: 18px;
+            .logo {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Effets décoratifs -->
-    <div class="decoration circle-1"></div>
-    <div class="decoration circle-2"></div>
-    
-    <!-- Contenu principal -->
     <div class="container">
         <div class="header">
-            <div class="logo">
-                <i class="fas fa-user-shield"></i>
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-user-shield"></i>
+                </div>
             </div>
             <h1>Suppression des données personnelles</h1>
             <p class="subtitle">Pour l'application <strong>Secret Mystique et Rituel</strong></p>
@@ -463,45 +447,61 @@
         
         <div class="content">
             <div class="info-box">
+                <div class="info-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Informations importantes</h3>
+                </div>
                 <p>Cette page vous permet de demander la suppression définitive de vos données personnelles associées à votre compte sur l'application <strong>Secret Mystique et Rituel</strong>.</p>
-                <p>Pour des raisons de sécurité, vous devez confirmer votre identité en saisissant votre adresse email et votre mot de passe.</p>
-                <p>Une fois votre demande soumise :</p>
-                <ul>
-                    <li>Vous recevrez un email de confirmation</li>
-                    <li>Vos données seront supprimées dans un délai de 30 jours</li>
-                    <li>Vous perdrez l'accès à tous vos rituels et historiques</li>
-                    <li>Cette action est irréversible</li>
+                <p>Pour des raisons de sécurité, vous devez confirmer votre identité en saisissant vos informations d'authentification.</p>
+                
+                <ul class="info-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Vous recevrez un email de confirmation</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Vos données seront supprimées dans un délai de 30 jours</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Vous perdrez l'accès à tous vos rituels et historiques</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Cette action est irréversible et définitive</span>
+                    </li>
                 </ul>
             </div>
             
             <div class="form-container">
                 <form id="deletion-form">
                     <div class="form-group">
-                        <label for="email">
-                            <i class="fas fa-envelope"></i> Adresse email associée à votre compte
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Adresse email
                         </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-at"></i>
+                        <div class="input-container">
+                            <i class="fas fa-at input-icon"></i>
                             <input type="email" id="email" placeholder="exemple@email.com" required>
                         </div>
                         <div class="input-hint">
-                            <i class="fas fa-info-circle"></i> L'adresse email que vous utilisez pour vous connecter
+                            <i class="fas fa-info-circle"></i> L'adresse email associée à votre compte
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">
-                            <i class="fas fa-lock"></i> Mot de passe de votre compte
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Mot de passe
                         </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-key"></i>
+                        <div class="input-container">
+                            <i class="fas fa-key input-icon"></i>
                             <input type="password" id="password" placeholder="Votre mot de passe" required>
                             <span class="password-toggle" id="toggle-password">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </div>
                         <div class="input-hint">
-                            <i class="fas fa-info-circle"></i> Pour des raisons de sécurité, nous devons vérifier votre identité
+                            <i class="fas fa-info-circle"></i> Pour vérifier votre identité et sécuriser la demande
                         </div>
                     </div>
                     
@@ -511,9 +511,18 @@
                 </form>
                 
                 <div class="confirmation-message" id="confirmation">
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Demande reçue avec succès</h3>
-                    <p>Nous avons bien reçu votre demande de suppression de données personnelles pour l'adresse <strong id="confirmed-email"></strong>.</p>
+                    <div class="confirmation-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Demande confirmée avec succès</h3>
+                    <p>Votre demande de suppression de données a été enregistrée avec succès.</p>
+                    
+                    <div class="confirmation-details">
+                        <p><strong>Email concerné :</strong> <span id="confirmed-email"></span></p>
+                        <p><strong>Date de la demande :</strong> <span id="request-date"></span></p>
+                        <p><strong>Référence :</strong> <span id="request-id"></span></p>
+                    </div>
+                    
                     <p>Vous allez recevoir un email de confirmation dans les prochaines minutes. Notre équipe traitera votre demande dans un délai maximum de 30 jours.</p>
                     <p>Merci d'avoir utilisé <strong>Secret Mystique et Rituel</strong>.</p>
                 </div>
@@ -521,18 +530,26 @@
         </div>
         
         <div class="footer">
-            <p>&copy; 2023 Secret Mystique et Rituel. Tous droits réservés.</p>
             <div class="footer-links">
                 <a href="#"><i class="fas fa-shield-alt"></i> Politique de confidentialité</a>
                 <a href="#"><i class="fas fa-file-contract"></i> Conditions d'utilisation</a>
                 <a href="mailto:privacy@secret-mystique-rituel.com"><i class="fas fa-envelope"></i> Contact RGPD</a>
-                <a href="#"><i class="fas fa-question-circle"></i> Centre d'aide</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Secret Mystique et Rituel. Tous droits réservés.
             </div>
         </div>
     </div>
     
     <script>
-        // Fonction pour basculer la visibilité du mot de passe
+        // Désactiver le zoom
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Basculer la visibilité du mot de passe
         document.getElementById('toggle-password').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
@@ -548,111 +565,107 @@
             }
         });
         
-        // Gestion de la soumission du formulaire
+        // Générer un ID de requête
+        function generateRequestId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = 'SM-';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // Formater la date
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Gestion de la soumission
         document.getElementById('submit-btn').addEventListener('click', function() {
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const confirmationDiv = document.getElementById('confirmation');
-            const confirmedEmailSpan = document.getElementById('confirmed-email');
             
-            // Validation basique de l'email
+            // Validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
-            // Validation des champs
-            let isValid = true;
-            let errorMessage = "";
-            
             if (!email) {
-                isValid = false;
-                errorMessage = "Veuillez saisir votre adresse email.";
+                alert("Veuillez saisir votre adresse email.");
                 emailInput.focus();
-            } else if (!emailRegex.test(email)) {
-                isValid = false;
-                errorMessage = "Veuillez saisir une adresse email valide.";
-                emailInput.focus();
-            } else if (!password) {
-                isValid = false;
-                errorMessage = "Veuillez saisir votre mot de passe.";
-                passwordInput.focus();
-            } else if (password.length < 6) {
-                isValid = false;
-                errorMessage = "Votre mot de passe doit contenir au moins 6 caractères.";
-                passwordInput.focus();
-            }
-            
-            if (!isValid) {
-                // Animation d'erreur sur le champ concerné
-                const invalidField = !email ? emailInput : passwordInput;
-                invalidField.style.borderColor = "var(--danger-color)";
-                invalidField.style.boxShadow = "0 0 0 4px rgba(255, 71, 87, 0.15)";
-                
-                setTimeout(() => {
-                    invalidField.style.borderColor = "";
-                    invalidField.style.boxShadow = "";
-                }, 2000);
-                
-                // Afficher une alerte stylisée
-                alert(errorMessage);
                 return;
             }
             
-            // Afficher le message de confirmation
-            confirmedEmailSpan.textContent = email;
+            if (!emailRegex.test(email)) {
+                alert("Veuillez saisir une adresse email valide.");
+                emailInput.focus();
+                return;
+            }
+            
+            if (!password) {
+                alert("Veuillez saisir votre mot de passe.");
+                passwordInput.focus();
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert("Votre mot de passe doit contenir au moins 6 caractères.");
+                passwordInput.focus();
+                return;
+            }
+            
+            // Afficher confirmation
+            document.getElementById('confirmed-email').textContent = email;
+            document.getElementById('request-date').textContent = getCurrentDate();
+            document.getElementById('request-id').textContent = generateRequestId();
+            
             confirmationDiv.style.display = 'block';
             
-            // Faire défiler jusqu'au message de confirmation
-            confirmationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            
-            // Effet visuel de soumission
+            // Animation du bouton
             const originalText = this.innerHTML;
-            const originalBg = this.style.background;
-            
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification en cours...';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
             this.disabled = true;
             
-            // Simuler un traitement (dans un cas réel, on enverrait les données au serveur)
             setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-check"></i> Demande envoyée avec succès !';
-                this.style.background = 'linear-gradient(135deg, var(--success-color), #2ed573)';
+                this.innerHTML = '<i class="fas fa-check"></i> Demandé envoyée !';
+                this.style.background = 'linear-gradient(135deg, var(--success), #34d399)';
                 
-                // Réinitialiser le formulaire après 5 secondes
+                // Scroll vers confirmation
+                confirmationDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Réinitialiser après 4 secondes
                 setTimeout(() => {
                     emailInput.value = '';
                     passwordInput.value = '';
                     this.innerHTML = originalText;
                     this.disabled = false;
-                    this.style.background = originalBg;
-                }, 5000);
+                    this.style.background = '';
+                }, 4000);
             }, 1500);
         });
         
-        // Permettre la soumission avec la touche Entrée
+        // Soumission avec Entrée
         document.getElementById('email').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('submit-btn').click();
-            }
+            if (e.key === 'Enter') document.getElementById('submit-btn').click();
         });
         
         document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('submit-btn').click();
-            }
+            if (e.key === 'Enter') document.getElementById('submit-btn').click();
         });
         
-        // Animation d'entrée pour le conteneur
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.querySelector('.container');
-            container.style.opacity = '0';
-            container.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                container.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                container.style.opacity = '1';
-                container.style.transform = 'translateY(0)';
-            }, 100);
-        });
+        // Empêcher le zoom sur mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
     </script>
 </body>
 </html>

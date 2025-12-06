@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Suppression des données - Secret Mystique et Rituel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Import Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -114,6 +118,39 @@
             padding: 40px 30px;
         }
 
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid var(--warning);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .warning-header i {
+            font-size: 1.5rem;
+            color: #856404;
+        }
+
+        .warning-header h3 {
+            font-size: 1.3rem;
+            color: #856404;
+            font-weight: 600;
+        }
+
+        .warning-box p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #856404;
+        }
+
         .info-box {
             background: #f8f9ff;
             border-radius: var(--radius);
@@ -142,12 +179,6 @@
             font-size: 1.3rem;
             color: var(--primary);
             font-weight: 600;
-        }
-
-        .info-box p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: var(--text);
         }
 
         .info-list {
@@ -289,13 +320,137 @@
             transform: translateY(0);
         }
 
-        .confirmation-message {
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Modal de confirmation */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
-            background: linear-gradient(135deg, #f0fff9 0%, #e6fff3 100%);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--danger), var(--danger-light));
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+            color: var(--danger);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .modal-header p {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-btn-cancel {
+            background: #f8f9ff;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .modal-btn-cancel:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, var(--danger), var(--danger-light));
+            color: white;
+            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.2);
+        }
+
+        .modal-btn-confirm:hover {
+            background: linear-gradient(135deg, #d32f2f, var(--danger));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .status-message {
+            display: none;
             border-radius: var(--radius);
             padding: 30px;
             margin-top: 30px;
-            border: 2px solid var(--success);
+            text-align: center;
             animation: fadeInUp 0.5s ease-out;
         }
 
@@ -310,41 +465,56 @@
             }
         }
 
-        .confirmation-icon {
+        .status-success {
+            background: linear-gradient(135deg, #f0fff9 0%, #e6fff3 100%);
+            border: 2px solid var(--success);
+        }
+
+        .status-error {
+            background: linear-gradient(135deg, #ffeaea 0%, #ffd6d6 100%);
+            border: 2px solid var(--danger);
+        }
+
+        .status-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 70px;
             height: 70px;
-            background: var(--success);
             border-radius: 50%;
             margin-bottom: 20px;
         }
 
-        .confirmation-icon i {
+        .status-success .status-icon {
+            background: var(--success);
+        }
+
+        .status-error .status-icon {
+            background: var(--danger);
+        }
+
+        .status-icon i {
             font-size: 2.2rem;
             color: white;
         }
 
-        .confirmation-message h3 {
-            color: var(--success);
+        .status-message h3 {
             margin-bottom: 15px;
             font-size: 1.8rem;
             font-weight: 700;
         }
 
-        .confirmation-message p {
-            line-height: 1.6;
-            color: #0d5742;
-            margin-bottom: 15px;
+        .status-success h3 {
+            color: var(--success);
         }
 
-        .confirmation-details {
-            background: white;
-            border-radius: 10px;
-            padding: 18px;
-            margin: 20px 0;
-            border: 1px solid rgba(42, 157, 143, 0.2);
+        .status-error h3 {
+            color: var(--danger);
+        }
+
+        .status-message p {
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
         .footer {
@@ -407,6 +577,10 @@
                 padding: 25px 20px;
             }
             
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
             .footer-links {
                 flex-direction: column;
                 gap: 15px;
@@ -430,10 +604,42 @@
             .logo {
                 font-size: 2rem;
             }
+            
+            .modal {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Modal de confirmation -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Confirmation requise</h3>
+                <p>Êtes-vous ABSOLUMENT SÛR de vouloir supprimer définitivement toutes vos données ? Cette action est <strong>IRRÉVERSIBLE</strong> et supprimera :</p>
+                <ul style="text-align: left; margin: 15px 0; padding-left: 20px;">
+                    <li>Votre compte utilisateur</li>
+                    <li>Tous vos rituels et historiques</li>
+                    <li>Vos préférences et paramètres</li>
+                    <li>Toutes les données associées à votre compte</li>
+                </ul>
+                <p><strong>Cette action ne peut pas être annulé et vos donnéessont irrécupérable !</strong></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" id="cancelBtn">
+                    <i class="fas fa-times"></i> Non, annuler
+                </button>
+                <button class="modal-btn modal-btn-confirm" id="confirmBtn">
+                    <i class="fas fa-trash-alt"></i> Oui, supprimer définitivement
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="logo-container">
@@ -446,30 +652,40 @@
         </div>
         
         <div class="content">
+            <div class="warning-box">
+                <div class="warning-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Avertissement important</h3>
+                </div>
+                <p>Cette action supprimera <strong>DÉFINITIVEMENT ET IRRÉVERSIBLEMENT</strong> toutes vos données personnelles de notre système.</p>
+                <p>Une fois confirmée, cette suppression sera immédiate et ne pourra pas être annulée.</p>
+            </div>
+            
             <div class="info-box">
                 <div class="info-header">
                     <i class="fas fa-info-circle"></i>
-                    <h3>Informations importantes</h3>
+                    <h3>Ce qui sera supprimé</h3>
                 </div>
-                <p>Cette page vous permet de demander la suppression définitive de vos données personnelles associées à votre compte sur l'application <strong>Secret Mystique et Rituel</strong>.</p>
-                <p>Pour des raisons de sécurité, vous devez confirmer votre identité en saisissant vos informations d'authentification.</p>
-                
                 <ul class="info-list">
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Vous recevrez un email de confirmation</span>
+                        <i class="fas fa-user"></i>
+                        <span>Votre compte utilisateur et profil</span>
                     </li>
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Vos données seront supprimées dans un délai de 30 jours</span>
+                        <i class="fas fa-scroll"></i>
+                        <span>Tous vos rituels enregistrés</span>
                     </li>
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Vous perdrez l'accès à tous vos rituels et historiques</span>
+                        <i class="fas fa-history"></i>
+                        <span>Votre historique d'activités</span>
                     </li>
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Cette action est irréversible et définitive</span>
+                        <i class="fas fa-cog"></i>
+                        <span>Vos préférences et paramètres</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-database"></i>
+                        <span>Toutes les données associées à votre compte</span>
                     </li>
                 </ul>
             </div>
@@ -485,7 +701,7 @@
                             <input type="email" id="email" placeholder="exemple@email.com" required>
                         </div>
                         <div class="input-hint">
-                            <i class="fas fa-info-circle"></i> L'adresse email associée à votre compte
+                            <i class="fas fa-info-circle"></i> L'adresse email de votre compte
                         </div>
                     </div>
                     
@@ -501,30 +717,31 @@
                             </span>
                         </div>
                         <div class="input-hint">
-                            <i class="fas fa-info-circle"></i> Pour vérifier votre identité et sécuriser la demande
+                            <i class="fas fa-info-circle"></i> Pour authentifier votre identité
                         </div>
                     </div>
                     
-                    <button type="button" class="btn-submit" id="submit-btn">
-                        <i class="fas fa-trash-alt"></i> Demander la suppression définitive
+                    <button type="button" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-trash-alt"></i> Supprimer définitivement mes données
                     </button>
                 </form>
                 
-                <div class="confirmation-message" id="confirmation">
-                    <div class="confirmation-icon">
+                <!-- Messages d'état -->
+                <div class="status-message status-success" id="successMessage">
+                    <div class="status-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
-                    <h3>Demande confirmée avec succès</h3>
-                    <p>Votre demande de suppression de données a été enregistrée avec succès.</p>
-                    
-                    <div class="confirmation-details">
-                        <p><strong>Email concerné :</strong> <span id="confirmed-email"></span></p>
-                        <p><strong>Date de la demande :</strong> <span id="request-date"></span></p>
-                        <p><strong>Référence :</strong> <span id="request-id"></span></p>
+                    <h3>Suppression réussie</h3>
+                    <p>Votre compte et toutes vos données ont été supprimés avec succès.</p>
+                    <p>Vous allez être redirigé vers la page d'accueil dans quelques secondes.</p>
+                </div>
+                
+                <div class="status-message status-error" id="errorMessage">
+                    <div class="status-icon">
+                        <i class="fas fa-exclamation-circle"></i>
                     </div>
-                    
-                    <p>Vous allez recevoir un email de confirmation dans les prochaines minutes. Notre équipe traitera votre demande dans un délai maximum de 30 jours.</p>
-                    <p>Merci d'avoir utilisé <strong>Secret Mystique et Rituel</strong>.</p>
+                    <h3 id="errorTitle">Erreur de suppression</h3>
+                    <p id="errorDetails">Une erreur s'est produite lors de la suppression de vos données.</p>
                 </div>
             </div>
         </div>
@@ -542,13 +759,29 @@
     </div>
     
     <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0NRSzHWFd6e2KS8u2it0dP0Y44Dzg4n4",
+            authDomain: "latrou.firebaseapp.com",
+            projectId: "latrou",
+            storageBucket: "latrou.appspot.com",
+            messagingSenderId: "320805997315",
+            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Variables globales pour les informations de l'utilisateur
+        let userCredentials = null;
+
         // Désactiver le zoom
         document.addEventListener('wheel', function(e) {
-            if (e.ctrlKey) {
-                e.preventDefault();
-            }
+            if (e.ctrlKey) e.preventDefault();
         }, { passive: false });
-        
+
         // Basculer la visibilité du mot de passe
         document.getElementById('toggle-password').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
@@ -564,108 +797,203 @@
                 icon.classList.add('fa-eye');
             }
         });
-        
-        // Générer un ID de requête
-        function generateRequestId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = 'SM-';
-            for (let i = 0; i < 8; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-        
-        // Formater la date
-        function getCurrentDate() {
-            const now = new Date();
-            return now.toLocaleDateString('fr-FR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-        
-        // Gestion de la soumission
-        document.getElementById('submit-btn').addEventListener('click', function() {
+
+        // Afficher le modal de confirmation
+        document.getElementById('submitBtn').addEventListener('click', async function() {
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const email = emailInput.value.trim();
             const password = passwordInput.value;
-            const confirmationDiv = document.getElementById('confirmation');
-            
+
             // Validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
             if (!email) {
-                alert("Veuillez saisir votre adresse email.");
+                showError("Erreur", "Veuillez saisir votre adresse email.");
                 emailInput.focus();
                 return;
             }
             
             if (!emailRegex.test(email)) {
-                alert("Veuillez saisir une adresse email valide.");
+                showError("Erreur", "Veuillez saisir une adresse email valide.");
                 emailInput.focus();
                 return;
             }
             
             if (!password) {
-                alert("Veuillez saisir votre mot de passe.");
+                showError("Erreur", "Veuillez saisir votre mot de passe.");
                 passwordInput.focus();
                 return;
             }
-            
-            if (password.length < 6) {
-                alert("Votre mot de passe doit contenir au moins 6 caractères.");
-                passwordInput.focus();
-                return;
-            }
-            
-            // Afficher confirmation
-            document.getElementById('confirmed-email').textContent = email;
-            document.getElementById('request-date').textContent = getCurrentDate();
-            document.getElementById('request-id').textContent = generateRequestId();
-            
-            confirmationDiv.style.display = 'block';
-            
-            // Animation du bouton
-            const originalText = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+
+            // Désactiver le bouton pendant la vérification
             this.disabled = true;
-            
-            setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-check"></i> Demandé envoyée !';
-                this.style.background = 'linear-gradient(135deg, var(--success), #34d399)';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification...';
+
+            try {
+                // Tenter de se connecter avec Firebase Auth
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                userCredentials = userCredential;
                 
-                // Scroll vers confirmation
-                confirmationDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Si la connexion réussit, afficher le modal de confirmation
+                document.getElementById('confirmationModal').style.display = 'flex';
                 
-                // Réinitialiser après 4 secondes
-                setTimeout(() => {
-                    emailInput.value = '';
-                    passwordInput.value = '';
-                    this.innerHTML = originalText;
-                    this.disabled = false;
-                    this.style.background = '';
-                }, 4000);
-            }, 1500);
+            } catch (error) {
+                // Gérer les erreurs d'authentification
+                let errorMessage = "Erreur d'authentification";
+                
+                switch(error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = "Aucun compte trouvé avec cette adresse email.";
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = "Mot de passe incorrect.";
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = "Adresse email invalide.";
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = "Ce compte a été désactivé.";
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = "Trop de tentatives. Veuillez réessayer plus tard.";
+                        break;
+                    default:
+                        errorMessage = "Erreur d'authentification : " + error.message;
+                }
+                
+                showError("Erreur d'authentification", errorMessage);
+            } finally {
+                // Réactiver le bouton
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-trash-alt"></i> Supprimer définitivement mes données';
+            }
         });
-        
-        // Soumission avec Entrée
+
+        // Annuler la suppression
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            if (userCredentials) {
+                // Déconnexion de l'utilisateur
+                auth.signOut();
+                userCredentials = null;
+            }
+        });
+
+        // Confirmer la suppression
+        document.getElementById('confirmBtn').addEventListener('click', async function() {
+            // Désactiver les boutons du modal
+            this.disabled = true;
+            document.getElementById('cancelBtn').disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suppression...';
+            
+            try {
+                // Supprimer les données Firestore de l'utilisateur
+                const userId = userCredentials.user.uid;
+                
+                // Supprimer le document utilisateur dans Firestore
+                await db.collection('users').doc(userId).delete();
+                
+                // Vous pouvez ajouter ici la suppression d'autres collections
+                // Exemple : await db.collection('rituels').where('userId', '==', userId).get().then(snapshot => {...});
+                
+                // Supprimer le compte utilisateur de Firebase Auth
+                await userCredentials.user.delete();
+                
+                // Fermer le modal
+                document.getElementById('confirmationModal').style.display = 'none';
+                
+                // Afficher le message de succès
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                
+                // Rediriger vers la page d'accueil après 5 secondes
+                setTimeout(() => {
+                    window.location.href = 'https://secret-mystique-rituel.com';
+                }, 5000);
+                
+            } catch (error) {
+                // Fermer le modal
+                document.getElementById('confirmationModal').style.display = 'none';
+                
+                // Afficher l'erreur
+                let errorTitle = "Erreur de suppression";
+                let errorDetails = "Une erreur s'est produite lors de la suppression de vos données.";
+                
+                switch(error.code) {
+                    case 'auth/requires-recent-login':
+                        errorTitle = "Reconnexion requise";
+                        errorDetails = "Pour des raisons de sécurité, vous devez vous reconnecter avant de supprimer votre compte.";
+                        break;
+                    case 'permission-denied':
+                        errorTitle = "Permission refusée";
+                        errorDetails = "Vous n'avez pas l'autorisation de supprimer ces données.";
+                        break;
+                    default:
+                        errorDetails = "Erreur : " + error.message;
+                }
+                
+                showError(errorTitle, errorDetails);
+                
+                // Déconnexion en cas d'erreur
+                auth.signOut();
+                userCredentials = null;
+            } finally {
+                // Réactiver les boutons du modal
+                this.disabled = false;
+                document.getElementById('cancelBtn').disabled = false;
+                this.innerHTML = '<i class="fas fa-trash-alt"></i> Oui, supprimer définitivement';
+            }
+        });
+
+        // Fonction pour afficher les erreurs
+        function showError(title, message) {
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorDetails').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            // Faire défiler vers le message d'erreur
+            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Soumission avec la touche Entrée
         document.getElementById('email').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') document.getElementById('submit-btn').click();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('submitBtn').click();
+            }
         });
         
         document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') document.getElementById('submit-btn').click();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('submitBtn').click();
+            }
         });
-        
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('confirmationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                if (userCredentials) {
+                    auth.signOut();
+                    userCredentials = null;
+                }
+            }
+        });
+
         // Empêcher le zoom sur mobile
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) e.preventDefault();
         }, { passive: false });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>

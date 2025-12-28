@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -80,6 +80,19 @@ l<!DOCTYPE html>
             padding: 25px;
             border-radius: 8px;
             margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
         }
 
         .form-group {
@@ -110,16 +123,51 @@ l<!DOCTYPE html>
             background: #1abc9c;
             color: white;
             border: none;
-            padding: 14px 25px;
+            padding: 12px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
             transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         button:hover {
             background: #16a085;
+        }
+
+        .btn-secondary {
+            background: #3498db;
+        }
+
+        .btn-secondary:hover {
+            background: #2980b9;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+        }
+
+        .btn-warning:hover {
+            background: #d35400;
+        }
+
+        .btn-cancel {
+            background: #95a5a6;
+        }
+
+        .btn-cancel:hover {
+            background: #7f8c8d;
         }
 
         .image-preview {
@@ -148,10 +196,17 @@ l<!DOCTYPE html>
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            border: 2px solid transparent;
         }
 
         .post-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-card.editing {
+            border-color: #f39c12;
+            background: #fff9e6;
         }
 
         .post-image {
@@ -173,24 +228,28 @@ l<!DOCTYPE html>
         .post-description {
             color: #7f8c8d;
             margin-bottom: 15px;
+            line-height: 1.5;
         }
 
         .post-id {
             font-size: 0.8rem;
             color: #95a5a6;
             font-family: monospace;
+            margin-bottom: 10px;
         }
 
-        .secret-details {
-            background: #e8f4fc;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
         }
 
-        .secret-details p {
-            margin: 5px 0;
-            font-size: 0.9rem;
+        .card-actions button {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
         }
 
         .notification {
@@ -204,6 +263,18 @@ l<!DOCTYPE html>
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: none;
             z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .loading {
@@ -223,37 +294,71 @@ l<!DOCTYPE html>
             margin-bottom: 15px;
         }
 
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
+        /* Styles spécifiques pour les secrets */
+        .secret-details {
+            background: #e8f4fc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #3498db;
         }
 
-        .section-title h2 {
+        .secret-details p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .secret-details span {
+            font-weight: bold;
             color: #2c3e50;
         }
 
-        .switch-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .switch-btn:hover {
-            background: #2980b9;
-        }
-
-        .secret-form {
+        /* Formulaire en grille pour les secrets */
+        .secret-form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
+        }
+
+        .image-preview-container {
+            grid-column: span 2;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
@@ -265,8 +370,21 @@ l<!DOCTYPE html>
                 flex-direction: column;
             }
 
-            .secret-form {
+            .secret-form-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .image-preview-container {
+                grid-column: span 1;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .modal {
+                width: 95%;
+                padding: 20px;
             }
         }
     </style>
@@ -279,15 +397,23 @@ l<!DOCTYPE html>
         </header>
 
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('admin')">Publications</button>
+            <button class="tab-button active" onclick="showTab('posts')">Publications</button>
             <button class="tab-button" onclick="showTab('secrets')">Secrets</button>
             <button class="tab-button" onclick="showTab('public')">Aperçu Public</button>
         </div>
 
-        <div id="admin" class="tab-content active">
+        <div id="posts" class="tab-content active">
             <div class="admin-section">
-                <h2>Nouvelle Publication</h2>
+                <div class="form-header">
+                    <h2 id="postFormTitle">Nouvelle Publication</h2>
+                    <div class="form-actions" id="postFormActions">
+                        <button type="button" onclick="resetPostForm()" class="btn-cancel" id="postCancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
                 <form id="postForm">
+                    <input type="hidden" id="postId">
                     <div class="form-group">
                         <label for="title">Titre:</label>
                         <input type="text" id="title" required placeholder="Entrez un titre attractif">
@@ -303,14 +429,13 @@ l<!DOCTYPE html>
                     <div class="image-preview" id="imagePreview">
                         <img id="preview" src="" alt="Aperçu de l'image">
                     </div>
-                    <button type="submit">Publier <i class="fas fa-paper-plane"></i></button>
+                    <button type="submit" id="postSubmitBtn">
+                        <i class="fas fa-paper-plane"></i> Publier
+                    </button>
                 </form>
             </div>
 
-            <div class="section-title">
-                <h2>Publications Récentes</h2>
-                <span id="postsCount">0 publications</span>
-            </div>
+            <h2>Publications Récentes</h2>
             <div id="adminPostsContainer" class="posts-grid">
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -321,16 +446,20 @@ l<!DOCTYPE html>
 
         <div id="secrets" class="tab-content">
             <div class="admin-section">
-                <h2>Nouveau Secret</h2>
+                <div class="form-header">
+                    <h2 id="secretFormTitle">Nouveau Secret</h2>
+                    <div class="form-actions" id="secretFormActions">
+                        <button type="button" onclick="resetSecretForm()" class="btn-cancel" id="secretCancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
                 <form id="secretForm">
-                    <div class="secret-form">
+                    <input type="hidden" id="secretId">
+                    <div class="secret-form-grid">
                         <div class="form-group">
                             <label for="secretTitle">Titre du Secret:</label>
                             <input type="text" id="secretTitle" required placeholder="Nom du secret">
-                        </div>
-                        <div class="form-group">
-                            <label for="secretDescription">Description:</label>
-                            <textarea id="secretDescription" required placeholder="Description du secret"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="requiredCredits">Crédits requis:</label>
@@ -340,15 +469,27 @@ l<!DOCTYPE html>
                             <label for="unlockCode">Code de déverrouillage:</label>
                             <input type="number" id="unlockCode" required placeholder="1234" value="1234">
                         </div>
+                        <div class="form-group">
+                            <label for="secretImage">Image (URL):</label>
+                            <input type="text" id="secretImage" placeholder="Collez l'URL de l'image du secret">
+                        </div>
+                        <div class="form-group">
+                            <label for="secretDescription">Description:</label>
+                            <textarea id="secretDescription" required placeholder="Description du secret"></textarea>
+                        </div>
                     </div>
-                    <button type="submit">Créer Secret <i class="fas fa-lock"></i></button>
+                    <div class="form-group image-preview-container">
+                        <div class="image-preview" id="secretImagePreview">
+                            <img id="secretPreview" src="" alt="Aperçu de l'image du secret">
+                        </div>
+                    </div>
+                    <button type="submit" id="secretSubmitBtn">
+                        <i class="fas fa-lock"></i> Créer Secret
+                    </button>
                 </form>
             </div>
 
-            <div class="section-title">
-                <h2>Secrets Actifs</h2>
-                <span id="secretsCount">0 secrets</span>
-            </div>
+            <h2>Secrets Actifs</h2>
             <div id="secretsContainer" class="posts-grid">
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -364,6 +505,22 @@ l<!DOCTYPE html>
                     <i class="fas fa-spinner fa-spin"></i>
                     <p>Chargement des publications...</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <h3 id="modalTitle">Confirmer la suppression</h3>
+            <p id="modalMessage">Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.</p>
+            <div class="modal-buttons">
+                <button type="button" onclick="closeDeleteModal()" class="btn-cancel">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button type="button" onclick="confirmDelete()" class="btn-danger">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
             </div>
         </div>
     </div>
@@ -395,26 +552,37 @@ l<!DOCTYPE html>
         // Références aux éléments du DOM
         const postForm = document.getElementById('postForm');
         const secretForm = document.getElementById('secretForm');
+        const postIdInput = document.getElementById('postId');
+        const secretIdInput = document.getElementById('secretId');
         const titleInput = document.getElementById('title');
         const descriptionInput = document.getElementById('description');
         const imageInput = document.getElementById('image');
         const secretTitleInput = document.getElementById('secretTitle');
         const secretDescriptionInput = document.getElementById('secretDescription');
+        const secretImageInput = document.getElementById('secretImage');
         const requiredCreditsInput = document.getElementById('requiredCredits');
         const unlockCodeInput = document.getElementById('unlockCode');
         const previewImage = document.getElementById('preview');
+        const secretPreviewImage = document.getElementById('secretPreview');
         const adminPostsContainer = document.getElementById('adminPostsContainer');
         const secretsContainer = document.getElementById('secretsContainer');
         const publicPostsContainer = document.getElementById('publicPostsContainer');
         const notification = document.getElementById('notification');
-        const postsCount = document.getElementById('postsCount');
-        const secretsCount = document.getElementById('secretsCount');
+        const deleteModal = document.getElementById('deleteModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const postFormTitle = document.getElementById('postFormTitle');
+        const secretFormTitle = document.getElementById('secretFormTitle');
+        const postSubmitBtn = document.getElementById('postSubmitBtn');
+        const secretSubmitBtn = document.getElementById('secretSubmitBtn');
+        const postCancelBtn = document.getElementById('postCancelBtn');
+        const secretCancelBtn = document.getElementById('secretCancelBtn');
 
-        // Variables pour stocker les données
-        let posts = [];
-        let secrets = [];
+        // Variables pour la suppression
+        let itemToDelete = null;
+        let deleteType = null;
 
-        // Afficher l'aperçu de l'image
+        // Afficher l'aperçu de l'image des publications
         imageInput.addEventListener('input', function() {
             if (imageInput.value) {
                 previewImage.src = imageInput.value;
@@ -424,34 +592,52 @@ l<!DOCTYPE html>
             }
         });
 
+        // Afficher l'aperçu de l'image des secrets
+        secretImageInput.addEventListener('input', function() {
+            if (secretImageInput.value) {
+                secretPreviewImage.src = secretImageInput.value;
+                document.getElementById('secretImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('secretImagePreview').style.display = 'none';
+            }
+        });
+
         // Gestion de la soumission du formulaire de publication
         postForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const id = postIdInput.value;
             const title = titleInput.value;
             const description = descriptionInput.value;
             const imageUrl = imageInput.value;
 
             try {
-                // Ajouter le document à Firestore
-                const docRef = await db.collection('posts').add({
-                    titre: title,
-                    description: description,
-                    image: imageUrl,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                console.log('Document écrit avec ID: ', docRef.id);
+                if (id) {
+                    // Mettre à jour le document existant
+                    await db.collection('posts').doc(id).update({
+                        titre: title,
+                        description: description,
+                        image: imageUrl,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Publication mise à jour avec succès!');
+                } else {
+                    // Ajouter un nouveau document
+                    const docRef = await db.collection('posts').add({
+                        titre: title,
+                        description: description,
+                        image: imageUrl,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log('Document écrit avec ID: ', docRef.id);
+                    showNotification('Publication créée avec succès!');
+                }
                 
                 // Réinitialiser le formulaire
-                postForm.reset();
-                document.getElementById('imagePreview').style.display = 'none';
-                
-                // Afficher la notification
-                showNotification('Publication créée avec succès!');
+                resetPostForm();
                 
             } catch (error) {
-                console.error('Erreur lors de l\'ajout du document: ', error);
+                console.error('Erreur lors de l\'opération: ', error);
                 showNotification('Une erreur s\'est produite: ' + error.message, true);
             }
         });
@@ -460,39 +646,161 @@ l<!DOCTYPE html>
         secretForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const id = secretIdInput.value;
             const title = secretTitleInput.value;
             const description = secretDescriptionInput.value;
+            const imageUrl = secretImageInput.value;
             const requiredCredits = parseInt(requiredCreditsInput.value);
             const unlockCode = parseInt(unlockCodeInput.value);
 
             try {
-                // Ajouter le document à la collection secrets
-                const docRef = await db.collection('secrets').add({
-                    titre: title,
-                    description: description,
-                    required_credits: requiredCredits,
-                    unlock_code: unlockCode,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                console.log('Secret créé avec ID: ', docRef.id);
+                if (id) {
+                    // Mettre à jour le document existant
+                    await db.collection('secrets').doc(id).update({
+                        titre: title,
+                        description: description,
+                        image: imageUrl,
+                        required_credits: requiredCredits,
+                        unlock_code: unlockCode,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Secret mis à jour avec succès!');
+                } else {
+                    // Ajouter un nouveau document
+                    const docRef = await db.collection('secrets').add({
+                        titre: title,
+                        description: description,
+                        image: imageUrl,
+                        required_credits: requiredCredits,
+                        unlock_code: unlockCode,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log('Secret créé avec ID: ', docRef.id);
+                    showNotification('Secret créé avec succès!');
+                }
                 
                 // Réinitialiser le formulaire
-                secretForm.reset();
-                
-                // Afficher la notification
-                showNotification('Secret créé avec succès!');
+                resetSecretForm();
                 
             } catch (error) {
-                console.error('Erreur lors de l\'ajout du secret: ', error);
+                console.error('Erreur lors de l\'opération: ', error);
                 showNotification('Une erreur s\'est produite: ' + error.message, true);
             }
         });
 
+        // Fonction pour éditer une publication
+        function editPost(post) {
+            postIdInput.value = post.id;
+            titleInput.value = post.titre;
+            descriptionInput.value = post.description;
+            imageInput.value = post.image || '';
+            
+            if (post.image) {
+                previewImage.src = post.image;
+                document.getElementById('imagePreview').style.display = 'block';
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+            
+            postFormTitle.textContent = 'Modifier la Publication';
+            postSubmitBtn.innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+            postCancelBtn.style.display = 'flex';
+            
+            // Scroll vers le formulaire
+            document.getElementById('posts').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fonction pour éditer un secret
+        function editSecret(secret) {
+            secretIdInput.value = secret.id;
+            secretTitleInput.value = secret.titre;
+            secretDescriptionInput.value = secret.description;
+            secretImageInput.value = secret.image || '';
+            requiredCreditsInput.value = secret.required_credits || 0;
+            unlockCodeInput.value = secret.unlock_code || 1234;
+            
+            if (secret.image) {
+                secretPreviewImage.src = secret.image;
+                document.getElementById('secretImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('secretImagePreview').style.display = 'none';
+            }
+            
+            secretFormTitle.textContent = 'Modifier le Secret';
+            secretSubmitBtn.innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+            secretCancelBtn.style.display = 'flex';
+            
+            // Scroll vers le formulaire
+            document.getElementById('secrets').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fonction pour supprimer une publication
+        function deletePost(id) {
+            itemToDelete = id;
+            deleteType = 'post';
+            modalTitle.textContent = 'Supprimer la Publication';
+            modalMessage.textContent = 'Êtes-vous sûr de vouloir supprimer cette publication ? Cette action est irréversible.';
+            deleteModal.style.display = 'flex';
+        }
+
+        // Fonction pour supprimer un secret
+        function deleteSecret(id) {
+            itemToDelete = id;
+            deleteType = 'secret';
+            modalTitle.textContent = 'Supprimer le Secret';
+            modalMessage.textContent = 'Êtes-vous sûr de vouloir supprimer ce secret ? Cette action est irréversible.';
+            deleteModal.style.display = 'flex';
+        }
+
+        // Fonction pour confirmer la suppression
+        async function confirmDelete() {
+            try {
+                if (deleteType === 'post') {
+                    await db.collection('posts').doc(itemToDelete).delete();
+                    showNotification('Publication supprimée avec succès!');
+                } else if (deleteType === 'secret') {
+                    await db.collection('secrets').doc(itemToDelete).delete();
+                    showNotification('Secret supprimé avec succès!');
+                }
+                closeDeleteModal();
+            } catch (error) {
+                console.error('Erreur lors de la suppression: ', error);
+                showNotification('Erreur lors de la suppression: ' + error.message, true);
+                closeDeleteModal();
+            }
+        }
+
+        // Fonction pour fermer le modal
+        function closeDeleteModal() {
+            deleteModal.style.display = 'none';
+            itemToDelete = null;
+            deleteType = null;
+        }
+
+        // Réinitialiser le formulaire des publications
+        function resetPostForm() {
+            postForm.reset();
+            postIdInput.value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            postFormTitle.textContent = 'Nouvelle Publication';
+            postSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Publier';
+            postCancelBtn.style.display = 'none';
+        }
+
+        // Réinitialiser le formulaire des secrets
+        function resetSecretForm() {
+            secretForm.reset();
+            secretIdInput.value = '';
+            requiredCreditsInput.value = 0;
+            unlockCodeInput.value = 1234;
+            document.getElementById('secretImagePreview').style.display = 'none';
+            secretFormTitle.textContent = 'Nouveau Secret';
+            secretSubmitBtn.innerHTML = '<i class="fas fa-lock"></i> Créer Secret';
+            secretCancelBtn.style.display = 'none';
+        }
+
         // Fonction pour afficher les posts dans l'interface d'administration
         function renderAdminPosts(posts) {
-            postsCount.textContent = `${posts.length} publication${posts.length > 1 ? 's' : ''}`;
-            
             if (posts.length === 0) {
                 adminPostsContainer.innerHTML = `
                     <div class="empty-state">
@@ -505,7 +813,7 @@ l<!DOCTYPE html>
             }
 
             adminPostsContainer.innerHTML = posts.map(post => `
-                <div class="post-card">
+                <div class="post-card ${postIdInput.value === post.id ? 'editing' : ''}" id="post-${post.id}">
                     ${post.image ? `<img src="${post.image}" alt="${post.titre}" class="post-image">` : 
                       `<div class="post-image" style="background:#eee;display:flex;align-items:center;justify-content:center;">
                          <i class="fas fa-image" style="font-size:3rem;color:#ccc;"></i>
@@ -514,6 +822,15 @@ l<!DOCTYPE html>
                         <h3 class="post-title">${post.titre}</h3>
                         <p class="post-description">${post.description}</p>
                         <div class="post-id">ID: ${post.id}</div>
+                        <div class="post-id">Créé: ${post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</div>
+                        <div class="card-actions">
+                            <button type="button" onclick="editPost(${JSON.stringify(post).replace(/"/g, '&quot;')})" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" onclick="deletePost('${post.id}')" class="btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -521,8 +838,6 @@ l<!DOCTYPE html>
 
         // Fonction pour afficher les secrets
         function renderSecrets(secrets) {
-            secretsCount.textContent = `${secrets.length} secret${secrets.length > 1 ? 's' : ''}`;
-            
             if (secrets.length === 0) {
                 secretsContainer.innerHTML = `
                     <div class="empty-state">
@@ -535,18 +850,28 @@ l<!DOCTYPE html>
             }
 
             secretsContainer.innerHTML = secrets.map(secret => `
-                <div class="post-card">
-                    <div class="post-image" style="background:#34495e;display:flex;align-items:center;justify-content:center;">
-                        <i class="fas fa-lock" style="font-size:3rem;color:#1abc9c;"></i>
-                    </div>
+                <div class="post-card ${secretIdInput.value === secret.id ? 'editing' : ''}" id="secret-${secret.id}">
+                    ${secret.image ? `<img src="${secret.image}" alt="${secret.titre}" class="post-image">` : 
+                      `<div class="post-image" style="background:#34495e;display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-lock" style="font-size:3rem;color:#1abc9c;"></i>
+                       </div>`}
                     <div class="post-content">
                         <h3 class="post-title">${secret.titre}</h3>
                         <p class="post-description">${secret.description}</p>
                         <div class="secret-details">
-                            <p><strong>Crédits requis:</strong> ${secret.required_credits}</p>
-                            <p><strong>Code de déverrouillage:</strong> ${secret.unlock_code}</p>
+                            <p>Crédits requis: <span>${secret.required_credits}</span></p>
+                            <p>Code de déverrouillage: <span>${secret.unlock_code}</span></p>
                         </div>
                         <div class="post-id">ID: ${secret.id}</div>
+                        <div class="post-id">Créé: ${secret.createdAt ? new Date(secret.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</div>
+                        <div class="card-actions">
+                            <button type="button" onclick="editSecret(${JSON.stringify(secret).replace(/"/g, '&quot;')})" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" onclick="deleteSecret('${secret.id}')" class="btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -579,11 +904,11 @@ l<!DOCTYPE html>
             `).join('');
         }
 
-        // Écouter les publications en temps réel
+        // Écouter les publications en temps réel pour l'administration
         db.collection('posts')
             .orderBy('createdAt', 'desc')
             .onSnapshot((snapshot) => {
-                posts = [];
+                const posts = [];
                 snapshot.forEach((doc) => {
                     posts.push({
                         id: doc.id,
@@ -602,7 +927,7 @@ l<!DOCTYPE html>
         db.collection('secrets')
             .orderBy('createdAt', 'desc')
             .onSnapshot((snapshot) => {
-                secrets = [];
+                const secrets = [];
                 snapshot.forEach((doc) => {
                     secrets.push({
                         id: doc.id,
@@ -647,6 +972,14 @@ l<!DOCTYPE html>
 
         // Masquer l'aperçu d'image au chargement initial
         document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('secretImagePreview').style.display = 'none';
+
+        // Fermer le modal en cliquant à l'extérieur
+        deleteModal.addEventListener('click', function(e) {
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
     </script>
 </body>
 </html>

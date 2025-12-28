@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -181,6 +181,18 @@
             font-family: monospace;
         }
 
+        .secret-details {
+            background: #e8f4fc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .secret-details p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
         .notification {
             position: fixed;
             top: 20px;
@@ -211,6 +223,39 @@
             margin-bottom: 15px;
         }
 
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-title h2 {
+            color: #2c3e50;
+        }
+
+        .switch-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .switch-btn:hover {
+            background: #2980b9;
+        }
+
+        .secret-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         @media (max-width: 768px) {
             .posts-grid {
                 grid-template-columns: 1fr;
@@ -219,6 +264,10 @@
             .tabs {
                 flex-direction: column;
             }
+
+            .secret-form {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -226,11 +275,12 @@
     <div class="container">
         <header>
             <h1>Latrou - Administration</h1>
-            <p>Gérez vos publications en temps réel avec Firebase</p>
+            <p>Gérez vos publications et secrets en temps réel avec Firebase</p>
         </header>
 
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('admin')">Administration</button>
+            <button class="tab-button active" onclick="showTab('admin')">Publications</button>
+            <button class="tab-button" onclick="showTab('secrets')">Secrets</button>
             <button class="tab-button" onclick="showTab('public')">Aperçu Public</button>
         </div>
 
@@ -257,11 +307,52 @@
                 </form>
             </div>
 
-            <h2>Publications Récentes</h2>
+            <div class="section-title">
+                <h2>Publications Récentes</h2>
+                <span id="postsCount">0 publications</span>
+            </div>
             <div id="adminPostsContainer" class="posts-grid">
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i>
                     <p>Chargement des publications...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="secrets" class="tab-content">
+            <div class="admin-section">
+                <h2>Nouveau Secret</h2>
+                <form id="secretForm">
+                    <div class="secret-form">
+                        <div class="form-group">
+                            <label for="secretTitle">Titre du Secret:</label>
+                            <input type="text" id="secretTitle" required placeholder="Nom du secret">
+                        </div>
+                        <div class="form-group">
+                            <label for="secretDescription">Description:</label>
+                            <textarea id="secretDescription" required placeholder="Description du secret"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="requiredCredits">Crédits requis:</label>
+                            <input type="number" id="requiredCredits" required min="0" placeholder="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="unlockCode">Code de déverrouillage:</label>
+                            <input type="number" id="unlockCode" required placeholder="1234" value="1234">
+                        </div>
+                    </div>
+                    <button type="submit">Créer Secret <i class="fas fa-lock"></i></button>
+                </form>
+            </div>
+
+            <div class="section-title">
+                <h2>Secrets Actifs</h2>
+                <span id="secretsCount">0 secrets</span>
+            </div>
+            <div id="secretsContainer" class="posts-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des secrets...</p>
                 </div>
             </div>
         </div>
@@ -294,7 +385,7 @@
             projectId: "latrou",
             storageBucket: "latrou.appspot.com",
             messagingSenderId: "320805997315",
-            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff" // Vous devrez ajouter cette valeur depuis la console Firebase
+            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff"
         };
 
         // Initialiser Firebase
@@ -303,13 +394,25 @@
 
         // Références aux éléments du DOM
         const postForm = document.getElementById('postForm');
+        const secretForm = document.getElementById('secretForm');
         const titleInput = document.getElementById('title');
         const descriptionInput = document.getElementById('description');
         const imageInput = document.getElementById('image');
+        const secretTitleInput = document.getElementById('secretTitle');
+        const secretDescriptionInput = document.getElementById('secretDescription');
+        const requiredCreditsInput = document.getElementById('requiredCredits');
+        const unlockCodeInput = document.getElementById('unlockCode');
         const previewImage = document.getElementById('preview');
         const adminPostsContainer = document.getElementById('adminPostsContainer');
+        const secretsContainer = document.getElementById('secretsContainer');
         const publicPostsContainer = document.getElementById('publicPostsContainer');
         const notification = document.getElementById('notification');
+        const postsCount = document.getElementById('postsCount');
+        const secretsCount = document.getElementById('secretsCount');
+
+        // Variables pour stocker les données
+        let posts = [];
+        let secrets = [];
 
         // Afficher l'aperçu de l'image
         imageInput.addEventListener('input', function() {
@@ -321,7 +424,7 @@
             }
         });
 
-        // Gestion de la soumission du formulaire
+        // Gestion de la soumission du formulaire de publication
         postForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -353,8 +456,43 @@
             }
         });
 
+        // Gestion de la soumission du formulaire de secret
+        secretForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = secretTitleInput.value;
+            const description = secretDescriptionInput.value;
+            const requiredCredits = parseInt(requiredCreditsInput.value);
+            const unlockCode = parseInt(unlockCodeInput.value);
+
+            try {
+                // Ajouter le document à la collection secrets
+                const docRef = await db.collection('secrets').add({
+                    titre: title,
+                    description: description,
+                    required_credits: requiredCredits,
+                    unlock_code: unlockCode,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                console.log('Secret créé avec ID: ', docRef.id);
+                
+                // Réinitialiser le formulaire
+                secretForm.reset();
+                
+                // Afficher la notification
+                showNotification('Secret créé avec succès!');
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'ajout du secret: ', error);
+                showNotification('Une erreur s\'est produite: ' + error.message, true);
+            }
+        });
+
         // Fonction pour afficher les posts dans l'interface d'administration
         function renderAdminPosts(posts) {
+            postsCount.textContent = `${posts.length} publication${posts.length > 1 ? 's' : ''}`;
+            
             if (posts.length === 0) {
                 adminPostsContainer.innerHTML = `
                     <div class="empty-state">
@@ -376,6 +514,39 @@
                         <h3 class="post-title">${post.titre}</h3>
                         <p class="post-description">${post.description}</p>
                         <div class="post-id">ID: ${post.id}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonction pour afficher les secrets
+        function renderSecrets(secrets) {
+            secretsCount.textContent = `${secrets.length} secret${secrets.length > 1 ? 's' : ''}`;
+            
+            if (secrets.length === 0) {
+                secretsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-lock"></i>
+                        <h3>Aucun secret</h3>
+                        <p>Créez votre premier secret en utilisant le formulaire ci-dessus.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            secretsContainer.innerHTML = secrets.map(secret => `
+                <div class="post-card">
+                    <div class="post-image" style="background:#34495e;display:flex;align-items:center;justify-content:center;">
+                        <i class="fas fa-lock" style="font-size:3rem;color:#1abc9c;"></i>
+                    </div>
+                    <div class="post-content">
+                        <h3 class="post-title">${secret.titre}</h3>
+                        <p class="post-description">${secret.description}</p>
+                        <div class="secret-details">
+                            <p><strong>Crédits requis:</strong> ${secret.required_credits}</p>
+                            <p><strong>Code de déverrouillage:</strong> ${secret.unlock_code}</p>
+                        </div>
+                        <div class="post-id">ID: ${secret.id}</div>
                     </div>
                 </div>
             `).join('');
@@ -408,11 +579,11 @@
             `).join('');
         }
 
-        // Écouter les publications en temps réel pour l'administration
+        // Écouter les publications en temps réel
         db.collection('posts')
             .orderBy('createdAt', 'desc')
             .onSnapshot((snapshot) => {
-                const posts = [];
+                posts = [];
                 snapshot.forEach((doc) => {
                     posts.push({
                         id: doc.id,
@@ -422,9 +593,26 @@
                 renderAdminPosts(posts);
                 renderPublicPosts(posts);
             }, (error) => {
-                console.error('Erreur lors de la récupération des documents: ', error);
+                console.error('Erreur lors de la récupération des publications: ', error);
                 adminPostsContainer.innerHTML = '<p>Une erreur s\'est produite lors du chargement des publications.</p>';
                 publicPostsContainer.innerHTML = '<p>Une erreur s\'est produite lors du chargement des publications.</p>';
+            });
+
+        // Écouter les secrets en temps réel
+        db.collection('secrets')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot((snapshot) => {
+                secrets = [];
+                snapshot.forEach((doc) => {
+                    secrets.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                renderSecrets(secrets);
+            }, (error) => {
+                console.error('Erreur lors de la récupération des secrets: ', error);
+                secretsContainer.innerHTML = '<p>Une erreur s\'est produite lors du chargement des secrets.</p>';
             });
 
         // Fonction pour afficher les onglets

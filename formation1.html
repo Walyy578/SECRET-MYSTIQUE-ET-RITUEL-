@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation en ligne - Sujet 22</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .whatsapp-banner {
+            background: linear-gradient(to right, #25D366, #128C7E);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .whatsapp-banner i {
+            font-size: 1.8rem;
+        }
+        
+        .whatsapp-banner a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .whatsapp-banner a:hover {
+            text-decoration: underline;
+        }
+        
+        .subject-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4a6491;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #4a6491;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #c3cfe2;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+            border-left-color: #4a6491;
+        }
+        
+        .option-label {
+            font-weight: 600;
+            margin-right: 8px;
+            color: #4a6491;
+        }
+        
+        .concours-banner {
+            background: linear-gradient(to right, #8B0000, #B22222);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info {
+            font-size: 1.3rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .contact-info i {
+            color: #FFD700;
+        }
+        
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .grammar-section .option {
+            border-left-color: #28a745;
+        }
+        
+        .grammar-section .option-label {
+            color: #28a745;
+        }
+        
+        .literature-section .option {
+            border-left-color: #9c27b0;
+        }
+        
+        .literature-section .option-label {
+            color: #9c27b0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="whatsapp-banner">
+                <i class="fab fa-whatsapp"></i>
+                <div>
+                    <span>FORMATION 100% EN LIGNE SUR WHATSAPP AU</span>
+                    <a href="tel:+22663481280">+226 63 48 12 80</a>
+                </div>
+            </div>
+            <h1 class="subject-title">SUJET 22</h1>
+            <p>Questionnaire de formation - Culture générale, Grammaire et Littérature</p>
+        </header>
+        
+        <div class="content-wrapper">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-globe-africa"></i> Culture Générale - Afrique</h2>
+                
+                <div class="question">
+                    <div class="question-text">1. L'organisation continentale qui coordonne les politiques africaines est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> la CEDEAO</div>
+                        <div class="option"><span class="option-label">b)</span> l'Union africaine</div>
+                        <div class="option"><span class="option-label">c)</span> l'UEMOA</div>
+                        <div class="option"><span class="option-label">d)</span> la CEMAC</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">2. Le pays africain le plus peuplé aujourd'hui est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> le Nigeria</div>
+                        <div class="option"><span class="option-label">b)</span> l'Égypte</div>
+                        <div class="option"><span class="option-label">c)</span> l'Éthiopie</div>
+                        <div class="option"><span class="option-label">d)</span> la RDC</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">3. L'AES (Alliance des États du Sahel) regroupe :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> 2 pays</div>
+                        <div class="option"><span class="option-label">b)</span> 3 pays</div>
+                        <div class="option"><span class="option-label">c)</span> 4 pays</div>
+                        <div class="option"><span class="option-label">d)</span> 5 pays</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">4. Les pays membres de l'AES sont :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> Nigeria - Niger - Tchad</div>
+                        <div class="option"><span class="option-label">b)</span> Mali - Burkina Faso - Niger</div>
+                        <div class="option"><span class="option-label">c)</span> Mali - Guinée - Niger</div>
+                        <div class="option"><span class="option-label">d)</span> Burkina Faso - Ghana - Mali</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">5. La principale menace sécuritaire actuelle au Sahel est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> la piraterie maritime</div>
+                        <div class="option"><span class="option-label">b)</span> le terrorisme armé</div>
+                        <div class="option"><span class="option-label">c)</span> les conflits frontaliers maritimes</div>
+                        <div class="option"><span class="option-label">d)</span> les épidémies</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">6. Le changement climatique affecte l'Afrique principalement par :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> la fonte des glaciers alpins</div>
+                        <div class="option"><span class="option-label">b)</span> la désertification et les sécheresses</div>
+                        <div class="option"><span class="option-label">c)</span> les tsunamis</div>
+                        <div class="option"><span class="option-label">d)</span> les volcans</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">7. La ZLECAf vise à :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> créer une monnaie unique africaine</div>
+                        <div class="option"><span class="option-label">b)</span> faciliter le commerce intra-africain</div>
+                        <div class="option"><span class="option-label">c)</span> supprimer l'Union africaine</div>
+                        <div class="option"><span class="option-label">d)</span> instaurer un visa unique</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">8. La ZLECAf signifie :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> Zone de libre-échange commerciale africaine</div>
+                        <div class="option"><span class="option-label">b)</span> Zone de libre-échange continentale africaine</div>
+                        <div class="option"><span class="option-label">c)</span> Zone légale économique africaine</div>
+                        <div class="option"><span class="option-label">d)</span> Zone de libre-échange communautaire africaine</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">9. Le pays africain devenu récemment le plus grand producteur de pétrole en Afrique est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'Angola</div>
+                        <div class="option"><span class="option-label">b)</span> le Nigeria</div>
+                        <div class="option"><span class="option-label">c)</span> la Libye</div>
+                        <div class="option"><span class="option-label">d)</span> l'Algérie</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">10. Le principal partenaire économique de nombreux pays africains aujourd'hui est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> la France</div>
+                        <div class="option"><span class="option-label">b)</span> la Chine</div>
+                        <div class="option"><span class="option-label">c)</span> le Japon</div>
+                        <div class="option"><span class="option-label">d)</span> le Canada</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-globe-africa"></i> Culture Générale - Afrique (suite)</h2>
+                
+                <div class="question">
+                    <div class="question-text">11. Le phénomène de coups d'État récents concerne surtout :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'Afrique australe</div>
+                        <div class="option"><span class="option-label">b)</span> l'Afrique de l'Ouest et le Sahel</div>
+                        <div class="option"><span class="option-label">c)</span> l'Afrique du Nord</div>
+                        <div class="option"><span class="option-label">d)</span> l'Afrique centrale uniquement</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">12. Le pays africain qui accueille le siège de l'Union africaine est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'Éthiopie</div>
+                        <div class="option"><span class="option-label">b)</span> le Kenya</div>
+                        <div class="option"><span class="option-label">c)</span> l'Ouganda</div>
+                        <div class="option"><span class="option-label">d)</span> la Tanzanie</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">13. La capitale politique du Nigeria est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> Lagos</div>
+                        <div class="option"><span class="option-label">b)</span> Abuja</div>
+                        <div class="option"><span class="option-label">c)</span> Ibadan</div>
+                        <div class="option"><span class="option-label">d)</span> Port Harcourt</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">14. L'enjeu majeur de la jeunesse africaine aujourd'hui est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> le vieillissement</div>
+                        <div class="option"><span class="option-label">b)</span> l'emploi et la formation</div>
+                        <div class="option"><span class="option-label">c)</span> la baisse démographique</div>
+                        <div class="option"><span class="option-label">d)</span> la robotisation</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">15. Le pays africain ayant connu une forte croissance économique grâce au gaz naturel est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> le Mali</div>
+                        <div class="option"><span class="option-label">b)</span> le Sénégal</div>
+                        <div class="option"><span class="option-label">c)</span> le Togo</div>
+                        <div class="option"><span class="option-label">d)</span> le Niger</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">16. La migration irrégulière africaine se fait principalement vers :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'Asie</div>
+                        <div class="option"><span class="option-label">b)</span> l'Europe</div>
+                        <div class="option"><span class="option-label">c)</span> l'Océanie</div>
+                        <div class="option"><span class="option-label">d)</span> l'Amérique du Sud</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">17. Le pays africain surnommé « la locomotive économique de l'Afrique de l'Est » est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'Ouganda</div>
+                        <div class="option"><span class="option-label">b)</span> le Kenya</div>
+                        <div class="option"><span class="option-label">c)</span> la Tanzanie</div>
+                        <div class="option"><span class="option-label">d)</span> le Rwanda</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">18. L'un des objectifs majeurs de l'Agenda 2063 de l'Union africaine est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> la recolonisation</div>
+                        <div class="option"><span class="option-label">b)</span> une Afrique intégrée et prospère</div>
+                        <div class="option"><span class="option-label">c)</span> la division régionale</div>
+                        <div class="option"><span class="option-label">d)</span> l'isolement économique</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">19. La principale source d'électricité renouvelable en Afrique est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'éolien</div>
+                        <div class="option"><span class="option-label">b)</span> l'hydroélectricité</div>
+                        <div class="option"><span class="option-label">c)</span> le solaire</div>
+                        <div class="option"><span class="option-label">d)</span> la biomasse</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">20. L'un des défis politiques majeurs actuels en Afrique est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">a)</span> l'absence de ressources</div>
+                        <div class="option"><span class="option-label">b)</span> la gouvernance et la stabilité institutionnelle</div>
+                        <div class="option"><span class="option-label">c)</span> le manque de population</div>
+                        <div class="option"><span class="option-label">d)</span> l'excès d'industrialisation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="concours-banner">
+            <h3>CONCOURS BF 2026</h3>
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i>
+                <span>CONTACT : </span>
+                <a href="tel:+22663481280">+226 63 48 12 80</a>
+            </div>
+        </div>
+        
+        <div class="content-wrapper" style="margin-top: 30px;">
+            <div class="section grammar-section">
+                <h2 class="section-title"><i class="fas fa-spell-check"></i> Grammaire Française</h2>
+                
+                <div class="question">
+                    <div class="question-text">1. Choisis la phrase correcte :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Elle s'est faite gronder par le professeur.</div>
+                        <div class="option"><span class="option-label">B.</span> Elle s'est fait gronder par le professeur.</div>
+                        <div class="option"><span class="option-label">C.</span> Elle s'est faits gronder par le professeur.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">2. Quelle est la bonne orthographe ?</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Elles se sont faites arrêter par la police.</div>
+                        <div class="option"><span class="option-label">B.</span> Elles se sont faits arrêter par la police.</div>
+                        <div class="option"><span class="option-label">C.</span> Elles se sont fait arrêter par la police.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">3. Complète correctement : Il s'est [___] réparer la voiture.</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> fait</div>
+                        <div class="option"><span class="option-label">B.</span> faite</div>
+                        <div class="option"><span class="option-label">C.</span> faits</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">4. Quelle phrase respecte la règle grammaticale ?</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Elle s'est faite couper les cheveux.</div>
+                        <div class="option"><span class="option-label">B.</span> Elle s'est fait couper les cheveux.</div>
+                        <div class="option"><span class="option-label">C.</span> Elle s'est faits couper les cheveux.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">5. Choisis la phrase correcte :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Elles se sont faites insulter.</div>
+                        <div class="option"><span class="option-label">B.</span> Elles se sont fait insulter.</div>
+                        <div class="option"><span class="option-label">C.</span> Elles se sont faite insulter.</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">6. Complète correctement : Nous nous sommes [___] punir injustement.</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> fait</div>
+                        <div class="option"><span class="option-label">B.</span> faits</div>
+                        <div class="option"><span class="option-label">C.</span> faites</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">7. Laquelle est correcte ?</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Elle s'est faite avoir.</div>
+                        <div class="option"><span class="option-label">B.</span> Elle s'est fait avoir.</div>
+                        <div class="option"><span class="option-label">C.</span> Elle s'est faits avoir.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section literature-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Littérature</h2>
+                
+                <div class="question">
+                    <div class="question-text">8. Apollinaire est un poète :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Classique</div>
+                        <div class="option"><span class="option-label">B.</span> Parnassien</div>
+                        <div class="option"><span class="option-label">C.</span> Romantique</div>
+                        <div class="option"><span class="option-label">D.</span> Surréaliste</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">9. Mouvement littéraire du XIXe siècle cherchant à représenter la réalité telle qu'elle est :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Le romantisme</div>
+                        <div class="option"><span class="option-label">B.</span> Le symbolisme</div>
+                        <div class="option"><span class="option-label">C.</span> Le réalisme</div>
+                        <div class="option"><span class="option-label">D.</span> Le surréalisme</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">10. Les penseurs ayant appelé à des réformes sociales et politiques au 18ème siècle sont :</div>
+                    <div class="options">
+                        <div class="option"><span class="option-label">A.</span> Les poètes de la pléiade</div>
+                        <div class="option"><span class="option-label">B.</span> Les poètes m...</div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; font-style: italic;">
+                        <span class="highlight">Note:</span> La question est incomplète dans le texte fourni. Les options complètes seraient normalement présentées ici.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Formation en ligne sur WhatsApp - Sujet 22 | Contact: +226 63 48 12 80</p>
+            <p>© 2023 - Tous droits réservés</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Ajout d'interactivité pour sélectionner les réponses
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Retirer la sélection précédente dans la même question
+                    const parentQuestion = this.closest('.question');
+                    const selectedOptions = parentQuestion.querySelectorAll('.option.selected');
+                    
+                    selectedOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Ajouter la sélection actuelle
+                    this.classList.add('selected');
+                    
+                    // Ajouter un effet visuel pour la sélection
+                    this.style.backgroundColor = '#e3f2fd';
+                    this.style.borderLeftColor = '#2196f3';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

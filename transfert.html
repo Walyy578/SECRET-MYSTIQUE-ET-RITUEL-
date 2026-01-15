@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latrou - Transfert de Crédits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: rgba(67, 97, 238, 0.1);
+            --secondary: #7209b7;
+            --secondary-dark: #5a08a3;
+            --success: #2ecc71;
+            --success-dark: #27ae60;
+            --danger: #e74c3c;
+            --danger-dark: #c0392b;
+            --warning: #f39c12;
+            --warning-dark: #d35400;
+            --info: #3498db;
+            --info-dark: #2980b9;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --gray: #95a5a6;
+            --border-radius: 15px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Card */
+        .main-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance-display {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 30px;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: var(--light);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light);
+            border: 3px solid var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .step.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .step.completed .step-circle {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--light);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .form-section.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .form-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background: white;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .input-with-icon input {
+            padding-left: 45px;
+        }
+
+        button {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: var(--warning-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: var(--info-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-light {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-light:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .form-actions button {
+            flex: 1;
+        }
+
+        /* User Info Display */
+        .user-info {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--primary-light);
+            margin-top: 25px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-info.active {
+            display: block;
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .info-header h4 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-item {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .info-value.credits {
+            color: var(--success);
+        }
+
+        .info-value.id {
+            font-family: monospace;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .modal-content {
+            padding: 30px;
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon.success {
+            color: var(--success);
+        }
+
+        .modal-icon.warning {
+            color: var(--warning);
+        }
+
+        .modal-icon.error {
+            color: var(--danger);
+        }
+
+        .modal-icon.info {
+            color: var(--info);
+        }
+
+        .modal-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-message h4 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .modal-message p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        /* Transfer Details Modal */
+        .transfer-details {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .transfer-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .transfer-amount {
+            text-align: center;
+            flex: 1;
+        }
+
+        .transfer-amount .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .transfer-amount .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success);
+        }
+
+        .transfer-direction {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-transfer {
+            text-align: center;
+            flex: 1;
+        }
+
+        .user-transfer .name {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-transfer .id {
+            color: var(--gray);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .transfer-arrow {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin: 0 20px;
+        }
+
+        /* Notification Toast */
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+            z-index: 999;
+            animation: slideInRight 0.3s ease;
+            max-width: 350px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification-toast.error {
+            background: var(--danger);
+        }
+
+        .notification-toast.warning {
+            background: var(--warning);
+        }
+
+        .notification-toast.info {
+            background: var(--info);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .notification-icon {
+            font-size: 1.3rem;
+        }
+
+        .notification-text h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .notification-text p {
+            opacity: 0.9;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .progress-steps {
+                margin-bottom: 30px;
+            }
+            
+            .progress-steps::before {
+                left: 40px;
+                right: 40px;
+            }
+            
+            .progress-bar {
+                left: 40px;
+            }
+            
+            .step-circle {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .transfer-direction {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .transfer-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h1>Transfert de Crédits Latrou</h1>
+            <p>Transférez vos crédits en toute sécurité entre utilisateurs</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <!-- Card Header -->
+            <div class="card-header">
+                <h2>
+                    <i class="fas fa-coins"></i>
+                    Transfert de Crédits
+                </h2>
+                <div class="balance-display">
+                    <i class="fas fa-wallet"></i>
+                    <span id="senderBalance">0</span> crédits
+                </div>
+            </div>
+
+            <!-- Card Content -->
+            <div class="card-content">
+                <!-- Progress Steps -->
+                <div class="progress-steps">
+                    <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+                    <div class="step active" id="step1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Votre compte</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Transfert</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Confirmation</div>
+                    </div>
+                </div>
+
+                <!-- Étape 1: Saisie de l'émetteur -->
+                <div class="form-section active" id="step1Section">
+                    <h3><i class="fas fa-user-circle"></i> Votre compte</h3>
+                    <form id="senderForm">
+                        <div class="form-group">
+                            <label for="senderId">Votre ID Utilisateur</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-id-card input-icon"></i>
+                                <input type="text" id="senderId" placeholder="Entrez votre ID" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary" id="checkSenderBtn">
+                                <i class="fas fa-search"></i> Vérifier mon compte
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Informations de l'émetteur -->
+                    <div class="user-info" id="senderInfo">
+                        <div class="info-header">
+                            <h4><i class="fas fa-user-check"></i> Votre compte est vérifié</h4>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-id-card"></i> Votre ID
+                                </div>
+                                <div class="info-value id" id="displaySenderId">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-coins"></i> Solde disponible
+                                </div>
+                                <div class="info-value credits" id="displaySenderCredits">0</div>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="margin-top: 25px;">
+                            <button type="button" class="btn-success" onclick="nextStep()">
+                                <i class="fas fa-arrow-right"></i> Continuer vers le transfert
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 2: Transfert -->
+                <div class="form-section" id="step2Section" style="display: none;">
+                    <h3><i class="fas fa-exchange-alt"></i> Détails du transfert</h3>
+                    <form id="transferForm">
+                        <div class="form-group">
+                            <label for="receiverId">ID du destinataire</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user-friends input-icon"></i>
+                                <input type="text" id="receiverId" placeholder="ID de la personne à créditer" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="transferAmount">Montant à transférer</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-money-bill-wave input-icon"></i>
+                                <input type="number" id="transferAmount" min="1" placeholder="Nombre de crédits" required>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 0.85rem; color: var(--gray);">
+                                <i class="fas fa-info-circle"></i> Votre solde: <span id="currentBalanceText">0</span> crédits
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-light" onclick="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Retour
+                            </button>
+                            <button type="submit" class="btn-success" id="transferBtn">
+                                <i class="fas fa-check-circle"></i> Vérifier le transfert
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                <i class="fas fa-shield-alt"></i> Transferts sécurisés • 
+                <i class="fas fa-bolt"></i> Temps réel • 
+                <i class="fas fa-headset"></i> Support
+            </p>
+            <p>© 2024 Latrou Transferts - Tous droits réservés</p>
+        </div>
+    </div>
+
+    <!-- Modal: Utilisateur non trouvé -->
+    <div class="modal-overlay" id="userNotFoundModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-slash"></i> Utilisateur non trouvé</h3>
+            </div>
+            <div class="modal-content">
+                <div class="modal-icon warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="modal-message">
+                    <h4 id="notFoundUserId">ID inconnu</h4>
+                    <p>Cet utilisateur n'existe pas dans notre système. Voulez-vous créer ce compte avec un solde initial de 1000 crédits ?</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-light" onclick="closeUserNotFoundModal()">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                    <button type="button" class="btn-primary" onclick="createNewUserFromModal()">
+                        <i class="fas fa-plus-circle"></i> Créer le compte
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Crédits insuffisants -->
+    <div class="modal-overlay" id="insufficientCreditsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-wallet"></i> Crédits insuffisants</h3>
+            </div>
+            <div class="modal-content">
+                <div class="modal-icon error">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="modal-message">
+                    <h4>Solde insuffisant</h4>
+                    <p>Vous essayez de transférer <strong id="insufficientAmount">0</strong> crédits mais votre solde actuel est de seulement <strong id="currentBalanceModal">0</strong> crédits.</p>
+                    <p style="margin-top: 15px; color: var(--danger);">
+                        <i class="fas fa-info-circle"></i> Il vous manque <strong id="missingCredits">0</strong> crédits pour effectuer ce transfert.
+                    </p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary" onclick="closeInsufficientCreditsModal()">
+                        <i class="fas fa-edit"></i> Modifier le montant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Vérification du destinataire -->
+    <div class="modal-overlay" id="verifyReceiverModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-check"></i> Vérification du destinataire</h3>
+            </div>
+            <div class="modal-content">
+                <div class="loading" id="verifyReceiverLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Vérification du destinataire en cours...</p>
+                </div>
+                <div class="modal-message" id="verifyReceiverMessage" style="display: none;">
+                    <h4 id="receiverVerificationTitle">Destinataire trouvé</h4>
+                    <p id="receiverVerificationMessage">Le destinataire a été vérifié avec succès.</p>
+                </div>
+                <div class="modal-actions" id="verifyReceiverActions" style="display: none;">
+                    <button type="button" class="btn-light" onclick="closeVerifyReceiverModal()">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                    <button type="button" class="btn-success" onclick="proceedToConfirmation()">
+                        <i class="fas fa-check-circle"></i> Confirmer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmation du transfert -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-shield-alt"></i> Confirmation du transfert</h3>
+            </div>
+            <div class="modal-content">
+                <div class="modal-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="modal-message">
+                    <h4>Confirmez votre transfert</h4>
+                    <p>Veuillez vérifier les détails de votre transfert avant de confirmer.</p>
+                </div>
+                
+                <div class="transfer-details">
+                    <div class="transfer-summary">
+                        <div class="transfer-amount">
+                            <div class="label">MONTANT À TRANSFÉRER</div>
+                            <div class="value" id="confirmationAmount">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="transfer-direction">
+                        <div class="user-transfer">
+                            <div class="name">De</div>
+                            <div class="id" id="confirmationSenderId">-</div>
+                        </div>
+                        <div class="transfer-arrow">
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </div>
+                        <div class="user-transfer">
+                            <div class="name">Vers</div>
+                            <div class="id" id="confirmationReceiverId">-</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #e8f6f3; border-radius: 8px; text-align: center;">
+                        <div style="color: var(--success); font-weight: 600;">
+                            <i class="fas fa-info-circle"></i> Votre nouveau solde après transfert:
+                        </div>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-top: 5px;">
+                            <span id="newBalanceAfterTransfer">0</span> crédits
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-light" onclick="closeConfirmationModal()">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                    <button type="button" class="btn-success" onclick="executeTransfer()" id="executeTransferBtn">
+                        <i class="fas fa-paper-plane"></i> Exécuter le transfert
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Transfert réussi -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);">
+                <h3><i class="fas fa-check-circle"></i> Transfert réussi !</h3>
+            </div>
+            <div class="modal-content">
+                <div class="modal-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="modal-message">
+                    <h4>Transfert effectué avec succès</h4>
+                    <p>Votre transfert a été traité avec succès. Les fonds ont été crédités sur le compte du destinataire.</p>
+                </div>
+                
+                <div class="transfer-details">
+                    <div class="transfer-summary">
+                        <div class="transfer-amount">
+                            <div class="label">MONTANT TRANSFÉRÉ</div>
+                            <div class="value" id="successAmount">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="transfer-direction">
+                        <div class="user-transfer">
+                            <div class="name">De</div>
+                            <div class="id" id="successSenderId">-</div>
+                        </div>
+                        <div class="transfer-arrow">
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </div>
+                        <div class="user-transfer">
+                            <div class="name">Vers</div>
+                            <div class="id" id="successReceiverId">-</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #e8f6f3; border-radius: 8px; text-align: center;">
+                        <div style="color: var(--success); font-weight: 600;">
+                            <i class="fas fa-wallet"></i> Votre nouveau solde:
+                        </div>
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--success); margin-top: 5px;">
+                            <span id="successNewBalance">0</span> crédits
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-primary" onclick="closeSuccessModal()">
+                        <i class="fas fa-redo"></i> Nouveau transfert
+                    </button>
+                    <button type="button" class="btn-light" onclick="closeSuccessModalAndReset()">
+                        <i class="fas fa-home"></i> Retour à l'accueil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="notification-toast" id="notificationToast">
+        <div class="notification-content">
+            <div class="notification-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="notification-text">
+                <h4 id="toastTitle">Succès</h4>
+                <p id="toastMessage">Opération réussie</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0NRSzHWFd6e2KS8u2it0dP0Y44Dzg4n4",
+            authDomain: "latrou.firebaseapp.com",
+            projectId: "latrou",
+            storageBucket: "latrou.appspot.com",
+            messagingSenderId: "320805997315",
+            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff"
+        };
+
+        // Variables globales
+        let db = null;
+        let currentSenderId = null;
+        let currentSenderCredits = 0;
+        let currentReceiverId = null;
+        let transferAmount = 0;
+        let userToCreate = null;
+
+        // Initialiser Firebase
+        function initializeFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                db = firebase.firestore();
+                console.log("✅ Firebase initialisé");
+                return true;
+            } catch (error) {
+                console.error("❌ Erreur Firebase:", error);
+                showToast('Erreur', 'Connexion à la base de données échouée', 'error');
+                return false;
+            }
+        }
+
+        // Initialiser
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!initializeFirebase()) return;
+
+            // Événements
+            document.getElementById('senderForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await checkSender();
+            });
+
+            document.getElementById('transferForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await verifyTransfer();
+            });
+
+            // Mettre à jour l'affichage du solde
+            document.getElementById('transferAmount').addEventListener('input', function() {
+                document.getElementById('currentBalanceText').textContent = currentSenderCredits;
+            });
+
+            // Vérifier l'URL pour un ID utilisateur
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user');
+            if (userId) {
+                document.getElementById('senderId').value = userId;
+                setTimeout(() => checkSender(), 1000);
+            }
+        });
+
+        // Gestion des étapes
+        function updateProgress(step) {
+            const progressBar = document.getElementById('progressBar');
+            const steps = document.querySelectorAll('.step');
+            
+            steps.forEach((s, index) => {
+                s.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    s.classList.add('completed');
+                } else if (index + 1 === step) {
+                    s.classList.add('active');
+                }
+            });
+            
+            progressBar.style.width = `${((step - 1) / 2) * 100}%`;
+        }
+
+        function nextStep() {
+            if (currentStep < 3) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress(currentStep);
+            }
+        }
+
+        function showStep(step) {
+            document.getElementById('step1Section').style.display = 'none';
+            document.getElementById('step2Section').style.display = 'none';
+            document.getElementById(`step${step}Section`).style.display = 'block';
+        }
+
+        let currentStep = 1;
+
+        // Vérifier l'émetteur
+        async function checkSender() {
+            const senderId = document.getElementById('senderId').value.trim();
+            const checkBtn = document.getElementById('checkSenderBtn');
+            
+            if (!senderId) {
+                showToast('Erreur', 'Veuillez saisir votre ID utilisateur', 'error');
+                return;
+            }
+
+            checkBtn.disabled = true;
+            checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification...';
+
+            try {
+                const docRef = db.collection('sport_credit').doc(senderId);
+                const doc = await docRef.get();
+                
+                if (doc.exists) {
+                    const data = doc.data();
+                    currentSenderId = senderId;
+                    currentSenderCredits = data.credits || 0;
+                    
+                    // Mettre à jour l'affichage
+                    updateSenderDisplay();
+                    
+                    // Activer l'étape suivante
+                    currentStep = 1;
+                    updateProgress(1);
+                    showToast('Succès', `Bonjour ${senderId} !`, 'success');
+                    
+                } else {
+                    userToCreate = senderId;
+                    showUserNotFoundModal(senderId);
+                }
+            } catch (error) {
+                console.error('Erreur vérification:', error);
+                showToast('Erreur', 'Impossible de vérifier le compte', 'error');
+            } finally {
+                checkBtn.disabled = false;
+                checkBtn.innerHTML = '<i class="fas fa-search"></i> Vérifier mon compte';
+            }
+        }
+
+        // Vérifier le transfert
+        async function verifyTransfer() {
+            const receiverId = document.getElementById('receiverId').value.trim();
+            const amount = parseInt(document.getElementById('transferAmount').value);
+            
+            if (!receiverId) {
+                showToast('Erreur', 'Veuillez saisir l\'ID du destinataire', 'error');
+                return;
+            }
+            
+            if (!amount || amount < 1) {
+                showToast('Erreur', 'Montant invalide', 'error');
+                return;
+            }
+            
+            if (!currentSenderId) {
+                showToast('Erreur', 'Veuillez d\'abord vérifier votre compte', 'error');
+                return;
+            }
+            
+            if (receiverId === currentSenderId) {
+                showToast('Erreur', 'Vous ne pouvez pas vous transférer à vous-même', 'error');
+                return;
+            }
+            
+            if (amount > currentSenderCredits) {
+                showInsufficientCreditsModal(amount, currentSenderCredits);
+                return;
+            }
+            
+            transferAmount = amount;
+            currentReceiverId = receiverId;
+            
+            // Vérifier le destinataire
+            showVerifyReceiverModal();
+            await verifyReceiver();
+        }
+
+        // Vérifier le destinataire
+        async function verifyReceiver() {
+            try {
+                const receiverRef = db.collection('sport_credit').doc(currentReceiverId);
+                const receiverDoc = await receiverRef.get();
+                
+                if (receiverDoc.exists) {
+                    document.getElementById('receiverVerificationTitle').textContent = 'Destinataire trouvé';
+                    document.getElementById('receiverVerificationMessage').textContent = 
+                        `Le compte ${currentReceiverId} existe et peut recevoir le transfert.`;
+                } else {
+                    document.getElementById('receiverVerificationTitle').textContent = 'Destinataire non trouvé';
+                    document.getElementById('receiverVerificationMessage').textContent = 
+                        `Le compte ${currentReceiverId} n'existe pas. Voulez-vous créer ce compte ?`;
+                }
+                
+                document.getElementById('verifyReceiverLoading').style.display = 'none';
+                document.getElementById('verifyReceiverMessage').style.display = 'block';
+                document.getElementById('verifyReceiverActions').style.display = 'flex';
+                
+            } catch (error) {
+                console.error('Erreur vérification destinataire:', error);
+                closeVerifyReceiverModal();
+                showToast('Erreur', 'Erreur de vérification', 'error');
+            }
+        }
+
+        // Exécuter le transfert
+        async function executeTransfer() {
+            const executeBtn = document.getElementById('executeTransferBtn');
+            executeBtn.disabled = true;
+            executeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+            
+            try {
+                await db.runTransaction(async (transaction) => {
+                    const senderRef = db.collection('sport_credit').doc(currentSenderId);
+                    const receiverRef = db.collection('sport_credit').doc(currentReceiverId);
+                    
+                    const senderDoc = await transaction.get(senderRef);
+                    const receiverDoc = await transaction.get(receiverRef);
+                    
+                    if (!senderDoc.exists || !receiverDoc.exists) {
+                        throw new Error('Un des comptes n\'existe plus');
+                    }
+                    
+                    const senderCredits = senderDoc.data().credits || 0;
+                    const receiverCredits = receiverDoc.data().credits || 0;
+                    
+                    if (transferAmount > senderCredits) {
+                        throw new Error('Crédits insuffisants');
+                    }
+                    
+                    const newSenderCredits = senderCredits - transferAmount;
+                    const newReceiverCredits = receiverCredits + transferAmount;
+                    
+                    // Mettre à jour les comptes
+                    transaction.update(senderRef, {
+                        credits: newSenderCredits,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    transaction.update(receiverRef, {
+                        credits: newReceiverCredits,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Enregistrer la transaction
+                    const transactionRef = db.collection('transactions').doc();
+                    transaction.set(transactionRef, {
+                        senderId: currentSenderId,
+                        receiverId: currentReceiverId,
+                        amount: transferAmount,
+                        senderOldBalance: senderCredits,
+                        senderNewBalance: newSenderCredits,
+                        receiverOldBalance: receiverCredits,
+                        receiverNewBalance: newReceiverCredits,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        status: 'completed'
+                    });
+                });
+                
+                // Mettre à jour le solde local
+                currentSenderCredits -= transferAmount;
+                document.getElementById('senderBalance').textContent = currentSenderCredits;
+                
+                // Afficher le modal de succès
+                closeConfirmationModal();
+                showSuccessModal();
+                
+            } catch (error) {
+                console.error('Erreur transfert:', error);
+                showToast('Erreur', 'Échec du transfert', 'error');
+            } finally {
+                executeBtn.disabled = false;
+                executeBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Exécuter le transfert';
+            }
+        }
+
+        // Créer un nouvel utilisateur
+        async function createNewUser(userId) {
+            try {
+                await db.collection('sport_credit').doc(userId).set({
+                    credits: 1000,
+                    spent: 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                showToast('Succès', `Compte ${userId} créé avec 1000 crédits`, 'success');
+                return true;
+            } catch (error) {
+                console.error('Erreur création:', error);
+                showToast('Erreur', 'Impossible de créer le compte', 'error');
+                return false;
+            }
+        }
+
+        // Fonctions d'affichage
+        function updateSenderDisplay() {
+            document.getElementById('displaySenderId').textContent = currentSenderId;
+            document.getElementById('displaySenderCredits').textContent = currentSenderCredits;
+            document.getElementById('senderBalance').textContent = currentSenderCredits;
+            document.getElementById('currentBalanceText').textContent = currentSenderCredits;
+            document.getElementById('senderInfo').classList.add('active');
+        }
+
+        // Modals
+        function showUserNotFoundModal(userId) {
+            document.getElementById('notFoundUserId').textContent = userId;
+            document.getElementById('userNotFoundModal').style.display = 'flex';
+        }
+
+        function closeUserNotFoundModal() {
+            document.getElementById('userNotFoundModal').style.display = 'none';
+            userToCreate = null;
+        }
+
+        async function createNewUserFromModal() {
+            if (await createNewUser(userToCreate)) {
+                closeUserNotFoundModal();
+                document.getElementById('senderId').value = userToCreate;
+                setTimeout(() => checkSender(), 500);
+            }
+        }
+
+        function showInsufficientCreditsModal(amount, balance) {
+            const missing = amount - balance;
+            document.getElementById('insufficientAmount').textContent = amount;
+            document.getElementById('currentBalanceModal').textContent = balance;
+            document.getElementById('missingCredits').textContent = missing;
+            document.getElementById('insufficientCreditsModal').style.display = 'flex';
+        }
+
+        function closeInsufficientCreditsModal() {
+            document.getElementById('insufficientCreditsModal').style.display = 'none';
+        }
+
+        function showVerifyReceiverModal() {
+            document.getElementById('verifyReceiverLoading').style.display = 'block';
+            document.getElementById('verifyReceiverMessage').style.display = 'none';
+            document.getElementById('verifyReceiverActions').style.display = 'none';
+            document.getElementById('verifyReceiverModal').style.display = 'flex';
+        }
+
+        function closeVerifyReceiverModal() {
+            document.getElementById('verifyReceiverModal').style.display = 'none';
+        }
+
+        function proceedToConfirmation() {
+            closeVerifyReceiverModal();
+            showConfirmationModal();
+        }
+
+        function showConfirmationModal() {
+            const newBalance = currentSenderCredits - transferAmount;
+            
+            document.getElementById('confirmationAmount').textContent = transferAmount;
+            document.getElementById('confirmationSenderId').textContent = currentSenderId;
+            document.getElementById('confirmationReceiverId').textContent = currentReceiverId;
+            document.getElementById('newBalanceAfterTransfer').textContent = newBalance;
+            
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function showSuccessModal() {
+            const newBalance = currentSenderCredits;
+            
+            document.getElementById('successAmount').textContent = transferAmount;
+            document.getElementById('successSenderId').textContent = currentSenderId;
+            document.getElementById('successReceiverId').textContent = currentReceiverId;
+            document.getElementById('successNewBalance').textContent = newBalance;
+            
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+            resetForm();
+        }
+
+        function closeSuccessModalAndReset() {
+            document.getElementById('successModal').style.display = 'none';
+            resetForm();
+            location.reload();
+        }
+
+        function resetForm() {
+            currentStep = 1;
+            showStep(1);
+            updateProgress(1);
+            
+            document.getElementById('receiverId').value = '';
+            document.getElementById('transferAmount').value = '';
+            document.getElementById('senderInfo').classList.remove('active');
+            currentReceiverId = null;
+            transferAmount = 0;
+        }
+
+        // Toast notification
+        function showToast(title, message, type = 'success') {
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 
+                        type === 'warning' ? 'fa-exclamation-triangle' : 
+                        'fa-info-circle';
+            
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            
+            const toast = document.getElementById('notificationToast');
+            toast.className = `notification-toast ${type}`;
+            toast.querySelector('.notification-icon').innerHTML = `<i class="fas ${icon}"></i>`;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeUserNotFoundModal();
+                closeInsufficientCreditsModal();
+                closeVerifyReceiverModal();
+                closeConfirmationModal();
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>

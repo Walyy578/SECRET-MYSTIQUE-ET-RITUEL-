@@ -19,6 +19,9 @@
             --warning-dark: #d35400;
             --info: #3498db;
             --info-dark: #2980b9;
+            --vip1: #ff6b6b;
+            --vip2: #feca57;
+            --vip3: #48dbfb;
             --light: #f8f9fa;
             --dark: #2c3e50;
             --gray: #95a5a6;
@@ -255,6 +258,7 @@
         .header-stats {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
 
         .stat-item {
@@ -602,6 +606,146 @@
             gap: 10px;
         }
 
+        /* VIP Badges */
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .vip-badge.vip1 { background: var(--vip1); color: white; }
+        .vip-badge.vip2 { background: var(--vip2); color: #333; }
+        .vip-badge.vip3 { background: var(--vip3); color: #333; }
+
+        .vip-toggle-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .vip-toggle {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #e0e0e0;
+        }
+
+        .vip-toggle.active {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .vip-toggle.active.vip1 { box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2); }
+        .vip-toggle.active.vip2 { box-shadow: 0 0 0 3px rgba(254, 202, 87, 0.2); }
+        .vip-toggle.active.vip3 { box-shadow: 0 0 0 3px rgba(72, 219, 251, 0.2); }
+
+        .vip-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .vip-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vip-price {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-top: 10px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* User Info Card */
+        .user-info-card {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a2530 100%);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .user-info-card h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .user-detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .user-detail-item .label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .user-detail-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
         /* Loading & Empty States */
         .loading {
             text-align: center;
@@ -768,6 +912,10 @@
             .modal-actions button {
                 width: 100%;
             }
+            
+            .vip-toggle-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -834,6 +982,9 @@
             </button>
             <button class="tab-button" onclick="showTab('sports')">
                 <i class="fas fa-futbol"></i> Paris Sportifs
+            </button>
+            <button class="tab-button" onclick="showTab('subscriptions')">
+                <i class="fas fa-gem"></i> Abonnements VIP
             </button>
             <button class="tab-button" onclick="showTab('credits')">
                 <i class="fas fa-coins"></i> Gestion Crédits
@@ -1069,6 +1220,114 @@
             </div>
         </div>
 
+        <!-- Subscriptions Tab - Nouvelle section VIP -->
+        <div id="subscriptions" class="tab-content">
+            <div class="credit-summary">
+                <div class="credit-info">
+                    <h3><i class="fas fa-gem"></i> Gestion des Abonnements VIP</h3>
+                    <p>Gérez les niveaux d'abonnement des utilisateurs</p>
+                </div>
+                <div class="spent-amount" id="vipStats">VIP Actifs</div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i> Rechercher un Utilisateur</h2>
+                </div>
+                <form id="vipSearchForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vipEmail">Adresse Email</label>
+                            <input type="email" id="vipEmail" required placeholder="exemple@email.com">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </form>
+            </div>
+
+            <div id="vipUserInfo" style="display: none;">
+                <div class="user-info-card">
+                    <h4><i class="fas fa-user-circle"></i> Informations Utilisateur</h4>
+                    <div class="user-details">
+                        <div class="user-detail-item">
+                            <div class="label">ID Utilisateur</div>
+                            <div class="value" id="vipUserId">-</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="label">Email</div>
+                            <div class="value" id="vipUserEmail">-</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="label">Nom d'utilisateur</div>
+                            <div class="value" id="vipUsername">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-crown"></i> Niveaux VIP</h2>
+                    </div>
+                    <div class="vip-toggle-group">
+                        <div class="vip-toggle" id="vip1Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="vip-name">VIP 1</div>
+                            <div class="vip-price">Accès Premium Basique</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip1Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="vip-toggle" id="vip2Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown" style="color: var(--vip2);"></i>
+                            </div>
+                            <div class="vip-name">VIP 2</div>
+                            <div class="vip-price">Accès Premium Avancé</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip2Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="vip-toggle" id="vip3Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown" style="color: var(--vip3);"></i>
+                            </div>
+                            <div class="vip-name">VIP 3</div>
+                            <div class="vip-price">Accès Premium Total</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip3Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button type="button" class="btn-success" onclick="saveVipChanges()">
+                            <i class="fas fa-save"></i> Enregistrer les modifications
+                        </button>
+                        <button type="button" class="btn-warning" onclick="resetVipChanges()" style="margin-left: 10px;">
+                            <i class="fas fa-undo"></i> Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="vipLoading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Recherche de l'utilisateur...</p>
+            </div>
+
+            <div id="vipError" class="empty-state" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Utilisateur non trouvé</h3>
+                <p>L'adresse email que vous avez saisie ne correspond à aucun utilisateur.</p>
+            </div>
+        </div>
+
         <!-- Credits Tab -->
         <div id="credits" class="tab-content">
             <div class="credit-summary">
@@ -1237,6 +1496,7 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
     <script>
         // Configuration Firebase
@@ -1252,6 +1512,7 @@
         // Initialiser Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
         // Mot de passe administrateur
         const ADMIN_PASSWORD = "@dmin7024476";
@@ -1270,6 +1531,7 @@
         const rechargeForm = document.getElementById('rechargeForm');
         const withdrawForm = document.getElementById('withdrawForm');
         const spentForm = document.getElementById('spentForm');
+        const vipSearchForm = document.getElementById('vipSearchForm');
         
         // Inputs
         const postIdInput = document.getElementById('postId');
@@ -1288,6 +1550,8 @@
         let currentUserDoc = null;
         let currentUserCredits = 0;
         let currentUserSpent = 0;
+        let currentVipUserDoc = null;
+        let currentVipUserData = null;
 
         // Statistiques globales
         let totalPosts = 0;
@@ -1348,6 +1612,9 @@
             }
             if (tabName !== 'spent') {
                 resetSpentSearch();
+            }
+            if (tabName !== 'subscriptions') {
+                resetVipSearch();
             }
         }
 
@@ -1496,6 +1763,127 @@
                 showNotification('Erreur: ' + error.message, 'error');
             }
         });
+
+        // Gestion des abonnements VIP
+        vipSearchForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('vipEmail').value.trim();
+            if (!email) return;
+            
+            try {
+                showVipLoading(true);
+                
+                // Rechercher l'utilisateur par email dans Firebase Auth
+                const userQuery = await db.collection('users').where('email', '==', email).limit(1).get();
+                
+                if (!userQuery.empty) {
+                    const userDoc = userQuery.docs[0];
+                    currentVipUserDoc = userDoc.ref;
+                    currentVipUserData = userDoc.data();
+                    
+                    // Afficher les informations
+                    document.getElementById('vipUserId').textContent = userDoc.id;
+                    document.getElementById('vipUserEmail').textContent = currentVipUserData.email || email;
+                    document.getElementById('vipUsername').textContent = currentVipUserData.username || currentVipUserData.displayName || 'Non défini';
+                    
+                    // Configurer les checkboxes VIP
+                    document.getElementById('vip1Checkbox').checked = currentVipUserData.vip1 === true;
+                    document.getElementById('vip2Checkbox').checked = currentVipUserData.vip2 === true;
+                    document.getElementById('vip3Checkbox').checked = currentVipUserData.vip3 === true;
+                    
+                    // Mettre à jour l'apparence des toggles
+                    updateVipTogglesAppearance();
+                    
+                    document.getElementById('vipUserInfo').style.display = 'block';
+                    document.getElementById('vipError').style.display = 'none';
+                    showNotification('Utilisateur trouvé!', 'success');
+                } else {
+                    document.getElementById('vipUserInfo').style.display = 'none';
+                    document.getElementById('vipError').style.display = 'block';
+                    showNotification('Utilisateur non trouvé', 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+                document.getElementById('vipUserInfo').style.display = 'none';
+                document.getElementById('vipError').style.display = 'block';
+            } finally {
+                showVipLoading(false);
+            }
+        });
+
+        function updateVipTogglesAppearance() {
+            const vip1Checked = document.getElementById('vip1Checkbox').checked;
+            const vip2Checked = document.getElementById('vip2Checkbox').checked;
+            const vip3Checked = document.getElementById('vip3Checkbox').checked;
+            
+            const vip1Toggle = document.getElementById('vip1Toggle');
+            const vip2Toggle = document.getElementById('vip2Toggle');
+            const vip3Toggle = document.getElementById('vip3Toggle');
+            
+            if (vip1Checked) vip1Toggle.classList.add('active');
+            else vip1Toggle.classList.remove('active');
+            
+            if (vip2Checked) vip2Toggle.classList.add('active');
+            else vip2Toggle.classList.remove('active');
+            
+            if (vip3Checked) vip3Toggle.classList.add('active');
+            else vip3Toggle.classList.remove('active');
+        }
+
+        // Écouter les changements des checkboxes VIP
+        document.getElementById('vip1Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+        document.getElementById('vip2Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+        document.getElementById('vip3Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+
+        async function saveVipChanges() {
+            if (!currentVipUserDoc) {
+                showNotification('Recherchez d\'abord un utilisateur', 'warning');
+                return;
+            }
+            
+            const vip1 = document.getElementById('vip1Checkbox').checked;
+            const vip2 = document.getElementById('vip2Checkbox').checked;
+            const vip3 = document.getElementById('vip3Checkbox').checked;
+            
+            try {
+                await currentVipUserDoc.update({
+                    vip1: vip1,
+                    vip2: vip2,
+                    vip3: vip3,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                showNotification('Niveaux VIP mis à jour avec succès!', 'success');
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        }
+
+        function resetVipChanges() {
+            if (!currentVipUserData) {
+                showNotification('Aucun utilisateur sélectionné', 'warning');
+                return;
+            }
+            
+            document.getElementById('vip1Checkbox').checked = currentVipUserData.vip1 === true;
+            document.getElementById('vip2Checkbox').checked = currentVipUserData.vip2 === true;
+            document.getElementById('vip3Checkbox').checked = currentVipUserData.vip3 === true;
+            updateVipTogglesAppearance();
+            showNotification('Réinitialisé aux valeurs enregistrées', 'success');
+        }
+
+        function resetVipSearch() {
+            document.getElementById('vipUserInfo').style.display = 'none';
+            document.getElementById('vipError').style.display = 'none';
+            document.getElementById('vipLoading').style.display = 'none';
+            document.getElementById('vipEmail').value = '';
+            currentVipUserDoc = null;
+            currentVipUserData = null;
+        }
+
+        function showVipLoading(show) {
+            document.getElementById('vipLoading').style.display = show ? 'block' : 'none';
+        }
 
         // Gestion des crédits
         creditForm?.addEventListener('submit', async (e) => {
@@ -1878,6 +2266,10 @@
                 const totalSpent = await calculateTotalSpent();
                 document.getElementById('totalSpent').textContent = totalSpent;
 
+                // Compter les VIP actifs
+                const vipUsersSnapshot = await db.collection('users').where('vip1', '==', true).get();
+                document.getElementById('vipStats').innerHTML = `${vipUsersSnapshot.size} VIP Actifs`;
+
                 // Mettre à jour l'activité récente
                 updateRecentActivity();
             } catch (error) {
@@ -1932,7 +2324,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <p class="item-description">${item.description.substring(0, 100)}...</p>
+                            <p class="item-description">${item.description ? item.description.substring(0, 100) + '...' : ''}</p>
                             <div class="item-id">
                                 Créé le: ${item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('fr-FR') : 'N/A'}
                             </div>
@@ -1979,6 +2371,10 @@
         });
 
         db.collection('sport_credit').onSnapshot(() => {
+            updateDashboardStats();
+        });
+
+        db.collection('users').onSnapshot(() => {
             updateDashboardStats();
         });
 

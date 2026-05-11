@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Règles du Groupe - Rappel officiel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0f1c;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.45;
+            padding: 24px 16px;
+            color: #eef2ff;
+        }
+
+        /* Container principal */
+        .rules-card {
+            max-width: 780px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            backdrop-filter: blur(0px);
+            transition: transform 0.2s ease;
+        }
+
+        /* Bandeau d'avertissement */
+        .alert-header {
+            background: #ff3b30;
+            background: linear-gradient(95deg, #dc2626 0%, #ef4444 100%);
+            padding: 20px 24px;
+            text-align: center;
+            border-bottom: 3px solid #facc15;
+        }
+
+        .alert-header h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .alert-header h1 span {
+            background: #00000055;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .sub {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Contenu */
+        .rules-content {
+            padding: 28px 26px 36px;
+        }
+
+        .rule-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid;
+            border-radius: 1.2rem;
+            margin-bottom: 28px;
+            padding: 18px 20px;
+            transition: all 0.2s;
+            backdrop-filter: blur(2px);
+        }
+
+        .rule-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(4px);
+        }
+
+        /* couleurs spécifiques par règle */
+        .rule-1 { border-left-color: #f97316; }
+        .rule-2 { border-left-color: #3b82f6; }
+        .rule-3 { border-left-color: #10b981; }
+        .rule-4 { border-left-color: #eab308; }
+        .rule-5 { border-left-color: #a855f7; }
+
+        .rule-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .rule-title .badge {
+            font-size: 1.6rem;
+        }
+
+        .rule-desc {
+            padding-left: 8px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #facc15;
+        }
+
+        .rule-details {
+            margin-top: 12px;
+            padding-left: 12px;
+            border-left: 2px dashed rgba(255,255,255,0.2);
+        }
+
+        .rule-details p, .rule-details li {
+            color: #cbd5e6;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .rule-details ul, .rule-details .list {
+            margin: 8px 0 0 20px;
+        }
+
+        .list li {
+            margin: 6px 0;
+        }
+
+        .highlight {
+            background: #1e293b;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-family: monospace;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #facc15;
+            display: inline-block;
+        }
+
+        .contact-info {
+            background: #00000033;
+            border-radius: 60px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            font-weight: 500;
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+        }
+
+        .contact-info a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 1px dotted #ffb347;
+        }
+
+        .contact-info a:hover {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        hr {
+            margin: 22px 0;
+            border-color: #2d3a5e;
+        }
+
+        .footer-thanks {
+            background: #0f172aee;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 18px 20px;
+            margin-top: 20px;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid #2d3a5e;
+        }
+
+        .footer-thanks p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 550px) {
+            .rules-content {
+                padding: 20px 16px;
+            }
+            .rule-title {
+                font-size: 1.2rem;
+            }
+            .alert-header h1 {
+                font-size: 1.3rem;
+            }
+            .contact-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .icon-em {
+            font-size: 1.2rem;
+        }
+
+        strong {
+            color: #facc15;
+        }
+    </style>
+</head>
+<body>
+
+<div class="rules-card">
+    <div class="alert-header">
+        <h1>
+            ⚠️ RÉTABLISSEMENT DES RÈGLES DU GROUPE ⚠️
+        </h1>
+        <div class="sub">Afin de maintenir un bon fonctionnement du groupe, merci de respecter les règles suivantes :</div>
+    </div>
+
+    <div class="rules-content">
+        
+        <!-- Règle 1 -->
+        <div class="rule-item rule-1">
+            <div class="rule-title">
+                <span class="badge">1.</span> ❌ Les causeries inutiles sont interdites
+            </div>
+            <div class="rule-details">
+                <p>📌 <strong>Ce qui n'est pas autorisé :</strong> échanger des salutations entre seulement deux personnes en public, demander des nouvelles personnelles (famille, santé, travail privé).</p>
+                <p>👉 <strong>Rappel :</strong> Ces échanges relèvent de conversations privées. <strong>Faites-les en inbox (MP).</strong></p>
+                <p>✔️ <strong>Exception autorisée :</strong> Vous pouvez toutefois <strong>saluer tout le groupe</strong> collectivement (ex: "Bonjour à tous") sans échanges individuels prolongés.</p>
+                <div class="highlight">🔁 Groupe = espace commun, pas un salon de discussion privé.</div>
+            </div>
+        </div>
+        
+        <!-- Règle 2 -->
+        <div class="rule-item rule-2">
+            <div class="rule-title">
+                <span class="badge">2.</span> ❌ Interdiction de partager des liens, vidéos ou images hors sujet
+            </div>
+            <div class="rule-details">
+                <p>👉 Tout contenu (liens, médias, mèmes, vidéos) doit être en lien direct avec <strong>l’objectif du groupe.</strong></p>
+                <p>📎 Les partages hors contexte ou publicitaires non sollicités sont strictement prohibés. <br> Le non-respect expose à un retrait immédiat.</p>
+            </div>
+        </div>
+        
+        <!-- Règle 3 : Langue -->
+        <div class="rule-item rule-3">
+            <div class="rule-title">
+                <span class="badge">3.</span> 🌍 Langue principale : le français
+            </div>
+            <div class="rule-details">
+                <p>📢 Tous les échanges doivent se faire prioritairement en <strong>français</strong>.</p>
+                <p>⚠️ Si vous utilisez une autre langue (anglais, espagnol, etc.), vous devez <strong>obligatoirement ajouter la traduction en français</strong> à la suite de votre message.</p>
+                <p><em>Exemple : "Good morning everyone → Bonjour à tous"</em></p>
+            </div>
+        </div>
+        
+        <!-- Règle 4 : faux maîtres -->
+        <div class="rule-item rule-4">
+            <div class="rule-title">
+                <span class="badge">4.</span> ⚠️ Attention aux faux “maîtres”
+            </div>
+            <div class="rule-details">
+                <p>🚨 Toute personne se faisant passer pour un maître (spirituel, ésotérique, ou autre) et qui vous contacte en privé pour proposer ses services <strong>doit être signalée immédiatement</strong>.</p>
+                <div class="contact-info">
+                    📢 Signaler à : <strong>Bassirou</strong> 
+                    <a href="tel:+22899567162">📞 @⁨+228 99 56 71 62⁩</a>
+                    <span style="font-size:1rem;"> ou à </span>
+                    <strong>l'administrateur (moi)</strong>
+                </div>
+                <p style="margin-top: 12px;">🔒 Ne répondez pas à ces faux comptes. Protégez les membres du groupe.</p>
+            </div>
+        </div>
+        
+        <!-- Règle 5 : responsabilité personnelle -->
+        <div class="rule-item rule-5">
+            <div class="rule-title">
+                <span class="badge">5.</span> ❗ Responsabilité personnelle
+            </div>
+            <div class="rule-details">
+                <p>👉 Si vous choisissez volontairement de traiter avec un <strong>faux maître</strong> (non vérifié, non recommandé) et que vous vous faites <strong>arnaquer</strong>, <u>nous n’assumons aucune responsabilité</u>.</p>
+                <p>🚫 <strong>Ne venez pas perturber le groupe</strong> avec ce type de problème (plaintes, drama, accusations sans preuve contre des membres).</p>
+                <p>✅ Agissez avec prudence et signalez d'abord les suspects aux responsables.</p>
+                <div class="highlight" style="margin-top: 10px;">Chaque membre est responsable de ses propres décisions financières ou personnelles.</div>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <!-- Message final de collaboration -->
+        <div class="footer-thanks">
+            <p>
+                🙏 Merci à tous pour votre compréhension et votre collaboration 🙏
+            </p>
+            <div style="font-size: 0.85rem; margin-top: 10px; color: #94a3b8;">
+                ⚡ Règles appliquées immédiatement — Groupe sain = progrès pour tous.
+            </div>
+        </div>
+        
+        <!-- mention discrète d'info supplémentaire concernant le contact principal -->
+        <div style="margin-top: 18px; font-size: 0.7rem; text-align: center; opacity: 0.6;">
+            📌 En cas de doute, uniquement Bassirou ou l'admin sont légitimes pour les signalements.
+        </div>
+    </div>
+</div>
+</body>
+</html>
+```

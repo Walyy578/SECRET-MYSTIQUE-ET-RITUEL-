@@ -53,10 +53,7 @@
     nav a:hover { color: #d4af37; }
 
     /* HERO */
-    .hero {
-      text-align: center;
-      padding: 80px 20px 50px;
-    }
+    .hero { text-align: center; padding: 80px 20px 50px; }
     .hero::before {
       content: "﷽";
       font-family: 'Amiri', serif;
@@ -89,10 +86,7 @@
     }
 
     /* SECTION TITRES */
-    .section-titre {
-      text-align: center;
-      margin: 60px 0 30px;
-    }
+    .section-titre { text-align: center; margin: 60px 0 30px; }
     .section-titre h2 {
       font-size: 1.9rem;
       font-weight: 400;
@@ -152,11 +146,7 @@
       margin-bottom: 16px;
       font-weight: 600;
     }
-    .infos h2 {
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: #f5efdd;
-    }
+    .infos h2 { font-size: 2.2rem; font-weight: 400; color: #f5efdd; }
     .nom-arabe {
       font-family: 'Amiri', serif;
       color: #b8952b;
@@ -177,11 +167,7 @@
       font-size: 1.4rem;
       margin-right: 16px;
     }
-    .prix-actuel {
-      font-size: 2.2rem;
-      color: #d4af37;
-      font-weight: 600;
-    }
+    .prix-actuel { font-size: 2.2rem; color: #d4af37; font-weight: 600; }
     .economie {
       display: inline-block;
       border: 1px solid rgba(212,175,55,0.4);
@@ -245,11 +231,7 @@
       color: rgba(212,175,55,0.5);
       margin-bottom: 16px;
     }
-    .carte h3 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #f0e9d8;
-    }
+    .carte h3 { font-size: 1.2rem; font-weight: 400; color: #f0e9d8; }
     .carte .ar {
       font-family: 'Amiri', serif;
       color: #b8952b;
@@ -257,11 +239,7 @@
       direction: rtl;
       margin: 4px 0 10px;
     }
-    .carte .prix-carte {
-      color: #d4af37;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
+    .carte .prix-carte { color: #d4af37; font-size: 1.1rem; font-weight: 600; }
     .btn-mini {
       margin-top: 14px;
       background: transparent;
@@ -279,18 +257,8 @@
     .btn-mini:hover { background: #d4af37; color: #0d0b14; }
 
     /* CITATION */
-    .citation {
-      text-align: center;
-      padding: 40px 20px 70px;
-      max-width: 750px;
-      margin: 0 auto;
-    }
-    .citation p {
-      font-style: italic;
-      color: #b8a06a;
-      font-size: 1.15rem;
-      line-height: 1.8;
-    }
+    .citation { text-align: center; padding: 40px 20px 70px; max-width: 750px; margin: 0 auto; }
+    .citation p { font-style: italic; color: #b8a06a; font-size: 1.15rem; line-height: 1.8; }
     .citation span {
       display: block;
       margin-top: 12px;
@@ -299,6 +267,7 @@
       letter-spacing: 2px;
     }
 
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 35px 20px;
@@ -380,21 +349,10 @@
       border-radius: 12px;
       text-align: center;
     }
-    .recap .nom-produit {
-      color: #f0e9d8;
-      font-size: 1.1rem;
-    }
-    .recap .prix-produit {
-      color: #d4af37;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-top: 4px;
-    }
+    .recap .nom-produit { color: #f0e9d8; font-size: 1.1rem; }
+    .recap .prix-produit { color: #d4af37; font-size: 1.3rem; font-weight: 600; margin-top: 4px; }
 
-    .champ {
-      margin-bottom: 16px;
-      text-align: left;
-    }
+    .champ { margin-bottom: 16px; text-align: left; }
     .champ label {
       display: block;
       font-size: 0.8rem;
@@ -440,23 +398,21 @@
       transform: translateY(-2px);
       box-shadow: 0 12px 30px rgba(212,175,55,0.4);
     }
-
-    .message-succes {
-      display: none;
-      text-align: center;
-      padding: 10px 0;
+    .btn-valider:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
+
+    .message-succes { display: none; text-align: center; padding: 10px 0; }
     .message-succes .check {
       font-size: 2.5rem;
       color: #d4af37;
       display: block;
       margin-bottom: 12px;
     }
-    .message-succes p {
-      color: #e8e2d4;
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
+    .message-succes p { color: #e8e2d4; font-size: 1.05rem; line-height: 1.7; }
 
     @media (max-width: 768px) {
       header { padding: 18px 22px; flex-direction: column; gap: 12px; }
@@ -603,7 +559,7 @@
             <input type="email" id="email" required placeholder="exemple@email.com">
           </div>
 
-          <button type="submit" class="btn-valider">Valider la commande</button>
+          <button type="submit" class="btn-valider" id="btnValider">Valider la commande</button>
         </form>
       </div>
 
@@ -616,6 +572,10 @@
   </div>
 
   <script>
+    /* ===== CONFIGURATION TELEGRAM ===== */
+    const TELEGRAM_TOKEN = "8945469400:AAG5A64d7WMCwYk-F9Mx8Ml3LomLD1_uYp4";
+    const TELEGRAM_CHAT_ID = "1741959003";
+
     let produitSelectionne = { nom: "", prix: 0 };
 
     function ouvrirCommande(nom, prix) {
@@ -629,6 +589,10 @@
       document.getElementById('messageSucces').style.display = 'none';
       document.getElementById('formCommande').reset();
 
+      const btn = document.getElementById('btnValider');
+      btn.disabled = false;
+      btn.textContent = "Valider la commande";
+
       document.getElementById('modalOverlay').classList.add('actif');
     }
 
@@ -636,33 +600,63 @@
       document.getElementById('modalOverlay').classList.remove('actif');
     }
 
-    function validerCommande(e) {
+    async function validerCommande(e) {
       e.preventDefault();
 
       const nom = document.getElementById('nom').value.trim();
       const prenom = document.getElementById('prenom').value.trim();
       const email = document.getElementById('email').value.trim();
 
-      // Message de confirmation
-      document.getElementById('texteSucces').innerHTML =
-        "Merci <strong>" + prenom + " " + nom + "</strong> 🌙<br><br>" +
-        "Votre commande de <strong>" + produitSelectionne.nom + "</strong> " +
-        "(" + produitSelectionne.prix.toLocaleString('fr-FR') + " FCFA) " +
-        "a bien été enregistrée.<br><br>" +
-        "Un email de confirmation sera envoyé à :<br><strong>" + email + "</strong>";
+      const btn = document.getElementById('btnValider');
+      btn.disabled = true;
+      btn.textContent = "Envoi en cours…";
 
-      document.getElementById('blocFormulaire').style.display = 'none';
-      document.getElementById('messageSucces').style.display = 'block';
+      // Message envoyé sur Telegram
+      const message =
+        "🌙 *NOUVELLE COMMANDE — Asrar Al-Nour*\n\n" +
+        "🧴 *Parfum :* " + produitSelectionne.nom + "\n" +
+        "💰 *Prix :* " + produitSelectionne.prix.toLocaleString('fr-FR') + " FCFA\n\n" +
+        "👤 *Client :*\n" +
+        "• Nom : " + nom + "\n" +
+        "• Prénom : " + prenom + "\n" +
+        "• Email : " + email + "\n\n" +
+        "📅 " + new Date().toLocaleString('fr-FR') + "\n" +
+        "⏳ _À contacter pour finaliser la commande._";
 
-      // 👉 Ici tu pourras plus tard :
-      // - envoyer les données à un serveur
-      // - rediriger vers WhatsApp avec les infos
-      // Exemple :
-      // window.location.href = "https://wa.me/226XXXXXXXX?text=" +
-      //   encodeURIComponent("Commande: " + produitSelectionne.nom + " - " + prenom + " " + nom + " - " + email);
+      try {
+        const url = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage";
+        const reponse = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
+          })
+        });
+
+        if (!reponse.ok) throw new Error("Erreur Telegram");
+
+        // Succès → message au client
+        document.getElementById('texteSucces').innerHTML =
+          "Merci <strong>" + prenom + "</strong> 🌙<br><br>" +
+          "Votre commande de <strong>" + produitSelectionne.nom + "</strong> " +
+          "(" + produitSelectionne.prix.toLocaleString('fr-FR') + " FCFA) " +
+          "a bien été enregistrée.<br><br>" +
+          "📧 <strong>Vous recevrez un mail dans les 5 minutes</strong> " +
+          "à l'adresse <strong>" + email + "</strong> " +
+          "pour finaliser la commande.";
+
+        document.getElementById('blocFormulaire').style.display = 'none';
+        document.getElementById('messageSucces').style.display = 'block';
+
+      } catch (err) {
+        alert("❌ Une erreur est survenue lors de l'envoi de la commande. Réessaie dans un instant.");
+        btn.disabled = false;
+        btn.textContent = "Valider la commande";
+      }
     }
 
-    // Fermer en cliquant en dehors du modal
     document.getElementById('modalOverlay').addEventListener('click', function(e) {
       if (e.target === this) fermerCommande();
     });

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asrar Al-Nour — Boutique de Parfums d'Exception</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Amiri&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #0d0b14;
+      color: #e8e2d4;
+      background-image:
+        radial-gradient(circle at 15% 5%, rgba(212,175,55,0.08), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(120,80,180,0.10), transparent 45%);
+    }
+
+    /* HEADER */
+    header {
+      padding: 26px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(212,175,55,0.25);
+      position: sticky; top: 0;
+      background: rgba(13,11,20,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .logo .arabe {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      color: #d4af37;
+      direction: rtl;
+    }
+    .logo .francais {
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #b8a06a;
+    }
+    nav a {
+      color: #cfc7b5;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #d4af37; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+    }
+    .hero::before {
+      content: "﷽";
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      color: rgba(212,175,55,0.35);
+      display: block;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      color: #f3ecd8;
+    }
+    .hero .sous-titre {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      color: #d4af37;
+      margin-top: 10px;
+      direction: rtl;
+    }
+    .hero p {
+      color: #9c9484;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-style: italic;
+      letter-spacing: 1px;
+      max-width: 650px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    /* SECTION TITRES */
+    .section-titre {
+      text-align: center;
+      margin: 60px 0 30px;
+    }
+    .section-titre h2 {
+      font-size: 1.9rem;
+      font-weight: 400;
+      color: #f3ecd8;
+      letter-spacing: 2px;
+    }
+    .section-titre span {
+      display: block;
+      color: #d4af37;
+      font-family: 'Amiri', serif;
+      font-size: 1.1rem;
+      margin-top: 6px;
+      direction: rtl;
+    }
+
+    /* PRODUIT VEDETTE */
+    .produit {
+      max-width: 1080px;
+      margin: 0 auto 60px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 55px;
+      background: linear-gradient(160deg, #17131f 0%, #100d18 100%);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 20px;
+      padding: 50px;
+      align-items: center;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .produit::after {
+      content: "";
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+    }
+    .produit img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 10px 40px rgba(212,175,55,0.15);
+    }
+    .infos { flex: 1; min-width: 280px; z-index: 2; }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg,#d4af37,#a9822b);
+      color: #0d0b14;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .infos h2 {
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: #f5efdd;
+    }
+    .nom-arabe {
+      font-family: 'Amiri', serif;
+      color: #b8952b;
+      font-size: 1.4rem;
+      margin-top: 8px;
+      direction: rtl;
+    }
+    .description {
+      color: #a8a091;
+      margin: 20px 0;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+    .prix { margin: 26px 0; }
+    .prix-barre {
+      text-decoration: line-through;
+      color: #6b6558;
+      font-size: 1.4rem;
+      margin-right: 16px;
+    }
+    .prix-actuel {
+      font-size: 2.2rem;
+      color: #d4af37;
+      font-weight: 600;
+    }
+    .economie {
+      display: inline-block;
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #d4af37;
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+    .btn-commander {
+      background: linear-gradient(135deg, #d4af37, #a9822b);
+      color: #0d0b14;
+      border: none;
+      padding: 17px 50px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.35s;
+      margin-top: 18px;
+      box-shadow: 0 8px 25px rgba(212,175,55,0.25);
+    }
+    .btn-commander:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 35px rgba(212,175,55,0.45);
+    }
+
+    /* GRILLE COLLECTION */
+    .collection {
+      max-width: 1150px;
+      margin: 0 auto 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      padding: 0 30px;
+    }
+    .carte {
+      background: #16121e;
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      transition: 0.35s;
+    }
+    .carte:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212,175,55,0.5);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    }
+    .carte .visuel {
+      height: 160px;
+      border-radius: 12px;
+      background: linear-gradient(150deg, #221b2f, #141020);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Amiri', serif;
+      font-size: 2rem;
+      color: rgba(212,175,55,0.5);
+      margin-bottom: 16px;
+    }
+    .carte h3 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #f0e9d8;
+    }
+    .carte .ar {
+      font-family: 'Amiri', serif;
+      color: #b8952b;
+      font-size: 0.95rem;
+      direction: rtl;
+      margin: 4px 0 10px;
+    }
+    .carte .prix-carte {
+      color: #d4af37;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .btn-mini {
+      margin-top: 14px;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.5);
+      color: #d4af37;
+      padding: 9px 26px;
+      border-radius: 30px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-mini:hover { background: #d4af37; color: #0d0b14; }
+
+    /* CITATION */
+    .citation {
+      text-align: center;
+      padding: 40px 20px 70px;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+    .citation p {
+      font-style: italic;
+      color: #b8a06a;
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+    .citation span {
+      display: block;
+      margin-top: 12px;
+      color: #7a715f;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      color: #6b6558;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+    footer .arabe {
+      font-family: 'Amiri', serif;
+      color: #b8952b;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 8px;
+      direction: rtl;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 18px 22px; flex-direction: column; gap: 12px; }
+      nav a { margin: 0 9px; font-size: 0.75rem; }
+      .produit { padding: 28px; gap: 30px; }
+      .hero h1 { font-size: 2rem; }
+      .infos h2 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="arabe">أسرار النور</div>
+      <div class="francais">Asrar Al-Nour · Parfums</div>
+    </div>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#collection">Collection</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>ASRAR AL-NOUR</h1>
+    <p class="sous-titre">أسرار النور</p>
+    <p>Boutique de parfums d'exception — des fragrances qui murmurent les secrets de la Lumière.</p>
+  </section>
+
+  <!-- PRODUIT VEDETTE -->
+  <div class="section-titre">
+    <h2>Parfum en Vedette</h2>
+    <span>عطر مميّز</span>
+  </div>
+
+  <section class="produit">
+    <!-- Remplace par le lien réel de ton image -->
+    <img src="https://i.postimg.cc/1zZgsY5r/IMG-20261004-WA0072.jpg" alt="Daw'āt al-Bātin — ضوء الباطن">
+
+    <div class="infos">
+      <span class="badge">Édition Limitée</span>
+      <h2>Daw'āt al-Bātin</h2>
+      <p class="nom-arabe">ضوء الباطن</p>
+
+      <p class="description">
+        « Les Lumières de l'Intérieur. » Une fragrance profonde et mystique :
+        oud, ambre, musc blanc et une touche de rose de Taïf. Un sillage qui
+        évoque la lumière cachée de l'âme — le <em>bātin</em>, ce qui se
+        dérobe au regard pour ne se révéler qu'à celui qui sait sentir.
+      </p>
+
+      <div class="prix">
+        <span class="prix-barre">175 000 FCFA</span>
+        <span class="prix-actuel">125 000 FCFA</span>
+        <br>
+        <span class="economie">Vous économisez 50 000 FCFA</span>
+      </div>
+
+      <button class="btn-commander" onclick="commander('Daw\'āt al-Bātin', 125000)">Commander</button>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <div class="section-titre" id="collection">
+    <h2>Notre Collection</h2>
+    <span>مجموعتنا</span>
+  </div>
+
+  <section class="collection">
+    <div class="carte">
+      <div class="visuel">نور</div>
+      <h3>Nour Al-Layl</h3>
+      <p class="ar">نور الليل</p>
+      <p class="prix-carte">95 000 FCFA</p>
+      <button class="btn-mini" onclick="commander('Nour Al-Layl', 95000)">Commander</button>
+    </div>
+
+    <div class="carte">
+      <div class="visuel">سرّ</div>
+      <h3>Sirr Al-Oud</h3>
+      <p class="ar">سرّ العود</p>
+      <p class="prix-carte">110 000 FCFA</p>
+      <button class="btn-mini" onclick="commander('Sirr Al-Oud', 110000)">Commander</button>
+    </div>
+
+    <div class="carte">
+      <div class="visuel">روح</div>
+      <h3>Rûh Al-Misk</h3>
+      <p class="ar">روح المسك</p>
+      <p class="prix-carte">88 000 FCFA</p>
+      <button class="btn-mini" onclick="commander('Rûh Al-Misk', 88000)">Commander</button>
+    </div>
+
+    <div class="carte">
+      <div class="visuel">هدى</div>
+      <h3>Hudâ Al-Ambar</h3>
+      <p class="ar">هدى العنبر</p>
+      <p class="prix-carte">135 000 FCFA</p>
+      <button class="btn-mini" onclick="commander('Hudâ Al-Ambar', 135000)">Commander</button>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <section class="citation">
+    <p>« Le zāhir se voit, le bātin se ressent. »</p>
+    <span>— Inspiration soufie</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="arabe">أسرار النور</span>
+    © 2026 Asrar Al-Nour — Boutique de parfums. Tous droits réservés.
+  </footer>
+
+  <script>
+    function commander(nom, prix) {
+      alert(
+        "Commande — Asrar Al-Nour\n\n" +
+        "Parfum : " + nom + "\n" +
+        "Prix : " + prix.toLocaleString('fr-FR') + " FCFA\n\n" +
+        "Nous vous contacterons pour finaliser la livraison."
+      );
+      // Pour WhatsApp :
+      // window.location.href = "https://wa.me/226XXXXXXXX?text=Salam,%20je%20souhaite%20commander%20" + encodeURIComponent(nom) + "%20à%20" + prix + "%20FCFA";
+    }
+  </script>
+
+</body>
+</html>

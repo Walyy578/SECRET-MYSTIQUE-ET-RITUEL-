@@ -316,12 +316,155 @@
       direction: rtl;
     }
 
+    /* ====== MODAL COMMANDE ====== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,4,10,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.actif { display: flex; }
+
+    .modal {
+      background: linear-gradient(160deg, #1b1626 0%, #100d18 100%);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 20px;
+      max-width: 460px;
+      width: 100%;
+      padding: 38px 34px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      position: relative;
+      animation: apparition 0.35s ease;
+    }
+    @keyframes apparition {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal .fermer {
+      position: absolute;
+      top: 14px; right: 18px;
+      background: none;
+      border: none;
+      color: #b8a06a;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .modal .fermer:hover { color: #d4af37; }
+
+    .modal h3 {
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: #f5efdd;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .modal .arabe-titre {
+      font-family: 'Amiri', serif;
+      color: #d4af37;
+      text-align: center;
+      display: block;
+      font-size: 1.1rem;
+      margin-top: 4px;
+      direction: rtl;
+    }
+    .recap {
+      margin: 22px 0 26px;
+      padding: 16px 18px;
+      border: 1px dashed rgba(212,175,55,0.35);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .recap .nom-produit {
+      color: #f0e9d8;
+      font-size: 1.1rem;
+    }
+    .recap .prix-produit {
+      color: #d4af37;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .champ {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .champ label {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b8a06a;
+      margin-bottom: 6px;
+    }
+    .champ input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0d0b14;
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 10px;
+      color: #f0e9d8;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .champ input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+
+    .btn-valider {
+      width: 100%;
+      background: linear-gradient(135deg, #d4af37, #a9822b);
+      color: #0d0b14;
+      border: none;
+      padding: 15px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.35s;
+      margin-top: 8px;
+    }
+    .btn-valider:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212,175,55,0.4);
+    }
+
+    .message-succes {
+      display: none;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .message-succes .check {
+      font-size: 2.5rem;
+      color: #d4af37;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .message-succes p {
+      color: #e8e2d4;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
     @media (max-width: 768px) {
       header { padding: 18px 22px; flex-direction: column; gap: 12px; }
       nav a { margin: 0 9px; font-size: 0.75rem; }
       .produit { padding: 28px; gap: 30px; }
       .hero h1 { font-size: 2rem; }
       .infos h2 { font-size: 1.7rem; }
+      .modal { padding: 30px 24px; }
     }
   </style>
 </head>
@@ -354,7 +497,6 @@
   </div>
 
   <section class="produit">
-    <!-- Remplace par le lien réel de ton image -->
     <img src="https://i.postimg.cc/1zZgsY5r/IMG-20261004-WA0072.jpg" alt="Daw'āt al-Bātin — ضوء الباطن">
 
     <div class="infos">
@@ -376,7 +518,7 @@
         <span class="economie">Vous économisez 50 000 FCFA</span>
       </div>
 
-      <button class="btn-commander" onclick="commander('Daw\'āt al-Bātin', 125000)">Commander</button>
+      <button class="btn-commander" onclick="ouvrirCommande('Daw\'āt al-Bātin', 125000)">Commander</button>
     </div>
   </section>
 
@@ -392,7 +534,7 @@
       <h3>Nour Al-Layl</h3>
       <p class="ar">نور الليل</p>
       <p class="prix-carte">95 000 FCFA</p>
-      <button class="btn-mini" onclick="commander('Nour Al-Layl', 95000)">Commander</button>
+      <button class="btn-mini" onclick="ouvrirCommande('Nour Al-Layl', 95000)">Commander</button>
     </div>
 
     <div class="carte">
@@ -400,7 +542,7 @@
       <h3>Sirr Al-Oud</h3>
       <p class="ar">سرّ العود</p>
       <p class="prix-carte">110 000 FCFA</p>
-      <button class="btn-mini" onclick="commander('Sirr Al-Oud', 110000)">Commander</button>
+      <button class="btn-mini" onclick="ouvrirCommande('Sirr Al-Oud', 110000)">Commander</button>
     </div>
 
     <div class="carte">
@@ -408,7 +550,7 @@
       <h3>Rûh Al-Misk</h3>
       <p class="ar">روح المسك</p>
       <p class="prix-carte">88 000 FCFA</p>
-      <button class="btn-mini" onclick="commander('Rûh Al-Misk', 88000)">Commander</button>
+      <button class="btn-mini" onclick="ouvrirCommande('Rûh Al-Misk', 88000)">Commander</button>
     </div>
 
     <div class="carte">
@@ -416,7 +558,7 @@
       <h3>Hudâ Al-Ambar</h3>
       <p class="ar">هدى العنبر</p>
       <p class="prix-carte">135 000 FCFA</p>
-      <button class="btn-mini" onclick="commander('Hudâ Al-Ambar', 135000)">Commander</button>
+      <button class="btn-mini" onclick="ouvrirCommande('Hudâ Al-Ambar', 135000)">Commander</button>
     </div>
   </section>
 
@@ -432,17 +574,98 @@
     © 2026 Asrar Al-Nour — Boutique de parfums. Tous droits réservés.
   </footer>
 
+  <!-- ====== MODAL COMMANDE ====== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="fermer" onclick="fermerCommande()">×</button>
+
+      <!-- Formulaire -->
+      <div id="blocFormulaire">
+        <h3>Finaliser la commande</h3>
+        <span class="arabe-titre">إتمام الطلب</span>
+
+        <div class="recap">
+          <div class="nom-produit" id="recapNom">—</div>
+          <div class="prix-produit" id="recapPrix">—</div>
+        </div>
+
+        <form id="formCommande" onsubmit="validerCommande(event)">
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" required placeholder="Votre nom">
+          </div>
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" required placeholder="Votre prénom">
+          </div>
+          <div class="champ">
+            <label for="email">Adresse email</label>
+            <input type="email" id="email" required placeholder="exemple@email.com">
+          </div>
+
+          <button type="submit" class="btn-valider">Valider la commande</button>
+        </form>
+      </div>
+
+      <!-- Message de succès -->
+      <div class="message-succes" id="messageSucces">
+        <span class="check">✓</span>
+        <p id="texteSucces"></p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function commander(nom, prix) {
-      alert(
-        "Commande — Asrar Al-Nour\n\n" +
-        "Parfum : " + nom + "\n" +
-        "Prix : " + prix.toLocaleString('fr-FR') + " FCFA\n\n" +
-        "Nous vous contacterons pour finaliser la livraison."
-      );
-      // Pour WhatsApp :
-      // window.location.href = "https://wa.me/226XXXXXXXX?text=Salam,%20je%20souhaite%20commander%20" + encodeURIComponent(nom) + "%20à%20" + prix + "%20FCFA";
+    let produitSelectionne = { nom: "", prix: 0 };
+
+    function ouvrirCommande(nom, prix) {
+      produitSelectionne = { nom, prix };
+
+      document.getElementById('recapNom').textContent = nom;
+      document.getElementById('recapPrix').textContent =
+        prix.toLocaleString('fr-FR') + " FCFA";
+
+      document.getElementById('blocFormulaire').style.display = 'block';
+      document.getElementById('messageSucces').style.display = 'none';
+      document.getElementById('formCommande').reset();
+
+      document.getElementById('modalOverlay').classList.add('actif');
     }
+
+    function fermerCommande() {
+      document.getElementById('modalOverlay').classList.remove('actif');
+    }
+
+    function validerCommande(e) {
+      e.preventDefault();
+
+      const nom = document.getElementById('nom').value.trim();
+      const prenom = document.getElementById('prenom').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      // Message de confirmation
+      document.getElementById('texteSucces').innerHTML =
+        "Merci <strong>" + prenom + " " + nom + "</strong> 🌙<br><br>" +
+        "Votre commande de <strong>" + produitSelectionne.nom + "</strong> " +
+        "(" + produitSelectionne.prix.toLocaleString('fr-FR') + " FCFA) " +
+        "a bien été enregistrée.<br><br>" +
+        "Un email de confirmation sera envoyé à :<br><strong>" + email + "</strong>";
+
+      document.getElementById('blocFormulaire').style.display = 'none';
+      document.getElementById('messageSucces').style.display = 'block';
+
+      // 👉 Ici tu pourras plus tard :
+      // - envoyer les données à un serveur
+      // - rediriger vers WhatsApp avec les infos
+      // Exemple :
+      // window.location.href = "https://wa.me/226XXXXXXXX?text=" +
+      //   encodeURIComponent("Commande: " + produitSelectionne.nom + " - " + prenom + " " + nom + " - " + email);
+    }
+
+    // Fermer en cliquant en dehors du modal
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) fermerCommande();
+    });
   </script>
 
 </body>

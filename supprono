@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppression de compte — Djinn Prono</title>
+    <meta name="description" content="Demandez la suppression de votre compte et de vos données personnelles sur Djinn Prono.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0D001A 0%, #1A0033 50%, #0D001A 100%);
+            color: #E8E0F5;
+            min-height: 100vh;
+            line-height: 1.75;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(45, 27, 105, 0.45);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px 32px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #FFD700, #9D4EDD, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #9D8BBF;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        h2 {
+            font-size: 18px;
+            color: #FFD700;
+            margin: 28px 0 12px;
+            padding-left: 12px;
+            border-left: 4px solid #9D4EDD;
+        }
+        p { margin-bottom: 14px; color: #D0C4E8; font-size: 15px; }
+        ul { margin: 12px 0 18px 24px; }
+        li { margin-bottom: 8px; color: #D0C4E8; font-size: 15px; }
+        a { color: #9D4EDD; text-decoration: none; }
+        a:hover { color: #FFD700; text-decoration: underline; }
+        .box {
+            background: rgba(13, 0, 26, 0.6);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        .box p { margin-bottom: 0; }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            color: #0D001A;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+            margin-top: 8px;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255, 215, 0, 0.5); }
+        .warning {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #FFD700;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            font-size: 14px;
+            color: #E8E0F5;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            font-size: 13px;
+            color: #6B5B8A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suppression de compte</h1>
+        <p class="subtitle">Application : <strong>Djinn Prono</strong> · Dernière mise à jour : Octobre 2026</p>
+
+        <h2>1. Données concernées</h2>
+        <p>Lors de la suppression de votre compte Djinn Prono, les données suivantes seront définitivement effacées :</p>
+        <ul>
+            <li>Votre adresse e-mail et votre nom (via Firebase Authentication).</li>
+            <li>Votre photo de profil (si vous en avez téléchargé une).</li>
+            <li>Votre historique de pronostics et vos préférences enregistrées dans l'application.</li>
+        </ul>
+
+        <h2>2. Comment demander la suppression</h2>
+        <p><strong>Méthode recommandée (la plus rapide) :</strong> supprimez directement votre compte depuis l'application Djinn Prono.</p>
+        <div class="box">
+            <p>Ouvrez l'application → <strong>Paramètres / Profil</strong> → <strong>Supprimer mon compte</strong>. La suppression est immédiate et irréversible.</p>
+        </div>
+        <p>Si vous ne pouvez plus accéder à l'application, envoyez une demande par e-mail :</p>
+        <div class="box">
+            <p>📧 <strong>E-mail :</strong> <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Djinn%20Prono">muslimwalyy@gmail.com</a></p>
+            <p>Objet : <strong>Demande de suppression de compte — Djinn Prono</strong></p>
+            <p>Indiquez l'adresse e-mail associée à votre compte Google utilisé pour vous connecter.</p>
+        </div>
+
+        <h2>3. Délai de traitement</h2>
+        <p>Les demandes envoyées par e-mail sont traitées dans un délai maximum de <strong>30 jours</strong>. Vous recevrez une confirmation une fois la suppression effectuée.</p>
+
+        <h2>4. Conséquences de la suppression</h2>
+        <div class="warning">
+            ⚠️ La suppression de votre compte est <strong>définitive et irréversible</strong>. Vous perdrez l'accès à tous vos pronostics, historiques et préférences. Aucune donnée ne pourra être récupérée après suppression.
+        </div>
+
+        <div style="text-align: center; margin-top: 32px;">
+            <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Djinn%20Prono" class="btn">
+                📧 Envoyer une demande par e-mail
+            </a>
+        </div>
+
+        <footer>
+            © 2026 Djinn Prono — Tous droits réservés. · 
+            <a href="/privacyprono">Politique de confidentialité</a>
+        </footer>
+    </div>
+</body>
+</html>

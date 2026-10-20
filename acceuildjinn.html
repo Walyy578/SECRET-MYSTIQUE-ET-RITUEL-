@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djinn Prono — Pronostics Sportifs & Statistiques</title>
+    <meta name="description" content="Djinn Prono : vos pronostics sportifs et statistiques en toute simplicité. Analyses fiables, historique des résultats, prédictions sportives.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0D001A 0%, #1A0033 50%, #0D001A 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER / HERO ===== */
+        .hero {
+            padding: 80px 20px 60px;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(157, 78, 221, 0.25), transparent 70%);
+        }
+
+        .hero-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #FFD700, #9D4EDD, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .hero p.slogan {
+            font-size: 18px;
+            color: #C9B8E8;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            color: #0D001A;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255, 215, 0, 0.5);
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #FFD700;
+            margin-bottom: 12px;
+        }
+
+        .features > p {
+            text-align: center;
+            color: #C9B8E8;
+            margin-bottom: 48px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(45, 27, 105, 0.45);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 20px;
+            padding: 32px 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 215, 0, 0.7);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #C9B8E8;
+            font-size: 15px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(13, 0, 26, 0.9);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 40px 20px 24px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        footer .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: #FFD700;
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: #9D4EDD;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+
+        footer .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        footer .copyright {
+            color: #6B5B8A;
+            font-size: 13px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 30px; }
+            .hero p.slogan { font-size: 16px; }
+            .features h2 { font-size: 24px; }
+            .btn-primary { padding: 14px 28px; font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-logo">🔮</div>
+        <h1>Djinn Prono</h1>
+        <p class="slogan">Vos pronostics sportifs et statistiques en toute simplicité.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.pronostic.parimystique" class="btn-primary">
+            ⬇️ Télécharger l'application
+        </a>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <h2>Pourquoi choisir Djinn Prono ?</h2>
+        <p>Des pronostics fiables, des statistiques claires, et une expérience utilisateur optimale.</p>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Analyses sportives</h3>
+                <p>Des analyses détaillées basées sur les statistiques réelles des équipes et des joueurs.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Pronostics fiables</h3>
+                <p>Des prédictions préparées avec soin, pour vous aider à prendre les meilleures décisions.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📜</div>
+                <h3>Historique des résultats</h3>
+                <p>Consultez l'historique complet de nos pronostics pour évaluer leur performance dans le temps.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔒</div>
+                <h3>Connexion sécurisée</h3>
+                <p>Connectez-vous avec Google en toute sécurité. Vos données sont protégées via Firebase.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="brand">Djinn Prono</div>
+        <div class="links">
+            <a href="mailto:muslimwalyy@gmail.com">📧 muslimwalyy@gmail.com</a>
+            <a href="/privacyprono">🔒 Politique de confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Djinn Prono — Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

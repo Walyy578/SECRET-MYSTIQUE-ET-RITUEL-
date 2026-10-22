@@ -15,6 +15,20 @@
         .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
         .file-input-btn { background-color: #4B0082; color: white; padding: 8px; border-radius: 8px; text-align: center; font-size: 12px; border: 1px dashed #FFD700; cursor: pointer; }
         .btn-action { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
+        
+        .team-dropdown {
+            position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+            background-color: #2D1B69; border: 1px solid #FFD700;
+            max-height: 250px; overflow-y: auto; border-radius: 8px; margin-top: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+        }
+        .team-dropdown-item {
+            display: flex; align-items: center; gap: 10px; padding: 8px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .team-dropdown-item:hover { background-color: rgba(255,215,0,0.2); }
+
+        .tab-btn { transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .tab-btn.active { border-bottom-color: #FFD700; color: #FFD700; font-weight: bold; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-6">
@@ -52,6 +66,23 @@
             </div>
         </div>
 
+        <!-- ⭐ NOUVELLE SECTION : NOTIFICATIONS PUSH ⭐ -->
+        <div class="bg-blue-900/40 border border-blue-600 rounded-2xl p-5 mb-6">
+            <h2 class="text-lg font-bold text-blue-400 mb-2">🔔 Envoyer une Notification Push</h2>
+            <div class="space-y-3 mt-3">
+                <input type="text" id="notif-titre" placeholder="Titre de la notification (ex: Alerte Match !)" class="input-field w-full p-2 rounded-lg">
+                <textarea id="notif-message" rows="2" placeholder="Message (ex: Un nouveau pronostic VIP vient d'être publié !)" class="input-field w-full p-2 rounded-lg"></textarea>
+                <input type="url" id="notif-image" placeholder="URL de l'image (Optionnel)" class="input-field w-full p-2 rounded-lg">
+                
+                <div class="flex flex-col md:flex-row gap-3 pt-2">
+                    <input type="text" id="notif-target-uid" placeholder="UID spécifique (Optionnel)" class="input-field p-2 rounded-lg flex-1">
+                    <button id="btn-send-notif-all" class="btn-gold py-2 px-6 rounded-lg whitespace-nowrap">📢 Envoyer à TOUS</button>
+                    <button id="btn-send-notif-one" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-lg transition whitespace-nowrap">🎯 Envoyer à 1 Utilisateur</button>
+                </div>
+            </div>
+            <p id="notif-status" class="text-sm mt-3 hidden"></p>
+        </div>
+
         <!-- SECTION : GESTION MANUELLE DES VIP -->
         <div class="bg-purple-900/40 border border-yellow-600 rounded-2xl p-5 mb-6">
             <h2 class="text-lg font-bold text-yellow-500 mb-2">Activation VIP Manuelle (WhatsApp)</h2>
@@ -78,29 +109,39 @@
                 <input type="hidden" id="edit-twin-id" value="false">
                 
                 <form id="match-form" class="space-y-3" autocomplete="off">
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-xs text-gray-300 mb-1">Équipe Domicile</label>
-                            <input type="text" id="equipeDomicile" list="liste-equipes" class="input-field w-full p-2 rounded-lg" required oninput="verifierEquipe('dom')">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-300 mb-1">Équipe Extérieur</label>
-                            <input type="text" id="equipeExterieur" list="liste-equipes" class="input-field w-full p-2 rounded-lg" required oninput="verifierEquipe('ext')">
-                        </div>
+                    
+                    <!-- ONGLETS DE RECHERCHE -->
+                    <div class="flex border-b border-gray-700 mb-2">
+                        <button type="button" id="tab-clubs" class="tab-btn active px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('clubs')">🛡️ Clubs</button>
+                        <button type="button" id="tab-nations" class="tab-btn px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('nations')">🌍 Nations</button>
                     </div>
-                    <datalist id="liste-equipes"></datalist>
 
                     <div class="grid grid-cols-2 gap-2">
-                        <div>
+                        <div class="relative">
+                            <label class="block text-xs text-gray-300 mb-1">Équipe Domicile</label>
+                            <input type="text" id="equipeDomicile" class="input-field w-full p-2 rounded-lg" required oninput="rechercherEquipe('dom')">
+                            <div id="dropdown-dom" class="team-dropdown hidden"></div>
+                        </div>
+                        <div class="relative">
+                            <label class="block text-xs text-gray-300 mb-1">Équipe Extérieur</label>
+                            <input type="text" id="equipeExterieur" class="input-field w-full p-2 rounded-lg" required oninput="rechercherEquipe('ext')">
+                            <div id="dropdown-ext" class="team-dropdown hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="relative">
                             <label class="block text-xs text-gray-300 mb-1">Compétition</label>
-                            <input type="text" id="competition" list="liste-competitions" class="input-field w-full p-2 rounded-lg" placeholder="Ligue 1" required>
+                            <input type="text" id="competition" class="input-field w-full p-2 rounded-lg" placeholder="Ex: CAN, Ligue 1..." required oninput="rechercherCompetition()" autocomplete="off">
+                            <div id="dropdown-competitions" class="team-dropdown hidden"></div>
+                            <p id="comp-loading" class="text-[10px] text-yellow-400 mt-1 hidden">⏳ Chargement...</p>
+                            <p id="comp-error" class="text-[10px] text-red-400 mt-1 hidden">❌ Erreur.</p>
                         </div>
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Date et Heure</label>
                             <input type="datetime-local" id="date" class="input-field w-full p-2 rounded-lg" required>
                         </div>
                     </div>
-                    <datalist id="liste-competitions"></datalist>
                     
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -110,8 +151,8 @@
                                 <input type="file" id="logoDomicileFile" accept="image/*">
                             </div>
                             <input type="hidden" id="logoDomicile" value="">
-                            <img id="previewLogoDom" src="" class="h-10 mt-1 rounded hidden object-contain">
-                            <p id="info-logo-dom" class="text-xs text-green-400 mt-1 hidden">Logo mémorisé</p>
+                            <img id="previewLogoDom" src="" class="h-10 mt-1 rounded hidden object-contain bg-white">
+                            <p id="info-logo-dom" class="text-xs text-green-400 mt-1 hidden">Logo sélectionné</p>
                         </div>
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Logo Extérieur</label>
@@ -120,19 +161,26 @@
                                 <input type="file" id="logoExterieurFile" accept="image/*">
                             </div>
                             <input type="hidden" id="logoExterieur" value="">
-                            <img id="previewLogoExt" src="" class="h-10 mt-1 rounded hidden object-contain">
-                            <p id="info-logo-ext" class="text-xs text-green-400 mt-1 hidden">Logo mémorisé</p>
+                            <img id="previewLogoExt" src="" class="h-10 mt-1 rounded hidden object-contain bg-white">
+                            <p id="info-logo-ext" class="text-xs text-green-400 mt-1 hidden">Logo sélectionné</p>
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-xs text-gray-300 mb-1">Image Centrale (Bannière)</label>
-                        <div class="file-input-wrapper">
-                            <div class="file-input-btn">Choisir une image</div>
-                            <input type="file" id="imageFile" accept="image/*">
+                    <div class="bg-black/30 p-3 rounded-lg border border-purple-600 border-dashed">
+                        <label class="block text-xs text-gray-300 mb-2">Affiche du match (Automatique)</label>
+                        <button type="button" id="btn-generate-poster" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg mb-2 transition">
+                            ✨ Générer l'affiche du match
+                        </button>
+                        
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Image Centrale (Bannière finale)</label>
+                            <div class="file-input-wrapper">
+                                <div class="file-input-btn">Ou choisir une image manuellement</div>
+                                <input type="file" id="imageFile" accept="image/*">
+                            </div>
+                            <input type="hidden" id="imageCentrale" value="">
+                            <img id="previewImageCentrale" src="" class="h-20 mt-1 rounded hidden object-cover w-full">
                         </div>
-                        <input type="hidden" id="imageCentrale" value="">
-                        <img id="previewImageCentrale" src="" class="h-20 mt-1 rounded hidden object-cover w-full">
                     </div>
 
                     <div>
@@ -156,7 +204,6 @@
                         <input type="number" id="requiredAds" class="input-field w-full p-2 rounded-lg" min="1" value="1">
                     </div>
 
-                    <!-- CASES À COCHER DE PUBLICATION -->
                     <div class="flex gap-4 mt-2 p-3 bg-black/20 rounded-lg border border-gray-700" id="checkboxes-container">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" id="publierGratuit" class="w-4 h-4 accent-green-500" checked>
@@ -168,13 +215,11 @@
                         </label>
                     </div>
 
-                    <!--  NOUVELLE CASE SPÉCIALE MODIFICATION  -->
                     <div id="modifier-les-deux-container" class="hidden mt-2 p-3 bg-blue-900/30 rounded-lg border border-blue-500">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" id="modifierLesDeux" class="w-4 h-4 accent-blue-500">
                             <span class="text-sm text-blue-200 font-bold">Mettre à jour les 2 versions en même temps</span>
                         </label>
-                        <p class="text-[10px] text-blue-300 mt-1">Cochez cette case pour que vos modifications s'appliquent au Gratuit ET au VIP.</p>
                     </div>
 
                     <button type="submit" id="submit-btn" class="btn-gold w-full py-3 rounded-xl text-md mt-2">
@@ -186,7 +231,6 @@
                 </form>
             </div>
 
-            <!-- COLONNE DROITE : LISTE DES MATCHS -->
             <div class="lg:col-span-3 space-y-4">
                 <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
                     <h3 class="text-md font-bold text-green-400 mb-3">Matchs Gratuits</h3>
@@ -200,6 +244,8 @@
             </div>
         </div>
     </div>
+
+    <canvas id="poster-canvas" width="1200" height="630" class="hidden"></canvas>
 
     <script type="module">
         const firebaseConfig = {
@@ -215,7 +261,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp, getDoc, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, uploadString } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
         import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
         const app = initializeApp(firebaseConfig);
@@ -227,6 +273,11 @@
 
         const ADMIN_EMAIL = "muslimwalyy@gmail.com"; 
         let isEditing = false;
+
+        let tousLesLogos = [];
+        let nations = [];
+        let competitionsList = [];
+        let modeRecherche = 'clubs';
 
         // Éléments UI
         const loginScreen = document.getElementById('login-screen');
@@ -265,6 +316,255 @@
         const btnGrantVip = document.getElementById('btn-grant-vip');
         const vipStatus = document.getElementById('vip-status');
 
+        // --- NOTIFICATIONS ---
+        const btnSendNotifAll = document.getElementById('btn-send-notif-all');
+        const btnSendNotifOne = document.getElementById('btn-send-notif-one');
+        const notifStatus = document.getElementById('notif-status');
+
+        function enleverAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // --- CHARGEMENT DES COMPÉTITIONS ---
+        async function chargerCompetitions() {
+            const loadingEl = document.getElementById('comp-loading');
+            const errorEl = document.getElementById('comp-error');
+            loadingEl.classList.remove('hidden');
+            errorEl.classList.add('hidden');
+
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/Walyy578/Football/main/comp%C3%A9titions.json');
+                if (!res.ok) throw new Error("Erreur réseau");
+                const data = await res.json();
+                competitionsList = data.map(nom => ({ nom: nom }));
+                competitionsList.sort((a, b) => a.nom.localeCompare(b.nom));
+                loadingEl.classList.add('hidden');
+            } catch (e) {
+                console.error("Erreur chargement compétitions :", e);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+        chargerCompetitions();
+
+        // --- CHARGEMENT DES NATIONS ---
+        async function chargerToutesLesNations() {
+            try {
+                const res = await fetch('https://cdn.jsdelivr.net/npm/world_countries_lists@latest/data/countries/fr/countries.json');
+                const data = await res.json();
+                nations = data.map(pays => ({
+                    nom: pays.name,
+                    url: `https://flagcdn.com/w320/${pays.alpha2}.png`
+                })).sort((a, b) => a.nom.localeCompare(b.nom));
+            } catch (e) { console.error("Erreur chargement nations :", e); }
+        }
+        chargerToutesLesNations();
+
+        window.changerOnglet = (mode) => {
+            modeRecherche = mode;
+            document.getElementById('tab-clubs').classList.toggle('active', mode === 'clubs');
+            document.getElementById('tab-nations').classList.toggle('active', mode === 'nations');
+            document.getElementById('dropdown-dom').classList.add('hidden');
+            document.getElementById('dropdown-ext').classList.add('hidden');
+        };
+
+        // --- CHARGEMENT DES LOGOS CLUBS ---
+        async function chargerLogosGitHub() {
+            try {
+                const res = await fetch('https://api.github.com/repos/luukhopman/football-logos/git/trees/master?recursive=1');
+                const data = await res.json();
+                tousLesLogos = data.tree
+                    .filter(item => item.path.endsWith('.png') && item.path.includes('logos/'))
+                    .map(item => {
+                        const fileName = item.path.split('/').pop().replace('.png', '');
+                        const nomPropre = fileName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        const urlImage = `https://raw.githubusercontent.com/luukhopman/football-logos/master/${item.path}`;
+                        return { nom: nomPropre, url: urlImage };
+                    });
+            } catch (e) { console.error("Erreur logos GitHub :", e); }
+        }
+        chargerLogosGitHub();
+
+        window.rechercherEquipe = (type) => {
+            const input = document.getElementById(type === 'dom' ? 'equipeDomicile' : 'equipeExterieur');
+            const dropdown = document.getElementById(type === 'dom' ? 'dropdown-dom' : 'dropdown-ext');
+            const texte = input.value.toLowerCase().trim();
+
+            if (texte.length < 2) { dropdown.classList.add('hidden'); return; }
+
+            let resultats = modeRecherche === 'clubs' 
+                ? tousLesLogos.filter(eq => eq.nom.toLowerCase().includes(texte)).slice(0, 15)
+                : nations.filter(n => n.nom.toLowerCase().includes(texte)).slice(0, 15);
+
+            if (resultats.length === 0) { dropdown.classList.add('hidden'); return; }
+
+            dropdown.innerHTML = resultats.map(eq => `
+                <div class="team-dropdown-item" onclick="selectionnerEquipe('${type}', '${eq.nom.replace(/'/g, "\\'")}', '${eq.url}')">
+                    <img src="${eq.url}" class="w-6 h-6 object-contain bg-white rounded-full p-1" onerror="this.style.display='none'">
+                    <span class="text-sm text-white">${eq.nom}</span>
+                </div>
+            `).join('');
+            dropdown.classList.remove('hidden');
+        };
+
+        window.selectionnerEquipe = (type, nom, urlLogo) => {
+            const input = document.getElementById(type === 'dom' ? 'equipeDomicile' : 'equipeExterieur');
+            const dropdown = document.getElementById(type === 'dom' ? 'dropdown-dom' : 'dropdown-ext');
+            const logoHidden = type === 'dom' ? logoDomUrl : logoExtUrl;
+            const logoImg = type === 'dom' ? previewLogoDom : previewLogoExt;
+            const infoText = type === 'dom' ? infoLogoDom : infoLogoExt;
+
+            input.value = nom;
+            logoHidden.value = urlLogo;
+            logoImg.src = urlLogo;
+            logoImg.classList.remove('hidden');
+            infoText.textContent = modeRecherche === 'clubs' ? "Logo Club sélectionné" : "Drapeau sélectionné";
+            infoText.className = "text-xs text-blue-400 mt-1 block";
+            dropdown.classList.add('hidden');
+        };
+
+        window.rechercherCompetition = () => {
+            const input = document.getElementById('competition');
+            const dropdown = document.getElementById('dropdown-competitions');
+            const texteTape = input.value.trim();
+
+            if (texteTape.length < 1) { dropdown.classList.add('hidden'); return; }
+
+            const texteSansAccents = enleverAccents(texteTape.toLowerCase());
+            
+            const resultats = competitionsList.filter(c => {
+                const cSansAccents = enleverAccents(c.nom.toLowerCase());
+                return cSansAccents.includes(texteSansAccents);
+            }).slice(0, 50);
+
+            if (resultats.length === 0) { 
+                dropdown.innerHTML = '<div class="team-dropdown-item text-gray-400">Aucun résultat...</div>';
+                dropdown.classList.remove('hidden'); 
+                return; 
+            }
+
+            dropdown.innerHTML = resultats.map(c => `
+                <div class="team-dropdown-item" onclick="selectionnerCompetition('${c.nom.replace(/'/g, "\\'")}')">
+                    <span class="text-sm text-white">${c.nom}</span>
+                </div>
+            `).join('');
+            dropdown.classList.remove('hidden');
+        };
+
+        window.selectionnerCompetition = (nom) => {
+            document.getElementById('competition').value = nom;
+            document.getElementById('dropdown-competitions').classList.add('hidden');
+        };
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.relative')) {
+                document.getElementById('dropdown-dom').classList.add('hidden');
+                document.getElementById('dropdown-ext').classList.add('hidden');
+                document.getElementById('dropdown-competitions').classList.add('hidden');
+            }
+        });
+
+        // --- GÉNÉRATION D'AFFICHE CANVAS ---
+        document.getElementById('btn-generate-poster').addEventListener('click', async () => {
+            const nomDom = document.getElementById('equipeDomicile').value.trim();
+            const nomExt = document.getElementById('equipeExterieur').value.trim();
+            const logoDom = logoDomUrl.value;
+            const logoExt = logoExtUrl.value;
+
+            if (!nomDom || !nomExt || !logoDom || !logoExt) {
+                return alert("Veuillez sélectionner les deux équipes et leurs logos.");
+            }
+
+            const btn = document.getElementById('btn-generate-poster');
+            btn.textContent = "⏳ Création...";
+            btn.disabled = true;
+
+            const canvas = document.getElementById('poster-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            const gradient = ctx.createRadialGradient(W/2, H/2, 100, W/2, H/2, W);
+            gradient.addColorStop(0, '#2D1B69');
+            gradient.addColorStop(0.5, '#1A0033');
+            gradient.addColorStop(1, '#0D001A');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, W, H);
+
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.05)';
+            ctx.lineWidth = 2;
+            for (let i = 0; i < W; i += 40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke(); }
+            for (let j = 0; j < H; j += 40) { ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(W, j); ctx.stroke(); }
+
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.1)';
+            ctx.lineWidth = 150;
+            ctx.beginPath(); ctx.moveTo(-100, -100); ctx.lineTo(W/2, H/2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(W+100, H+100); ctx.lineTo(W/2, H/2); ctx.stroke();
+
+            const loadImage = (src) => new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+
+            try {
+                const [imgDom, imgExt] = await Promise.all([loadImage(logoDom), loadImage(logoExt)]);
+                const logoSize = 220;
+                const yPos = H/2 - logoSize/2 - 20;
+
+                let lightG = ctx.createRadialGradient(W/4, H/2, 10, W/4, H/2, 300);
+                lightG.addColorStop(0, 'rgba(255, 255, 255, 0.15)');
+                lightG.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                ctx.fillStyle = lightG; ctx.fillRect(0, 0, W/2, H);
+
+                let lightD = ctx.createRadialGradient(W*0.75, H/2, 10, W*0.75, H/2, 300);
+                lightD.addColorStop(0, 'rgba(255, 255, 255, 0.15)');
+                lightD.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                ctx.fillStyle = lightD; ctx.fillRect(W/2, 0, W/2, H);
+
+                ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30; ctx.fillStyle = '#1A0033';
+                ctx.beginPath(); ctx.arc(W/4, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(W/4, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.stroke();
+                ctx.drawImage(imgDom, W/4 - logoSize/2, yPos, logoSize, logoSize);
+
+                ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30; ctx.fillStyle = '#1A0033';
+                ctx.beginPath(); ctx.arc(W*0.75, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(W*0.75, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.stroke();
+                ctx.drawImage(imgExt, W*0.75 - logoSize/2, yPos, logoSize, logoSize);
+
+                ctx.fillStyle = 'rgba(0,0,0,0.8)'; ctx.beginPath(); ctx.arc(W/2, H/2 - 20, 80, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(W/2, H/2 - 20, 80, 0, Math.PI * 2); ctx.stroke();
+                ctx.font = 'italic 900 90px "Segoe UI", Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 20; ctx.fillStyle = '#FFFFFF'; ctx.fillText('VS', W/2, H/2 - 20); ctx.shadowBlur = 0;
+
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; ctx.fillRect(0, H - 120, W, 120);
+                ctx.fillStyle = '#FFD700'; ctx.fillRect(0, H - 125, W, 5);
+                ctx.font = 'bold 45px "Segoe UI", Arial, sans-serif'; ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'center';
+                ctx.fillText(nomDom.toUpperCase(), W/4, H - 65);
+                ctx.fillText(nomExt.toUpperCase(), W*0.75, H - 65);
+                ctx.font = 'bold 20px "Segoe UI", Arial, sans-serif'; ctx.fillStyle = '#FFD700';
+                ctx.fillText('DJINN PRONO', W/2, H - 30);
+
+                const dataUrl = canvas.toDataURL('image/png');
+                previewImageCentrale.src = dataUrl;
+                previewImageCentrale.classList.remove('hidden');
+                imageCentraleUrl.value = dataUrl;
+                imageCentraleUrl.dataset.type = 'base64'; 
+
+                btn.textContent = "✅ Affiche générée !";
+                setTimeout(() => { btn.textContent = "✨ Générer l'affiche du match"; }, 3000);
+
+            } catch (e) {
+                console.error(e);
+                alert("Erreur lors du chargement des logos pour l'affiche.");
+                btn.textContent = "✨ Générer l'affiche du match";
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
         // --- CONNEXION ---
         document.getElementById('email-login-btn').addEventListener('click', async () => {
             const email = document.getElementById('login-email').value.trim();
@@ -272,10 +572,7 @@
             if (!email || !pass) return alert("Remplissez l'email et le mot de passe.");
             try {
                 const result = await signInWithEmailAndPassword(auth, email, pass);
-                if (result.user.email !== ADMIN_EMAIL) {
-                    await signOut(auth);
-                    throw new Error("Cet email n'est pas l'admin.");
-                }
+                if (result.user.email !== ADMIN_EMAIL) { await signOut(auth); throw new Error("Cet email n'est pas l'admin."); }
             } catch (e) {
                 loginError.textContent = e.message;
                 loginError.classList.remove('hidden');
@@ -285,10 +582,7 @@
         document.getElementById('google-login-btn').addEventListener('click', async () => {
             try {
                 const result = await signInWithPopup(auth, provider);
-                if (result.user.email !== ADMIN_EMAIL) {
-                    await signOut(auth);
-                    throw new Error("Cet email n'est pas l'admin.");
-                }
+                if (result.user.email !== ADMIN_EMAIL) { await signOut(auth); throw new Error("Cet email n'est pas l'admin."); }
             } catch (e) {
                 loginError.textContent = e.message;
                 loginError.classList.remove('hidden');
@@ -301,89 +595,19 @@
             if (user && user.email === ADMIN_EMAIL) {
                 loginScreen.classList.add('hidden');
                 adminScreen.classList.remove('hidden');
-                chargerMemoire();
                 chargerMatchs();
             } else {
-                loginScreen.classList.remove('hidden');
+                loginScreen.classList.add('hidden'); // Ou remove selon la logique
                 adminScreen.classList.add('hidden');
             }
         });
-
-        // --- MÉMOIRE (Équipes et Logos) ---
-        function chargerMemoire() {
-            const equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
-            const datalistEquipes = document.getElementById('liste-equipes');
-            datalistEquipes.innerHTML = '';
-            equipes.sort((a,b) => a.nom.localeCompare(b.nom)).forEach(eq => {
-                const option = document.createElement('option');
-                option.value = eq.nom;
-                datalistEquipes.appendChild(option);
-            });
-
-            const competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
-            const datalistComp = document.getElementById('liste-competitions');
-            datalistComp.innerHTML = '';
-            competitions.sort().forEach(c => {
-                const option = document.createElement('option');
-                option.value = c;
-                datalistComp.appendChild(option);
-            });
-        }
-
-        window.verifierEquipe = (type) => {
-            const nomInput = type === 'dom' ? document.getElementById('equipeDomicile') : document.getElementById('equipeExterieur');
-            const nom = nomInput.value.trim();
-            const logoImg = type === 'dom' ? previewLogoDom : previewLogoExt;
-            const logoHidden = type === 'dom' ? logoDomUrl : logoExtUrl;
-            const infoText = type === 'dom' ? infoLogoDom : infoLogoExt;
-
-            if (!nom) {
-                logoImg.classList.add('hidden');
-                logoHidden.value = '';
-                infoText.classList.add('hidden');
-                return;
-            }
-
-            const equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
-            const equipe = equipes.find(e => e.nom.toLowerCase() === nom.toLowerCase());
-
-            if (equipe && equipe.logo) {
-                logoImg.src = equipe.logo;
-                logoImg.classList.remove('hidden');
-                logoHidden.value = equipe.logo;
-                infoText.classList.remove('hidden');
-            } else {
-                logoImg.classList.add('hidden');
-                logoHidden.value = '';
-                infoText.classList.add('hidden');
-            }
-        };
-
-        logoDomFile.addEventListener('change', (e) => afficherPreview(e, previewLogoDom));
-        logoExtFile.addEventListener('change', (e) => afficherPreview(e, previewLogoExt));
-        imageFile.addEventListener('change', (e) => afficherPreview(e, previewImageCentrale));
-
-        function afficherPreview(event, imgElement) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imgElement.src = e.target.result;
-                    imgElement.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
 
         // --- GESTION VIP ---
         btnGrantVip.addEventListener('click', async () => {
             const email = document.getElementById('vip-email').value.trim();
             const days = parseInt(document.getElementById('vip-days').value);
             if (!email) return alert("Entrez un email.");
-            btnGrantVip.disabled = true;
-            btnGrantVip.textContent = "Traitement...";
-            vipStatus.classList.add('hidden');
-
+            btnGrantVip.disabled = true; btnGrantVip.textContent = "Traitement..."; vipStatus.classList.add('hidden');
             try {
                 const grantVipFn = httpsCallable(functions, 'grantVipManually');
                 const result = await grantVipFn({ email: email, days: days });
@@ -394,9 +618,71 @@
                 vipStatus.textContent = `Erreur : ${error.message}`;
                 vipStatus.className = "text-sm mt-3 text-red-400 block";
             } finally {
-                btnGrantVip.disabled = false;
-                btnGrantVip.textContent = "Rendre VIP";
+                btnGrantVip.disabled = false; btnGrantVip.textContent = "Rendre VIP";
             }
+        });
+
+        // --- LOGIQUE NOTIFICATION PUSH ---
+        async function envoyerNotificationPush(cibleUid = null) {
+            const titre = document.getElementById('notif-titre').value.trim();
+            const message = document.getElementById('notif-message').value.trim();
+            const imageUrl = document.getElementById('notif-image').value.trim();
+
+            if (!titre || !message) {
+                return alert("Le titre et le message sont obligatoires.");
+            }
+
+            if (cibleUid && !cibleUid.trim()) {
+                return alert("Veuillez entrer un UID valide pour l'envoi ciblé.");
+            }
+
+            notifStatus.classList.add('hidden');
+            btnSendNotifAll.disabled = true;
+            btnSendNotifOne.disabled = true;
+            const originalTextAll = btnSendNotifAll.textContent;
+            const originalTextOne = btnSendNotifOne.textContent;
+            
+            btnSendNotifAll.textContent = "Envoi...";
+            btnSendNotifOne.textContent = "Envoi...";
+
+            try {
+                const payload = { titre, message, imageUrl: imageUrl || null };
+                if (cibleUid && cibleUid.trim()) {
+                    payload.targetUid = cibleUid.trim();
+                }
+
+                const envoyerNotifFn = httpsCallable(functions, 'envoyerNotification');
+                const result = await envoyerNotifFn(payload);
+
+                if (result.data.success) {
+                    notifStatus.textContent = `✅ Succès ! ${result.data.sent || 1} notification(s) envoyée(s).`;
+                    notifStatus.className = "text-sm mt-3 text-green-400 block";
+                    // On vide les champs
+                    document.getElementById('notif-titre').value = '';
+                    document.getElementById('notif-message').value = '';
+                    document.getElementById('notif-image').value = '';
+                    document.getElementById('notif-target-uid').value = '';
+                } else {
+                    notifStatus.textContent = `❌ Erreur : ${result.data.message || 'Aucun utilisateur trouvé.'}`;
+                    notifStatus.className = "text-sm mt-3 text-orange-400 block";
+                }
+            } catch (error) {
+                console.error("Erreur Notification:", error);
+                notifStatus.textContent = `❌ Erreur : ${error.message}`;
+                notifStatus.className = "text-sm mt-3 text-red-400 block";
+            } finally {
+                btnSendNotifAll.disabled = false;
+                btnSendNotifOne.disabled = false;
+                btnSendNotifAll.textContent = originalTextAll;
+                btnSendNotifOne.textContent = originalTextOne;
+            }
+        }
+
+        btnSendNotifAll.addEventListener('click', () => envoyerNotificationPush(null));
+        btnSendNotifOne.addEventListener('click', () => {
+            const targetUid = document.getElementById('notif-target-uid').value.trim();
+            if (!targetUid) return alert("Veuillez entrer un UID pour l'envoi ciblé.");
+            envoyerNotificationPush(targetUid);
         });
 
         // --- LISTES DES MATCHS ---
@@ -405,18 +691,14 @@
                 const container = document.getElementById('liste-gratuits');
                 container.innerHTML = '';
                 if (snapshot.empty) container.innerHTML = '<p class="text-gray-500 text-xs">Aucun match.</p>';
-                snapshot.forEach((docSnap) => {
-                    container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'gratuit'));
-                });
+                snapshot.forEach((docSnap) => { container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'gratuit')); });
             });
 
             onSnapshot(query(collection(db, "matchs_payants"), orderBy("date", "desc")), (snapshot) => {
                 const container = document.getElementById('liste-payants');
                 container.innerHTML = '';
                 if (snapshot.empty) container.innerHTML = '<p class="text-gray-500 text-xs">Aucun match.</p>';
-                snapshot.forEach((docSnap) => {
-                    container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'payant'));
-                });
+                snapshot.forEach((docSnap) => { container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'payant')); });
             });
         }
 
@@ -424,7 +706,6 @@
             const div = document.createElement('div');
             div.className = "flex items-center justify-between bg-black/40 p-2 rounded-lg border border-gray-700 text-sm mb-2";
             const dateStr = m.date ? new Date(m.date.seconds * 1000).toLocaleDateString('fr-FR') : 'Date ?';
-            
             div.innerHTML = `
                 <div class="flex items-center gap-2">
                     ${m.logoDomicile ? `<img src="${m.logoDomicile}" class="w-6 h-6 object-contain">` : ''}
@@ -438,146 +719,102 @@
                     <button type="button" class="btn-action bg-red-600 text-white btn-delete" data-id="${id}" data-type="${type}">Supprimer</button>
                 </div>
             `;
-
             div.querySelector('.btn-edit').addEventListener('click', (e) => { e.preventDefault(); editerMatch(id, type); });
             div.querySelector('.btn-delete').addEventListener('click', (e) => { e.preventDefault(); supprimerMatch(id, type); });
-
             return div;
         }
 
         async function supprimerMatch(id, type) {
             if (!confirm("Voulez-vous vraiment supprimer ce match ?")) return;
             const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
-            try {
-                await deleteDoc(doc(db, coll, id));
-            } catch (e) {
-                alert("Erreur: " + e.message);
-            }
+            try { await deleteDoc(doc(db, coll, id)); } catch (e) { alert("Erreur: " + e.message); }
         }
 
-        //  MODIFICATION INTELLIGENTE 
         async function editerMatch(id, type) {
             try {
                 const docSnap = await getDoc(doc(db, type === 'gratuit' ? "matchs_gratuits" : "matchs_payants", id));
-                
                 if (docSnap.exists()) {
                     const m = docSnap.data();
                     isEditing = true;
-                    editIdInput.value = id;
-                    editTypeInput.value = type;
-                    
+                    editIdInput.value = id; editTypeInput.value = type;
                     document.getElementById('equipeDomicile').value = m.equipeDomicile || '';
                     document.getElementById('equipeExterieur').value = m.equipeExterieur || '';
                     document.getElementById('competition').value = m.competition || '';
-                    
                     if (m.date) {
                         const d = new Date(m.date.seconds * 1000);
                         d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
                         document.getElementById('date').value = d.toISOString().slice(0,16);
                     }
-                    
                     if (m.logoDomicile) { previewLogoDom.src = m.logoDomicile; previewLogoDom.classList.remove('hidden'); logoDomUrl.value = m.logoDomicile; }
                     if (m.logoExterieur) { previewLogoExt.src = m.logoExterieur; previewLogoExt.classList.remove('hidden'); logoExtUrl.value = m.logoExterieur; }
                     if (m.imageCentrale) { previewImageCentrale.src = m.imageCentrale; previewImageCentrale.classList.remove('hidden'); imageCentraleUrl.value = m.imageCentrale; }
-                    
                     document.getElementById('pronostic').value = m.pronostic || '';
                     document.getElementById('probabilite').value = m.probabilite || 85;
                     document.getElementById('requiredAds').value = m.requiredAds || 1;
-                    
-                    // Gestion du score
                     const scoreInput = document.getElementById('scorePredit');
                     scoreInput.value = m.scorePredit || "";
-
-                    // On affiche les cases de base (mais on va les griser)
                     checkboxesContainer.classList.remove('hidden');
                     requiredAdsContainer.style.display = 'block';
-
-                    // On cherche si le match jumeau existe
                     const autreColl = type === 'gratuit' ? "matchs_payants" : "matchs_gratuits";
                     const q = query(collection(db, autreColl), where("equipeDomicile", "==", m.equipeDomicile), where("date", "==", m.date));
                     const querySnapshot = await getDocs(q);
-                    
                     if (type === 'gratuit') {
-                        checkboxGratuit.checked = true;
-                        checkboxPayant.checked = !querySnapshot.empty;
-                        scoreInput.disabled = true;
-                        scoreInput.placeholder = "Géré depuis la version VIP";
+                        checkboxGratuit.checked = true; checkboxPayant.checked = !querySnapshot.empty;
+                        scoreInput.disabled = true; scoreInput.placeholder = "Géré depuis la version VIP";
                     } else {
-                        checkboxPayant.checked = true;
-                        checkboxGratuit.checked = !querySnapshot.empty;
-                        scoreInput.disabled = false;
-                        scoreInput.placeholder = "2-1";
+                        checkboxPayant.checked = true; checkboxGratuit.checked = !querySnapshot.empty;
+                        scoreInput.disabled = false; scoreInput.placeholder = "2-1";
                     }
-
-                    //  On grise les cases de publication pour éviter de faire n'importe quoi 
-                    checkboxGratuit.disabled = true;
-                    checkboxPayant.disabled = true;
-
+                    checkboxGratuit.disabled = true; checkboxPayant.disabled = true;
                     if (!querySnapshot.empty) {
-                        // Si le match existe dans les deux, on affiche la case spéciale
                         editTwinIdInput.value = querySnapshot.docs[0].id;
                         modifierLesDeuxContainer.classList.remove('hidden');
-                        modifierLesDeux.checked = true; // Coché par défaut pour la fluidité
+                        modifierLesDeux.checked = true;
                         formTitle.textContent = "Modifier le match (Gratuit + VIP)";
                     } else {
                         editTwinIdInput.value = "false";
                         modifierLesDeuxContainer.classList.add('hidden');
                         formTitle.textContent = "Modifier le match (" + (type === 'gratuit' ? "Gratuit" : "VIP") + ")";
                     }
-
                     submitBtn.textContent = "Enregistrer les modifications";
                     cancelEditBtn.classList.remove('hidden');
                 }
-            } catch (e) {
-                alert("Erreur: " + e.message);
-            }
+            } catch (e) { alert("Erreur: " + e.message); }
         }
 
         window.resetForm = () => {
             form.reset();
-            editIdInput.value = '';
-            editTypeInput.value = '';
-            editTwinIdInput.value = 'false';
-            isEditing = false;
-            formTitle.textContent = "Publier un match";
-            submitBtn.textContent = "Publier le match";
-            cancelEditBtn.classList.add('hidden');
-            
-            previewLogoDom.classList.add('hidden');
-            previewLogoExt.classList.add('hidden');
-            previewImageCentrale.classList.add('hidden');
-            infoLogoDom.classList.add('hidden');
-            infoLogoExt.classList.add('hidden');
-            
-            logoDomUrl.value = '';
-            logoExtUrl.value = '';
-            imageCentraleUrl.value = '';
-            
-            document.getElementById('scorePredit').disabled = false;
-            document.getElementById('scorePredit').placeholder = "2-1";
-            
-            // On réactive les cases pour la publication
-            checkboxGratuit.disabled = false;
-            checkboxPayant.disabled = false;
-            checkboxesContainer.classList.remove('hidden');
-            modifierLesDeuxContainer.classList.add('hidden');
-            checkboxGratuit.checked = true;
-            checkboxPayant.checked = true;
-            requiredAdsContainer.style.display = 'block';
+            editIdInput.value = ''; editTypeInput.value = ''; editTwinIdInput.value = 'false'; isEditing = false;
+            formTitle.textContent = "Publier un match"; submitBtn.textContent = "Publier le match"; cancelEditBtn.classList.add('hidden');
+            previewLogoDom.classList.add('hidden'); previewLogoExt.classList.add('hidden'); previewImageCentrale.classList.add('hidden');
+            infoLogoDom.classList.add('hidden'); infoLogoExt.classList.add('hidden');
+            logoDomUrl.value = ''; logoExtUrl.value = ''; imageCentraleUrl.value = ''; imageCentraleUrl.dataset.type = '';
+            document.getElementById('scorePredit').disabled = false; document.getElementById('scorePredit').placeholder = "2-1";
+            checkboxGratuit.disabled = false; checkboxPayant.disabled = false;
+            checkboxesContainer.classList.remove('hidden'); modifierLesDeuxContainer.classList.add('hidden');
+            checkboxGratuit.checked = true; checkboxPayant.checked = true; requiredAdsContainer.style.display = 'block';
         };
 
-        // --- SOUMISSION DU FORMULAIRE ---
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            if (!isEditing && !checkboxGratuit.checked && !checkboxPayant.checked) {
-                return alert("Veuillez cocher au moins une version (Gratuit ou Payant).");
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Traitement en cours...";
-
+            if (!isEditing && !checkboxGratuit.checked && !checkboxPayant.checked) return alert("Veuillez cocher au moins une version.");
+            submitBtn.disabled = true; submitBtn.textContent = "Traitement...";
             try {
+                let finalImageCentrale = null;
+                if (imageCentraleUrl.dataset.type === 'base64') {
+                    const base64Image = imageCentraleUrl.value;
+                    const storageRef = ref(storage, `matchs/affiche_${Date.now()}.png`);
+                    await uploadString(storageRef, base64Image, 'data_url');
+                    finalImageCentrale = await getDownloadURL(storageRef);
+                } else if (imageFile.files.length > 0) {
+                    const file = imageFile.files[0];
+                    const storageRef = ref(storage, `matchs/${Date.now()}_${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    finalImageCentrale = await getDownloadURL(storageRef);
+                } else {
+                    finalImageCentrale = imageCentraleUrl.value || null;
+                }
+
                 async function uploadFile(fileInput, currentUrl, folder) {
                     if (fileInput.files.length > 0) {
                         const file = fileInput.files[0];
@@ -587,106 +824,54 @@
                     }
                     return currentUrl;
                 }
-
                 const finalLogoDom = await uploadFile(logoDomFile, logoDomUrl.value, 'logos');
                 const finalLogoExt = await uploadFile(logoExtFile, logoExtUrl.value, 'logos');
-                const finalImageCentrale = await uploadFile(imageFile, imageCentraleUrl.value, 'matchs');
-
                 const nomDom = document.getElementById('equipeDomicile').value.trim();
                 const nomExt = document.getElementById('equipeExterieur').value.trim();
                 const nomComp = document.getElementById('competition').value.trim();
-
-                // Mémorisation
+                
                 let equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
                 let idxDom = equipes.findIndex(e => e.nom.toLowerCase() === nomDom.toLowerCase());
-                if (idxDom > -1) { if (finalLogoDom) equipes[idxDom].logo = finalLogoDom; } 
-                else { equipes.push({ nom: nomDom, logo: finalLogoDom || null }); }
-                
+                if (idxDom > -1) { if (finalLogoDom) equipes[idxDom].logo = finalLogoDom; } else { equipes.push({ nom: nomDom, logo: finalLogoDom || null }); }
                 let idxExt = equipes.findIndex(e => e.nom.toLowerCase() === nomExt.toLowerCase());
-                if (idxExt > -1) { if (finalLogoExt) equipes[idxExt].logo = finalLogoExt; } 
-                else { equipes.push({ nom: nomExt, logo: finalLogoExt || null }); }
+                if (idxExt > -1) { if (finalLogoExt) equipes[idxExt].logo = finalLogoExt; } else { equipes.push({ nom: nomExt, logo: finalLogoExt || null }); }
                 localStorage.setItem('equipes_memoire', JSON.stringify(equipes));
-
-                let competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
-                if (nomComp && !competitions.includes(nomComp)) {
-                    competitions.push(nomComp);
-                    localStorage.setItem('competitions_memoire', JSON.stringify(competitions));
-                }
 
                 const dateInput = document.getElementById('date').value;
                 const dateObj = new Date(dateInput);
                 const scorePredit = document.getElementById('scorePredit').value.trim();
 
                 const baseData = {
-                    equipeDomicile: nomDom,
-                    equipeExterieur: nomExt,
-                    competition: nomComp,
-                    date: Timestamp.fromDate(dateObj),
-                    imageCentrale: finalImageCentrale || null,
-                    logoDomicile: finalLogoDom || null,
-                    logoExterieur: finalLogoExt || null,
+                    equipeDomicile: nomDom, equipeExterieur: nomExt, competition: nomComp,
+                    date: Timestamp.fromDate(dateObj), imageCentrale: finalImageCentrale,
+                    logoDomicile: finalLogoDom || null, logoExterieur: finalLogoExt || null,
                     pronostic: document.getElementById('pronostic').value.trim(),
                     probabilite: parseInt(document.getElementById('probabilite').value) || 0,
                 };
 
                 if (isEditing) {
-                    const id = editIdInput.value;
-                    const type = editTypeInput.value;
-                    const idTwin = editTwinIdInput.value;
-                    const updateBoth = modifierLesDeux.checked; //  On regarde si la case est cochée 
-
+                    const id = editIdInput.value; const type = editTypeInput.value; const idTwin = editTwinIdInput.value; const updateBoth = modifierLesDeux.checked;
                     const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
                     const autreColl = type === 'gratuit' ? "matchs_payants" : "matchs_gratuits";
-
-                    // 1. Mise à jour de la version d'origine
                     const dataToUpdate = { ...baseData };
-                    if (type === 'payant') dataToUpdate.scorePredit = scorePredit;
-                    else dataToUpdate.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
-                    
+                    if (type === 'payant') dataToUpdate.scorePredit = scorePredit; else dataToUpdate.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
                     await updateDoc(doc(db, coll, id), dataToUpdate);
-
-                    // 2. Mise à jour de la version jumelle (SI la case est cochée)
                     if (idTwin && idTwin !== "false" && updateBoth) {
                         const dataToUpdateTwin = { ...baseData };
-                        // On applique les spécificités de l'autre collection
-                        if (type === 'gratuit') {
-                            dataToUpdateTwin.scorePredit = scorePredit; // Si on modifie le gratuit, on met le score du payant
-                        } else {
-                            dataToUpdateTwin.scorePredit = ""; // Si on modifie le payant, on vide le score du gratuit
-                            dataToUpdateTwin.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
-                        }
+                        if (type === 'gratuit') { dataToUpdateTwin.scorePredit = scorePredit; } else { dataToUpdateTwin.scorePredit = ""; dataToUpdateTwin.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1; }
                         await updateDoc(doc(db, autreColl, idTwin), dataToUpdateTwin);
-                        alert("Match modifié avec succès sur les 2 versions !");
-                    } else {
-                        alert("Match modifié avec succès !");
-                    }
-
+                        alert("Match modifié sur les 2 versions !");
+                    } else { alert("Match modifié !"); }
                 } else {
-                    // Publication normale
-                    if (checkboxGratuit.checked) {
-                        await addDoc(collection(db, "matchs_gratuits"), {
-                            ...baseData,
-                            scorePredit: "",
-                            requiredAds: parseInt(document.getElementById('requiredAds').value) || 1
-                        });
-                    }
-                    if (checkboxPayant.checked) {
-                        await addDoc(collection(db, "matchs_payants"), {
-                            ...baseData,
-                            scorePredit: scorePredit
-                        });
-                    }
-                    alert("Match publié avec succès !");
+                    if (checkboxGratuit.checked) { await addDoc(collection(db, "matchs_gratuits"), { ...baseData, scorePredit: "", requiredAds: parseInt(document.getElementById('requiredAds').value) || 1 }); }
+                    if (checkboxPayant.checked) { await addDoc(collection(db, "matchs_payants"), { ...baseData, scorePredit: scorePredit }); }
+                    alert("Match publié !");
                 }
-                
-                chargerMemoire();
                 resetForm();
             } catch (error) {
-                console.error(error);
-                alert("Erreur lors de l'enregistrement :\n\n" + error.message);
+                console.error(error); alert("Erreur :\n\n" + error.message);
             } finally {
-                submitBtn.disabled = false;
-                if (!isEditing) submitBtn.textContent = "Publier le match";
+                submitBtn.disabled = false; if (!isEditing) submitBtn.textContent = "Publier le match";
             }
         });
     </script>

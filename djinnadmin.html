@@ -14,39 +14,70 @@
         .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
         .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
         .file-input-btn { background-color: #4B0082; color: white; padding: 8px; border-radius: 8px; text-align: center; font-size: 12px; border: 1px dashed #FFD700; cursor: pointer; }
+        .btn-action { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-6">
 
     <!-- ÉCRAN DE CONNEXION -->
-    <div id="login-screen" class="max-w-md mx-auto mt-20 p-8 rounded-2xl border border-yellow-600 bg-purple-900/30 backdrop-blur-md">
-        <h1 class="text-3xl font-bold text-center text-yellow-500 mb-6">🔐 Connexion Admin</h1>
+    <div id="login-screen" class="max-w-md mx-auto mt-10 p-8 rounded-2xl border border-yellow-600 bg-purple-900/30 backdrop-blur-md">
+        <h1 class="text-2xl font-bold text-center text-yellow-500 mb-6">Connexion Admin</h1>
+        
+        <div class="space-y-3 mb-6">
+            <input type="email" id="login-email" placeholder="Email admin" class="input-field w-full p-3 rounded-lg">
+            <input type="password" id="login-password" placeholder="Mot de passe" class="input-field w-full p-3 rounded-lg">
+            <button id="email-login-btn" class="btn-gold w-full py-3 rounded-lg">Se connecter par Email</button>
+        </div>
+
+        <div class="flex items-center gap-2 mb-4">
+            <div class="flex-1 h-px bg-gray-600"></div>
+            <span class="text-xs text-gray-400">OU</span>
+            <div class="flex-1 h-px bg-gray-600"></div>
+        </div>
+
         <button id="google-login-btn" class="w-full flex items-center justify-center gap-3 bg-white text-gray-900 font-bold py-3 px-4 rounded-xl hover:bg-gray-100 transition">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-6 h-6">
             Se connecter avec Google
         </button>
+        
         <p id="login-error" class="text-red-500 text-center mt-4 text-sm hidden"></p>
     </div>
 
     <!-- ÉCRAN D'ADMINISTRATION -->
     <div id="admin-screen" class="max-w-6xl mx-auto hidden">
         <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
-            <h1 class="text-2xl font-bold text-yellow-500">⚙️ Tableau de Bord</h1>
+            <h1 class="text-2xl font-bold text-yellow-500">Tableau de Bord Admin</h1>
             <div class="flex gap-4 items-center">
-                <button id="clear-memory-btn" class="text-orange-400 hover:text-orange-300 text-xs">Vider la mémoire</button>
                 <button id="logout-btn" class="text-red-400 hover:text-red-300 text-sm font-semibold">Déconnexion</button>
             </div>
+        </div>
+
+        <!-- SECTION : GESTION MANUELLE DES VIP -->
+        <div class="bg-purple-900/40 border border-yellow-600 rounded-2xl p-5 mb-6">
+            <h2 class="text-lg font-bold text-yellow-500 mb-2">Activation VIP Manuelle (WhatsApp)</h2>
+            <div class="flex flex-col md:flex-row gap-3 mt-3">
+                <input type="email" id="vip-email" placeholder="Email du client" class="input-field p-2 rounded-lg flex-1">
+                <select id="vip-days" class="input-field p-2 rounded-lg">
+                    <option value="3">3 jours</option>
+                    <option value="7">1 Semaine</option>
+                    <option value="14">2 Semaines</option>
+                    <option value="30" selected>1 Mois</option>
+                    <option value="90">3 Mois</option>
+                </select>
+                <button id="btn-grant-vip" class="btn-gold py-2 px-6 rounded-lg">Rendre VIP</button>
+            </div>
+            <p id="vip-status" class="text-sm mt-3 hidden"></p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
             <!-- COLONNE GAUCHE : FORMULAIRE -->
             <div class="lg:col-span-2 bg-purple-900/20 border border-purple-700 rounded-2xl p-5 h-fit">
-                <h2 id="form-title" class="text-lg font-bold text-white mb-4">📝 Publier un match</h2>
+                <h2 id="form-title" class="text-lg font-bold text-white mb-4">Publier un match</h2>
                 <input type="hidden" id="edit-id" value="">
                 <input type="hidden" id="edit-type" value="">
+                <input type="hidden" id="edit-twin-id" value="false">
                 
                 <form id="match-form" class="space-y-3" autocomplete="off">
-                    <!-- Équipes avec Auto-complétion -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Équipe Domicile</label>
@@ -59,7 +90,6 @@
                     </div>
                     <datalist id="liste-equipes"></datalist>
 
-                    <!-- Compétition + Date avec Auto-complétion -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Compétition</label>
@@ -72,51 +102,47 @@
                     </div>
                     <datalist id="liste-competitions"></datalist>
                     
-                    <!-- Logos (Upload) -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Logo Domicile</label>
                             <div class="file-input-wrapper">
-                                <div class="file-input-btn">📁 Choisir</div>
+                                <div class="file-input-btn">Choisir une image</div>
                                 <input type="file" id="logoDomicileFile" accept="image/*">
                             </div>
                             <input type="hidden" id="logoDomicile" value="">
                             <img id="previewLogoDom" src="" class="h-10 mt-1 rounded hidden object-contain">
-                            <p id="info-logo-dom" class="text-xs text-green-400 mt-1 hidden">✅ Logo mémorisé</p>
+                            <p id="info-logo-dom" class="text-xs text-green-400 mt-1 hidden">Logo mémorisé</p>
                         </div>
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Logo Extérieur</label>
                             <div class="file-input-wrapper">
-                                <div class="file-input-btn">📁 Choisir</div>
+                                <div class="file-input-btn">Choisir une image</div>
                                 <input type="file" id="logoExterieurFile" accept="image/*">
                             </div>
                             <input type="hidden" id="logoExterieur" value="">
                             <img id="previewLogoExt" src="" class="h-10 mt-1 rounded hidden object-contain">
-                            <p id="info-logo-ext" class="text-xs text-green-400 mt-1 hidden">✅ Logo mémorisé</p>
+                            <p id="info-logo-ext" class="text-xs text-green-400 mt-1 hidden">Logo mémorisé</p>
                         </div>
                     </div>
 
-                    <!-- Image Centrale (Upload) -->
                     <div>
                         <label class="block text-xs text-gray-300 mb-1">Image Centrale (Bannière)</label>
                         <div class="file-input-wrapper">
-                            <div class="file-input-btn">📁 Choisir une image</div>
+                            <div class="file-input-btn">Choisir une image</div>
                             <input type="file" id="imageFile" accept="image/*">
                         </div>
                         <input type="hidden" id="imageCentrale" value="">
                         <img id="previewImageCentrale" src="" class="h-20 mt-1 rounded hidden object-cover w-full">
                     </div>
 
-                    <!-- Pronostic -->
                     <div>
                         <label class="block text-xs text-gray-300 mb-1">Pronostic</label>
                         <textarea id="pronostic" rows="2" class="input-field w-full p-2 rounded-lg"></textarea>
                     </div>
                     
-                    <!-- Score + Proba -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-xs text-gray-300 mb-1">Score Prédit (VIP)</label>
+                            <label class="block text-xs text-gray-300 mb-1">Score Prédit (VIP uniquement)</label>
                             <input type="text" id="scorePredit" class="input-field w-full p-2 rounded-lg" placeholder="2-1">
                         </div>
                         <div>
@@ -125,30 +151,34 @@
                         </div>
                     </div>
 
-                    <div class="bg-red-900/30 border border-red-600 p-2 rounded-lg text-xs text-red-200">
-                        ⚠️ Le score prédit sera <strong>masqué</strong> dans la version gratuite.
-                    </div>
-
-                    <!-- Pubs requises -->
                     <div id="requiredAds-container">
                         <label class="block text-xs text-gray-300 mb-1">Pubs requises (Gratuit)</label>
                         <input type="number" id="requiredAds" class="input-field w-full p-2 rounded-lg" min="1" value="1">
                     </div>
 
-                    <!-- Checkboxes -->
-                    <div class="flex gap-4 mt-2" id="checkboxes-container">
-                        <label class="flex items-center gap-1 cursor-pointer">
-                            <input type="checkbox" id="publierGratuit" checked class="w-4 h-4 accent-yellow-500">
-                            <span class="text-sm text-white">Gratuit</span>
+                    <!-- CASES À COCHER DE PUBLICATION -->
+                    <div class="flex gap-4 mt-2 p-3 bg-black/20 rounded-lg border border-gray-700" id="checkboxes-container">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="publierGratuit" class="w-4 h-4 accent-green-500" checked>
+                            <span class="text-sm text-white font-bold">Version Gratuite</span>
                         </label>
-                        <label class="flex items-center gap-1 cursor-pointer">
-                            <input type="checkbox" id="publierPayant" checked class="w-4 h-4 accent-yellow-500">
-                            <span class="text-sm text-white">Payant (VIP)</span>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="publierPayant" class="w-4 h-4 accent-yellow-500" checked>
+                            <span class="text-sm text-white font-bold">Version Payante (VIP)</span>
                         </label>
                     </div>
 
+                    <!--  NOUVELLE CASE SPÉCIALE MODIFICATION  -->
+                    <div id="modifier-les-deux-container" class="hidden mt-2 p-3 bg-blue-900/30 rounded-lg border border-blue-500">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="modifierLesDeux" class="w-4 h-4 accent-blue-500">
+                            <span class="text-sm text-blue-200 font-bold">Mettre à jour les 2 versions en même temps</span>
+                        </label>
+                        <p class="text-[10px] text-blue-300 mt-1">Cochez cette case pour que vos modifications s'appliquent au Gratuit ET au VIP.</p>
+                    </div>
+
                     <button type="submit" id="submit-btn" class="btn-gold w-full py-3 rounded-xl text-md mt-2">
-                        🚀 Publier
+                        Publier le match
                     </button>
                     <button type="button" id="cancel-edit-btn" class="w-full text-center text-gray-400 text-xs mt-1 hover:text-white hidden" onclick="resetForm()">
                         Annuler la modification
@@ -159,12 +189,12 @@
             <!-- COLONNE DROITE : LISTE DES MATCHS -->
             <div class="lg:col-span-3 space-y-4">
                 <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
-                    <h3 class="text-md font-bold text-green-400 mb-3">🆓 Matchs Gratuits</h3>
+                    <h3 class="text-md font-bold text-green-400 mb-3">Matchs Gratuits</h3>
                     <div id="liste-gratuits" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
                 </div>
 
                 <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
-                    <h3 class="text-md font-bold text-yellow-400 mb-3">👑 Matchs Payants (VIP)</h3>
+                    <h3 class="text-md font-bold text-yellow-400 mb-3">Matchs Payants (VIP)</h3>
                     <div id="liste-payants" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
                 </div>
             </div>
@@ -183,32 +213,38 @@
         };
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp, getDoc, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
         const provider = new GoogleAuthProvider();
+        const functions = getFunctions(app, "us-central1"); 
+
+        const ADMIN_EMAIL = "muslimwalyy@gmail.com"; 
+        let isEditing = false;
 
         // Éléments UI
         const loginScreen = document.getElementById('login-screen');
         const adminScreen = document.getElementById('admin-screen');
-        const loginBtn = document.getElementById('google-login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
         const loginError = document.getElementById('login-error');
         const form = document.getElementById('match-form');
         const submitBtn = document.getElementById('submit-btn');
         const formTitle = document.getElementById('form-title');
         const editIdInput = document.getElementById('edit-id');
         const editTypeInput = document.getElementById('edit-type');
+        const editTwinIdInput = document.getElementById('edit-twin-id');
         const cancelEditBtn = document.getElementById('cancel-edit-btn');
         
         const checkboxGratuit = document.getElementById('publierGratuit');
         const checkboxPayant = document.getElementById('publierPayant');
         const checkboxesContainer = document.getElementById('checkboxes-container');
+        const modifierLesDeux = document.getElementById('modifierLesDeux');
+        const modifierLesDeuxContainer = document.getElementById('modifier-les-deux-container');
         const requiredAdsContainer = document.getElementById('requiredAds-container');
         
         const logoDomFile = document.getElementById('logoDomicileFile');
@@ -226,12 +262,55 @@
         const infoLogoDom = document.getElementById('info-logo-dom');
         const infoLogoExt = document.getElementById('info-logo-ext');
 
-        const ADMIN_EMAIL = "muslimwalyy@gmail.com"; 
-        let isEditing = false;
+        const btnGrantVip = document.getElementById('btn-grant-vip');
+        const vipStatus = document.getElementById('vip-status');
 
-        // ⭐ GESTION DE LA MÉMOIRE LOCALE (Équipes et Compétitions)
+        // --- CONNEXION ---
+        document.getElementById('email-login-btn').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value;
+            if (!email || !pass) return alert("Remplissez l'email et le mot de passe.");
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, pass);
+                if (result.user.email !== ADMIN_EMAIL) {
+                    await signOut(auth);
+                    throw new Error("Cet email n'est pas l'admin.");
+                }
+            } catch (e) {
+                loginError.textContent = e.message;
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('google-login-btn').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                if (result.user.email !== ADMIN_EMAIL) {
+                    await signOut(auth);
+                    throw new Error("Cet email n'est pas l'admin.");
+                }
+            } catch (e) {
+                loginError.textContent = e.message;
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === ADMIN_EMAIL) {
+                loginScreen.classList.add('hidden');
+                adminScreen.classList.remove('hidden');
+                chargerMemoire();
+                chargerMatchs();
+            } else {
+                loginScreen.classList.remove('hidden');
+                adminScreen.classList.add('hidden');
+            }
+        });
+
+        // --- MÉMOIRE (Équipes et Logos) ---
         function chargerMemoire() {
-            // Équipes
             const equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
             const datalistEquipes = document.getElementById('liste-equipes');
             datalistEquipes.innerHTML = '';
@@ -241,7 +320,6 @@
                 datalistEquipes.appendChild(option);
             });
 
-            // Compétitions
             const competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
             const datalistComp = document.getElementById('liste-competitions');
             datalistComp.innerHTML = '';
@@ -252,7 +330,6 @@
             });
         }
 
-        // ⭐ VÉRIFIER SI L'ÉQUIPE EXISTE (Pour afficher son logo automatiquement)
         window.verifierEquipe = (type) => {
             const nomInput = type === 'dom' ? document.getElementById('equipeDomicile') : document.getElementById('equipeExterieur');
             const nom = nomInput.value.trim();
@@ -271,20 +348,17 @@
             const equipe = equipes.find(e => e.nom.toLowerCase() === nom.toLowerCase());
 
             if (equipe && equipe.logo) {
-                // Équipe trouvée avec logo -> On affiche
                 logoImg.src = equipe.logo;
                 logoImg.classList.remove('hidden');
                 logoHidden.value = equipe.logo;
                 infoText.classList.remove('hidden');
             } else {
-                // Équipe inconnue ou sans logo -> On laisse vide pour import
                 logoImg.classList.add('hidden');
                 logoHidden.value = '';
                 infoText.classList.add('hidden');
             }
         };
 
-        // Aperçu des images
         logoDomFile.addEventListener('change', (e) => afficherPreview(e, previewLogoDom));
         logoExtFile.addEventListener('change', (e) => afficherPreview(e, previewLogoExt));
         imageFile.addEventListener('change', (e) => afficherPreview(e, previewImageCentrale));
@@ -298,53 +372,34 @@
                     imgElement.classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
-            } else {
-                imgElement.classList.add('hidden');
             }
         }
 
-        checkboxGratuit.addEventListener('change', (e) => {
-            requiredAdsContainer.style.display = e.target.checked ? 'block' : 'none';
-        });
+        // --- GESTION VIP ---
+        btnGrantVip.addEventListener('click', async () => {
+            const email = document.getElementById('vip-email').value.trim();
+            const days = parseInt(document.getElementById('vip-days').value);
+            if (!email) return alert("Entrez un email.");
+            btnGrantVip.disabled = true;
+            btnGrantVip.textContent = "Traitement...";
+            vipStatus.classList.add('hidden');
 
-        document.getElementById('clear-memory-btn').addEventListener('click', () => {
-            if (confirm("Voulez-vous vraiment vider la mémoire des équipes et compétitions ?")) {
-                localStorage.removeItem('equipes_memoire');
-                localStorage.removeItem('competitions_memoire');
-                chargerMemoire();
-                alert("Mémoire vidée.");
-            }
-        });
-
-        // Connexion
-        loginBtn.addEventListener('click', async () => {
             try {
-                const result = await signInWithPopup(auth, provider);
-                if (result.user.email !== ADMIN_EMAIL) {
-                    await signOut(auth);
-                    throw new Error("Accès refusé.");
-                }
+                const grantVipFn = httpsCallable(functions, 'grantVipManually');
+                const result = await grantVipFn({ email: email, days: days });
+                vipStatus.textContent = `Succès : ${result.data.email} est VIP jusqu'au ${new Date(result.data.premiumExpire).toLocaleDateString('fr-FR')}`;
+                vipStatus.className = "text-sm mt-3 text-green-400 block";
+                document.getElementById('vip-email').value = '';
             } catch (error) {
-                loginError.textContent = error.message;
-                loginError.classList.remove('hidden');
+                vipStatus.textContent = `Erreur : ${error.message}`;
+                vipStatus.className = "text-sm mt-3 text-red-400 block";
+            } finally {
+                btnGrantVip.disabled = false;
+                btnGrantVip.textContent = "Rendre VIP";
             }
         });
 
-        logoutBtn.addEventListener('click', () => signOut(auth));
-
-        onAuthStateChanged(auth, (user) => {
-            if (user && user.email === ADMIN_EMAIL) {
-                loginScreen.classList.add('hidden');
-                adminScreen.classList.remove('hidden');
-                chargerMemoire();
-                chargerMatchs();
-            } else {
-                loginScreen.classList.remove('hidden');
-                adminScreen.classList.add('hidden');
-            }
-        });
-
-        // Charger les listes
+        // --- LISTES DES MATCHS ---
         function chargerMatchs() {
             onSnapshot(query(collection(db, "matchs_gratuits"), orderBy("date", "desc")), (snapshot) => {
                 const container = document.getElementById('liste-gratuits');
@@ -365,7 +420,6 @@
             });
         }
 
-        // ⭐ CRÉATION DE LA CARTE AVEC BOUTONS FONCTIONNELS
         function creerCarteMatch(m, id, type) {
             const div = document.createElement('div');
             div.className = "flex items-center justify-between bg-black/40 p-2 rounded-lg border border-gray-700 text-sm mb-2";
@@ -379,20 +433,14 @@
                         <p class="text-[10px] text-gray-400">${m.competition} · ${dateStr}</p>
                     </div>
                 </div>
-                <div class="flex gap-1">
-                    <button type="button" class="btn-edit text-blue-400 p-1 hover:text-blue-300" data-id="${id}" data-type="${type}">✏️</button>
-                    <button type="button" class="btn-delete text-red-400 p-1 hover:text-red-300" data-id="${id}" data-type="${type}">🗑️</button>
+                <div class="flex gap-2">
+                    <button type="button" class="btn-action bg-blue-600 text-white btn-edit" data-id="${id}" data-type="${type}">Modifier</button>
+                    <button type="button" class="btn-action bg-red-600 text-white btn-delete" data-id="${id}" data-type="${type}">Supprimer</button>
                 </div>
             `;
 
-            div.querySelector('.btn-edit').addEventListener('click', (e) => {
-                e.preventDefault();
-                editerMatch(id, type);
-            });
-            div.querySelector('.btn-delete').addEventListener('click', (e) => {
-                e.preventDefault();
-                supprimerMatch(id, type);
-            });
+            div.querySelector('.btn-edit').addEventListener('click', (e) => { e.preventDefault(); editerMatch(id, type); });
+            div.querySelector('.btn-delete').addEventListener('click', (e) => { e.preventDefault(); supprimerMatch(id, type); });
 
             return div;
         }
@@ -403,45 +451,85 @@
             try {
                 await deleteDoc(doc(db, coll, id));
             } catch (e) {
-                alert("❌ Erreur: " + e.message);
+                alert("Erreur: " + e.message);
             }
         }
 
+        //  MODIFICATION INTELLIGENTE 
         async function editerMatch(id, type) {
-            const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
-            const docSnap = await getDoc(doc(db, coll, id));
-            
-            if (docSnap.exists()) {
-                const m = docSnap.data();
-                isEditing = true;
-                editIdInput.value = id;
-                editTypeInput.value = type;
+            try {
+                const docSnap = await getDoc(doc(db, type === 'gratuit' ? "matchs_gratuits" : "matchs_payants", id));
                 
-                document.getElementById('equipeDomicile').value = m.equipeDomicile || '';
-                document.getElementById('equipeExterieur').value = m.equipeExterieur || '';
-                document.getElementById('competition').value = m.competition || '';
-                
-                if (m.date) {
-                    const d = new Date(m.date.seconds * 1000);
-                    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-                    document.getElementById('date').value = d.toISOString().slice(0,16);
+                if (docSnap.exists()) {
+                    const m = docSnap.data();
+                    isEditing = true;
+                    editIdInput.value = id;
+                    editTypeInput.value = type;
+                    
+                    document.getElementById('equipeDomicile').value = m.equipeDomicile || '';
+                    document.getElementById('equipeExterieur').value = m.equipeExterieur || '';
+                    document.getElementById('competition').value = m.competition || '';
+                    
+                    if (m.date) {
+                        const d = new Date(m.date.seconds * 1000);
+                        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+                        document.getElementById('date').value = d.toISOString().slice(0,16);
+                    }
+                    
+                    if (m.logoDomicile) { previewLogoDom.src = m.logoDomicile; previewLogoDom.classList.remove('hidden'); logoDomUrl.value = m.logoDomicile; }
+                    if (m.logoExterieur) { previewLogoExt.src = m.logoExterieur; previewLogoExt.classList.remove('hidden'); logoExtUrl.value = m.logoExterieur; }
+                    if (m.imageCentrale) { previewImageCentrale.src = m.imageCentrale; previewImageCentrale.classList.remove('hidden'); imageCentraleUrl.value = m.imageCentrale; }
+                    
+                    document.getElementById('pronostic').value = m.pronostic || '';
+                    document.getElementById('probabilite').value = m.probabilite || 85;
+                    document.getElementById('requiredAds').value = m.requiredAds || 1;
+                    
+                    // Gestion du score
+                    const scoreInput = document.getElementById('scorePredit');
+                    scoreInput.value = m.scorePredit || "";
+
+                    // On affiche les cases de base (mais on va les griser)
+                    checkboxesContainer.classList.remove('hidden');
+                    requiredAdsContainer.style.display = 'block';
+
+                    // On cherche si le match jumeau existe
+                    const autreColl = type === 'gratuit' ? "matchs_payants" : "matchs_gratuits";
+                    const q = query(collection(db, autreColl), where("equipeDomicile", "==", m.equipeDomicile), where("date", "==", m.date));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if (type === 'gratuit') {
+                        checkboxGratuit.checked = true;
+                        checkboxPayant.checked = !querySnapshot.empty;
+                        scoreInput.disabled = true;
+                        scoreInput.placeholder = "Géré depuis la version VIP";
+                    } else {
+                        checkboxPayant.checked = true;
+                        checkboxGratuit.checked = !querySnapshot.empty;
+                        scoreInput.disabled = false;
+                        scoreInput.placeholder = "2-1";
+                    }
+
+                    //  On grise les cases de publication pour éviter de faire n'importe quoi 
+                    checkboxGratuit.disabled = true;
+                    checkboxPayant.disabled = true;
+
+                    if (!querySnapshot.empty) {
+                        // Si le match existe dans les deux, on affiche la case spéciale
+                        editTwinIdInput.value = querySnapshot.docs[0].id;
+                        modifierLesDeuxContainer.classList.remove('hidden');
+                        modifierLesDeux.checked = true; // Coché par défaut pour la fluidité
+                        formTitle.textContent = "Modifier le match (Gratuit + VIP)";
+                    } else {
+                        editTwinIdInput.value = "false";
+                        modifierLesDeuxContainer.classList.add('hidden');
+                        formTitle.textContent = "Modifier le match (" + (type === 'gratuit' ? "Gratuit" : "VIP") + ")";
+                    }
+
+                    submitBtn.textContent = "Enregistrer les modifications";
+                    cancelEditBtn.classList.remove('hidden');
                 }
-                
-                if (m.logoDomicile) { previewLogoDom.src = m.logoDomicile; previewLogoDom.classList.remove('hidden'); logoDomUrl.value = m.logoDomicile; }
-                if (m.logoExterieur) { previewLogoExt.src = m.logoExterieur; previewLogoExt.classList.remove('hidden'); logoExtUrl.value = m.logoExterieur; }
-                if (m.imageCentrale) { previewImageCentrale.src = m.imageCentrale; previewImageCentrale.classList.remove('hidden'); imageCentraleUrl.value = m.imageCentrale; }
-                
-                document.getElementById('pronostic').value = m.pronostic || '';
-                document.getElementById('scorePredit').value = m.scorePredit || '';
-                document.getElementById('probabilite').value = m.probabilite || 85;
-                document.getElementById('requiredAds').value = m.requiredAds || 1;
-                
-                formTitle.textContent = "✏️ Modifier le match";
-                submitBtn.textContent = "💾 Enregistrer";
-                cancelEditBtn.classList.remove('hidden');
-                
-                checkboxesContainer.classList.add('hidden');
-                requiredAdsContainer.style.display = (type === 'gratuit') ? 'block' : 'none';
+            } catch (e) {
+                alert("Erreur: " + e.message);
             }
         }
 
@@ -449,9 +537,10 @@
             form.reset();
             editIdInput.value = '';
             editTypeInput.value = '';
+            editTwinIdInput.value = 'false';
             isEditing = false;
-            formTitle.textContent = "📝 Publier un match";
-            submitBtn.textContent = "🚀 Publier";
+            formTitle.textContent = "Publier un match";
+            submitBtn.textContent = "Publier le match";
             cancelEditBtn.classList.add('hidden');
             
             previewLogoDom.classList.add('hidden');
@@ -464,20 +553,31 @@
             logoExtUrl.value = '';
             imageCentraleUrl.value = '';
             
+            document.getElementById('scorePredit').disabled = false;
+            document.getElementById('scorePredit').placeholder = "2-1";
+            
+            // On réactive les cases pour la publication
+            checkboxGratuit.disabled = false;
+            checkboxPayant.disabled = false;
             checkboxesContainer.classList.remove('hidden');
+            modifierLesDeuxContainer.classList.add('hidden');
             checkboxGratuit.checked = true;
             checkboxPayant.checked = true;
             requiredAdsContainer.style.display = 'block';
         };
 
-        // Soumission du formulaire
+        // --- SOUMISSION DU FORMULAIRE ---
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            if (!isEditing && !checkboxGratuit.checked && !checkboxPayant.checked) {
+                return alert("Veuillez cocher au moins une version (Gratuit ou Payant).");
+            }
+
             submitBtn.disabled = true;
-            submitBtn.textContent = "⏳ Traitement...";
+            submitBtn.textContent = "Traitement en cours...";
 
             try {
-                // Upload générique
                 async function uploadFile(fileInput, currentUrl, folder) {
                     if (fileInput.files.length > 0) {
                         const file = fileInput.files[0];
@@ -496,27 +596,17 @@
                 const nomExt = document.getElementById('equipeExterieur').value.trim();
                 const nomComp = document.getElementById('competition').value.trim();
 
-                // ⭐ MÉMORISER LES ÉQUIPES ET LEURS LOGOS
+                // Mémorisation
                 let equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
-                
-                // Domicile
                 let idxDom = equipes.findIndex(e => e.nom.toLowerCase() === nomDom.toLowerCase());
-                if (idxDom > -1) {
-                    if (finalLogoDom) equipes[idxDom].logo = finalLogoDom;
-                } else {
-                    equipes.push({ nom: nomDom, logo: finalLogoDom || null });
-                }
+                if (idxDom > -1) { if (finalLogoDom) equipes[idxDom].logo = finalLogoDom; } 
+                else { equipes.push({ nom: nomDom, logo: finalLogoDom || null }); }
                 
-                // Extérieur
                 let idxExt = equipes.findIndex(e => e.nom.toLowerCase() === nomExt.toLowerCase());
-                if (idxExt > -1) {
-                    if (finalLogoExt) equipes[idxExt].logo = finalLogoExt;
-                } else {
-                    equipes.push({ nom: nomExt, logo: finalLogoExt || null });
-                }
+                if (idxExt > -1) { if (finalLogoExt) equipes[idxExt].logo = finalLogoExt; } 
+                else { equipes.push({ nom: nomExt, logo: finalLogoExt || null }); }
                 localStorage.setItem('equipes_memoire', JSON.stringify(equipes));
 
-                // ⭐ MÉMORISER LA COMPÉTITION
                 let competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
                 if (nomComp && !competitions.includes(nomComp)) {
                     competitions.push(nomComp);
@@ -542,15 +632,37 @@
                 if (isEditing) {
                     const id = editIdInput.value;
                     const type = editTypeInput.value;
+                    const idTwin = editTwinIdInput.value;
+                    const updateBoth = modifierLesDeux.checked; //  On regarde si la case est cochée 
+
                     const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
-                    
+                    const autreColl = type === 'gratuit' ? "matchs_payants" : "matchs_gratuits";
+
+                    // 1. Mise à jour de la version d'origine
                     const dataToUpdate = { ...baseData };
                     if (type === 'payant') dataToUpdate.scorePredit = scorePredit;
                     else dataToUpdate.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
                     
                     await updateDoc(doc(db, coll, id), dataToUpdate);
-                    alert("✅ Match modifié !");
+
+                    // 2. Mise à jour de la version jumelle (SI la case est cochée)
+                    if (idTwin && idTwin !== "false" && updateBoth) {
+                        const dataToUpdateTwin = { ...baseData };
+                        // On applique les spécificités de l'autre collection
+                        if (type === 'gratuit') {
+                            dataToUpdateTwin.scorePredit = scorePredit; // Si on modifie le gratuit, on met le score du payant
+                        } else {
+                            dataToUpdateTwin.scorePredit = ""; // Si on modifie le payant, on vide le score du gratuit
+                            dataToUpdateTwin.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
+                        }
+                        await updateDoc(doc(db, autreColl, idTwin), dataToUpdateTwin);
+                        alert("Match modifié avec succès sur les 2 versions !");
+                    } else {
+                        alert("Match modifié avec succès !");
+                    }
+
                 } else {
+                    // Publication normale
                     if (checkboxGratuit.checked) {
                         await addDoc(collection(db, "matchs_gratuits"), {
                             ...baseData,
@@ -564,17 +676,17 @@
                             scorePredit: scorePredit
                         });
                     }
-                    alert("✅ Match publié !");
+                    alert("Match publié avec succès !");
                 }
                 
-                chargerMemoire(); // Recharger l'auto-complétion avec les nouvelles équipes
+                chargerMemoire();
                 resetForm();
             } catch (error) {
                 console.error(error);
-                alert("❌ Erreur: " + error.message);
+                alert("Erreur lors de l'enregistrement :\n\n" + error.message);
             } finally {
                 submitBtn.disabled = false;
-                if (!isEditing) submitBtn.textContent = "🚀 Publier";
+                if (!isEditing) submitBtn.textContent = "Publier le match";
             }
         });
     </script>

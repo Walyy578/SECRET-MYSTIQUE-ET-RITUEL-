@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppression des données - Lumystic</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #07080D 0%, #1A1A2E 100%);
+            color: #E0E0E0;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(30, 34, 48, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 159, 67, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #FF9F43;
+            font-size: 32px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #FF9F43;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #FF9F43;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        p { margin-bottom: 15px; }
+        ul { margin-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        .info-box {
+            background: rgba(255, 159, 67, 0.1);
+            border-left: 4px solid #FF9F43;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .email {
+            color: #FF9F43;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .email:hover { text-decoration: underline; }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #888;
+        }
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -2px;
+            background: #FF9F43;
+            color: #000;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suppression des données utilisateur</h1>
+        <p><strong>Application :</strong> Lumystic (Géomancie)</p>
+        <p><strong>Dernière mise à jour :</strong> 28 octobre 2025</p>
+
+        <div class="info-box">
+            <strong>ℹ️ Important :</strong> Vous pouvez demander la suppression de toutes vos données personnelles associées à votre compte Lumystic à tout moment.
+        </div>
+
+        <h2>Comment supprimer vos données ?</h2>
+        <p>Pour demander la suppression de vos données, suivez ces étapes simples :</p>
+        <ol class="steps">
+            <li>Envoyez un email à l'adresse suivante : <a href="mailto:support@lumystic-app.com?subject=Demande%20de%20suppression%20de%20donn%C3%A9es" class="email">support@lumystic-app.com</a></li>
+            <li>Indiquez dans l'objet : <strong>"Demande de suppression de données"</strong></li>
+            <li>Précisez dans le corps de l'email l'adresse email associée à votre compte Lumystic</li>
+            <li>Nous traiterons votre demande dans un délai de <strong>7 jours ouvrés</strong></li>
+        </ol>
+
+        <h2>Quelles données seront supprimées ?</h2>
+        <p>Une fois votre demande traitée, les données suivantes seront définitivement supprimées :</p>
+        <ul>
+            <li>Votre adresse email et informations de compte</li>
+            <li>Votre historique de consultations et de rêves</li>
+            <li>Vos résultats de géomancie et interprétations</li>
+            <li>Vos conversations avec l'Oracle AI</li>
+            <li>Votre solde de jetons (non remboursable)</li>
+            <li>Vos préférences et paramètres de l'application</li>
+        </ul>
+
+        <h2>Données conservées</h2>
+        <p>Certaines données peuvent être conservées pour des raisons légales ou comptables :</p>
+        <ul>
+            <li><strong>Historique des paiements :</strong> conservé 10 ans (obligation légale)</li>
+            <li><strong>Logs techniques :</strong> conservés 30 jours puis supprimés automatiquement</li>
+        </ul>
+
+        <h2>Délai de traitement</h2>
+        <p>Votre demande sera traitée dans les <strong>7 jours ouvrés</strong> suivant sa réception. Vous recevrez un email de confirmation une fois vos données supprimées.</p>
+
+        <div class="info-box">
+            <strong>📧 Contact :</strong> Pour toute question concernant la suppression de vos données, contactez-nous à <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a>
+        </div>
+
+        <div class="footer">
+            © 2025 Lumystic - Tous droits réservés
+        </div>
+    </div>
+</body>
+</html>

@@ -16,6 +16,7 @@
         .file-input-btn { background-color: #4B0082; color: white; padding: 8px; border-radius: 8px; text-align: center; font-size: 12px; border: 1px dashed #FFD700; cursor: pointer; }
         .btn-action { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
         
+        /* Styles pour les menus déroulants */
         .team-dropdown {
             position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
             background-color: #2D1B69; border: 1px solid #FFD700;
@@ -27,6 +28,7 @@
         }
         .team-dropdown-item:hover { background-color: rgba(255,215,0,0.2); }
 
+        /* Styles pour les onglets */
         .tab-btn { transition: all 0.2s; border-bottom: 2px solid transparent; }
         .tab-btn.active { border-bottom-color: #FFD700; color: #FFD700; font-weight: bold; }
     </style>
@@ -66,9 +68,9 @@
             </div>
         </div>
 
-        <!-- ⭐ NOUVELLE SECTION : NOTIFICATIONS PUSH ⭐ -->
+        <!-- SECTION : NOTIFICATIONS PUSH -->
         <div class="bg-blue-900/40 border border-blue-600 rounded-2xl p-5 mb-6">
-            <h2 class="text-lg font-bold text-blue-400 mb-2">🔔 Envoyer une Notification Push</h2>
+            <h2 class="text-lg font-bold text-blue-400 mb-2"> Envoyer une Notification Push</h2>
             <div class="space-y-3 mt-3">
                 <input type="text" id="notif-titre" placeholder="Titre de la notification (ex: Alerte Match !)" class="input-field w-full p-2 rounded-lg">
                 <textarea id="notif-message" rows="2" placeholder="Message (ex: Un nouveau pronostic VIP vient d'être publié !)" class="input-field w-full p-2 rounded-lg"></textarea>
@@ -76,8 +78,8 @@
                 
                 <div class="flex flex-col md:flex-row gap-3 pt-2">
                     <input type="text" id="notif-target-uid" placeholder="UID spécifique (Optionnel)" class="input-field p-2 rounded-lg flex-1">
-                    <button id="btn-send-notif-all" class="btn-gold py-2 px-6 rounded-lg whitespace-nowrap">📢 Envoyer à TOUS</button>
-                    <button id="btn-send-notif-one" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-lg transition whitespace-nowrap">🎯 Envoyer à 1 Utilisateur</button>
+                    <button id="btn-send-notif-all" class="btn-gold py-2 px-6 rounded-lg whitespace-nowrap"> Envoyer à TOUS</button>
+                    <button id="btn-send-notif-one" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-lg transition whitespace-nowrap"> Envoyer à 1 Utilisateur</button>
                 </div>
             </div>
             <p id="notif-status" class="text-sm mt-3 hidden"></p>
@@ -112,16 +114,18 @@
                     
                     <!-- ONGLETS DE RECHERCHE -->
                     <div class="flex border-b border-gray-700 mb-2">
-                        <button type="button" id="tab-clubs" class="tab-btn active px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('clubs')">🛡️ Clubs</button>
-                        <button type="button" id="tab-nations" class="tab-btn px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('nations')">🌍 Nations</button>
+                        <button type="button" id="tab-clubs" class="tab-btn active px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('clubs')"> Clubs</button>
+                        <button type="button" id="tab-nations" class="tab-btn px-4 py-2 text-sm text-gray-300 hover:text-white" onclick="changerOnglet('nations')"> Nations</button>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
+                        <!-- ÉQUIPE DOMICILE AVEC RECHERCHE -->
                         <div class="relative">
                             <label class="block text-xs text-gray-300 mb-1">Équipe Domicile</label>
                             <input type="text" id="equipeDomicile" class="input-field w-full p-2 rounded-lg" required oninput="rechercherEquipe('dom')">
                             <div id="dropdown-dom" class="team-dropdown hidden"></div>
                         </div>
+                        <!-- ÉQUIPE EXTÉRIEUR AVEC RECHERCHE -->
                         <div class="relative">
                             <label class="block text-xs text-gray-300 mb-1">Équipe Extérieur</label>
                             <input type="text" id="equipeExterieur" class="input-field w-full p-2 rounded-lg" required oninput="rechercherEquipe('ext')">
@@ -129,13 +133,14 @@
                         </div>
                     </div>
 
+                    <!-- COMPÉTITION -->
                     <div class="grid grid-cols-2 gap-2">
                         <div class="relative">
                             <label class="block text-xs text-gray-300 mb-1">Compétition</label>
                             <input type="text" id="competition" class="input-field w-full p-2 rounded-lg" placeholder="Ex: CAN, Ligue 1..." required oninput="rechercherCompetition()" autocomplete="off">
                             <div id="dropdown-competitions" class="team-dropdown hidden"></div>
-                            <p id="comp-loading" class="text-[10px] text-yellow-400 mt-1 hidden">⏳ Chargement...</p>
-                            <p id="comp-error" class="text-[10px] text-red-400 mt-1 hidden">❌ Erreur.</p>
+                            <p id="comp-loading" class="text-[10px] text-yellow-400 mt-1 hidden"> Chargement...</p>
+                            <p id="comp-error" class="text-[10px] text-red-400 mt-1 hidden"> Erreur.</p>
                         </div>
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Date et Heure</label>
@@ -143,6 +148,7 @@
                         </div>
                     </div>
                     
+                    <!-- LOGOS (MANUEL OU GITHUB) -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="block text-xs text-gray-300 mb-1">Logo Domicile</label>
@@ -166,10 +172,11 @@
                         </div>
                     </div>
 
+                    <!-- GÉNÉRATION D'AFFICHE -->
                     <div class="bg-black/30 p-3 rounded-lg border border-purple-600 border-dashed">
                         <label class="block text-xs text-gray-300 mb-2">Affiche du match (Automatique)</label>
                         <button type="button" id="btn-generate-poster" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg mb-2 transition">
-                            ✨ Générer l'affiche du match
+                             Générer l'affiche du match
                         </button>
                         
                         <div>
@@ -231,6 +238,7 @@
                 </form>
             </div>
 
+            <!-- COLONNE DROITE : LISTE DES MATCHS -->
             <div class="lg:col-span-3 space-y-4">
                 <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
                     <h3 class="text-md font-bold text-green-400 mb-3">Matchs Gratuits</h3>
@@ -316,7 +324,7 @@
         const btnGrantVip = document.getElementById('btn-grant-vip');
         const vipStatus = document.getElementById('vip-status');
 
-        // --- NOTIFICATIONS ---
+        // NOTIFICATIONS
         const btnSendNotifAll = document.getElementById('btn-send-notif-all');
         const btnSendNotifOne = document.getElementById('btn-send-notif-one');
         const notifStatus = document.getElementById('notif-status');
@@ -464,6 +472,29 @@
             }
         });
 
+        //  GESTION DES LOGOS MANUELS (TÉLÉPHONE) 
+        function afficherPreview(event, imgElement, hiddenInput) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imgElement.src = e.target.result;
+                    imgElement.classList.remove('hidden');
+                    hiddenInput.value = e.target.result; // On stocke le Base64 dans le champ caché
+                    hiddenInput.dataset.type = 'base64'; // On marque comme "image locale"
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imgElement.classList.add('hidden');
+                hiddenInput.value = '';
+                hiddenInput.dataset.type = '';
+            }
+        }
+
+        logoDomFile.addEventListener('change', (e) => afficherPreview(e, previewLogoDom, logoDomUrl));
+        logoExtFile.addEventListener('change', (e) => afficherPreview(e, previewLogoExt, logoExtUrl));
+        imageFile.addEventListener('change', (e) => afficherPreview(e, previewImageCentrale, imageCentraleUrl));
+
         // --- GÉNÉRATION D'AFFICHE CANVAS ---
         document.getElementById('btn-generate-poster').addEventListener('click', async () => {
             const nomDom = document.getElementById('equipeDomicile').value.trim();
@@ -476,7 +507,7 @@
             }
 
             const btn = document.getElementById('btn-generate-poster');
-            btn.textContent = "⏳ Création...";
+            btn.textContent = " Création...";
             btn.disabled = true;
 
             const canvas = document.getElementById('poster-canvas');
@@ -505,7 +536,7 @@
                 const img = new Image();
                 img.crossOrigin = "Anonymous";
                 img.onload = () => resolve(img);
-                img.onerror = reject;
+                img.onerror = () => reject(new Error("Impossible de charger l'image"));
                 img.src = src;
             });
 
@@ -524,21 +555,25 @@
                 lightD.addColorStop(1, 'rgba(255, 255, 255, 0)');
                 ctx.fillStyle = lightD; ctx.fillRect(W/2, 0, W/2, H);
 
+                // LOGO DOMICILE
                 ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30; ctx.fillStyle = '#1A0033';
                 ctx.beginPath(); ctx.arc(W/4, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
                 ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(W/4, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.stroke();
                 ctx.drawImage(imgDom, W/4 - logoSize/2, yPos, logoSize, logoSize);
 
+                // LOGO EXTERIEUR
                 ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30; ctx.fillStyle = '#1A0033';
                 ctx.beginPath(); ctx.arc(W*0.75, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
                 ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(W*0.75, H/2 - 20, logoSize/2 + 15, 0, Math.PI * 2); ctx.stroke();
                 ctx.drawImage(imgExt, W*0.75 - logoSize/2, yPos, logoSize, logoSize);
 
+                // BADGE VS
                 ctx.fillStyle = 'rgba(0,0,0,0.8)'; ctx.beginPath(); ctx.arc(W/2, H/2 - 20, 80, 0, Math.PI * 2); ctx.fill();
                 ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(W/2, H/2 - 20, 80, 0, Math.PI * 2); ctx.stroke();
                 ctx.font = 'italic 900 90px "Segoe UI", Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                 ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 20; ctx.fillStyle = '#FFFFFF'; ctx.fillText('VS', W/2, H/2 - 20); ctx.shadowBlur = 0;
 
+                // BANDEAU
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; ctx.fillRect(0, H - 120, W, 120);
                 ctx.fillStyle = '#FFD700'; ctx.fillRect(0, H - 125, W, 5);
                 ctx.font = 'bold 45px "Segoe UI", Arial, sans-serif'; ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'center';
@@ -553,13 +588,13 @@
                 imageCentraleUrl.value = dataUrl;
                 imageCentraleUrl.dataset.type = 'base64'; 
 
-                btn.textContent = "✅ Affiche générée !";
-                setTimeout(() => { btn.textContent = "✨ Générer l'affiche du match"; }, 3000);
+                btn.textContent = " Affiche générée !";
+                setTimeout(() => { btn.textContent = " Générer l'affiche du match"; }, 3000);
 
             } catch (e) {
                 console.error(e);
-                alert("Erreur lors du chargement des logos pour l'affiche.");
-                btn.textContent = "✨ Générer l'affiche du match";
+                alert("Erreur : Impossible de charger les logos. Vérifiez que les liens sont valides ou utilisez des images locales.");
+                btn.textContent = " Générer l'affiche du match";
             } finally {
                 btn.disabled = false;
             }
@@ -597,7 +632,7 @@
                 adminScreen.classList.remove('hidden');
                 chargerMatchs();
             } else {
-                loginScreen.classList.add('hidden'); // Ou remove selon la logique
+                loginScreen.classList.add('hidden');
                 adminScreen.classList.add('hidden');
             }
         });
@@ -622,59 +657,43 @@
             }
         });
 
-        // --- LOGIQUE NOTIFICATION PUSH ---
+        // --- NOTIFICATIONS PUSH ---
         async function envoyerNotificationPush(cibleUid = null) {
             const titre = document.getElementById('notif-titre').value.trim();
             const message = document.getElementById('notif-message').value.trim();
             const imageUrl = document.getElementById('notif-image').value.trim();
 
-            if (!titre || !message) {
-                return alert("Le titre et le message sont obligatoires.");
-            }
-
-            if (cibleUid && !cibleUid.trim()) {
-                return alert("Veuillez entrer un UID valide pour l'envoi ciblé.");
-            }
+            if (!titre || !message) return alert("Le titre et le message sont obligatoires.");
+            if (cibleUid && !cibleUid.trim()) return alert("Veuillez entrer un UID valide.");
 
             notifStatus.classList.add('hidden');
-            btnSendNotifAll.disabled = true;
-            btnSendNotifOne.disabled = true;
-            const originalTextAll = btnSendNotifAll.textContent;
-            const originalTextOne = btnSendNotifOne.textContent;
-            
-            btnSendNotifAll.textContent = "Envoi...";
-            btnSendNotifOne.textContent = "Envoi...";
+            btnSendNotifAll.disabled = true; btnSendNotifOne.disabled = true;
+            const originalTextAll = btnSendNotifAll.textContent; const originalTextOne = btnSendNotifOne.textContent;
+            btnSendNotifAll.textContent = "Envoi..."; btnSendNotifOne.textContent = "Envoi...";
 
             try {
                 const payload = { titre, message, imageUrl: imageUrl || null };
-                if (cibleUid && cibleUid.trim()) {
-                    payload.targetUid = cibleUid.trim();
-                }
+                if (cibleUid && cibleUid.trim()) payload.targetUid = cibleUid.trim();
 
                 const envoyerNotifFn = httpsCallable(functions, 'envoyerNotification');
                 const result = await envoyerNotifFn(payload);
 
                 if (result.data.success) {
-                    notifStatus.textContent = `✅ Succès ! ${result.data.sent || 1} notification(s) envoyée(s).`;
+                    notifStatus.textContent = ` Succès ! ${result.data.sent || 1} notification(s) envoyée(s).`;
                     notifStatus.className = "text-sm mt-3 text-green-400 block";
-                    // On vide les champs
-                    document.getElementById('notif-titre').value = '';
-                    document.getElementById('notif-message').value = '';
-                    document.getElementById('notif-image').value = '';
-                    document.getElementById('notif-target-uid').value = '';
+                    document.getElementById('notif-titre').value = ''; document.getElementById('notif-message').value = '';
+                    document.getElementById('notif-image').value = ''; document.getElementById('notif-target-uid').value = '';
                 } else {
-                    notifStatus.textContent = `❌ Erreur : ${result.data.message || 'Aucun utilisateur trouvé.'}`;
+                    notifStatus.textContent = ` Erreur : ${result.data.message || 'Aucun utilisateur trouvé.'}`;
                     notifStatus.className = "text-sm mt-3 text-orange-400 block";
                 }
             } catch (error) {
                 console.error("Erreur Notification:", error);
-                notifStatus.textContent = `❌ Erreur : ${error.message}`;
+                notifStatus.textContent = ` Erreur : ${error.message}`;
                 notifStatus.className = "text-sm mt-3 text-red-400 block";
             } finally {
-                btnSendNotifAll.disabled = false;
-                btnSendNotifOne.disabled = false;
-                btnSendNotifAll.textContent = originalTextAll;
-                btnSendNotifOne.textContent = originalTextOne;
+                btnSendNotifAll.disabled = false; btnSendNotifOne.disabled = false;
+                btnSendNotifAll.textContent = originalTextAll; btnSendNotifOne.textContent = originalTextOne;
             }
         }
 

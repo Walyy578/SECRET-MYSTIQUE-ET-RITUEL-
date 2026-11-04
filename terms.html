@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conditions d'utilisation et de vente — MOBVISION</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Palette sombre élégante avec accents dorés/jaunes */
+      --bg-primary: #0c0c10;
+      --bg-secondary: #14141c;
+      --bg-card: #1a1a24;
+      --bg-hover: #22222e;
+      --gold: #f5c842;
+      --gold-soft: #e8b931;
+      --gold-dim: rgba(245, 200, 66, 0.12);
+      --gold-border: rgba(245, 200, 66, 0.22);
+      --text-primary: #ececf0;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6e6e80;
+      --border: #2a2a38;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 16px;
+      min-height: 100vh;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== LAYOUT ===== */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      text-align: center;
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-primary);
+      font-size: 1.2rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .header h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .header .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .header .badge {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 6px 16px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 100px;
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ===== SOMMAIRE ===== */
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      gap: 8px;
+    }
+
+    .toc li {
+      counter-increment: toc;
+    }
+
+    .toc a {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      min-width: 24px;
+    }
+
+    .toc a:hover {
+      background: var(--gold-dim);
+      color: var(--text-primary);
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 30px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .section:hover {
+      border-color: var(--gold-border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .section h2 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .section p {
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      font-size: 0.94rem;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== LISTES ===== */
+    .legal-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .legal-list li {
+      position: relative;
+      padding-left: 26px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .legal-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 4px;
+      top: -1px;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .legal-list li strong {
+      color: var(--text-primary);
+    }
+
+    /* ===== TABLE TARIFS ===== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 18px 0 6px;
+    }
+
+    .price-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 14px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .price-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-2px);
+    }
+
+    .price-card:hover::before {
+      opacity: 1;
+    }
+
+    .price-duration {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .price-amount {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .price-currency {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ===== ENCADRÉS ===== */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: var(--radius-sm);
+      margin: 16px 0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .callout-warning {
+      background: rgba(245, 200, 66, 0.07);
+      border: 1px solid rgba(245, 200, 66, 0.2);
+      color: #e8d9a8;
+    }
+
+    .callout-warning .callout-icon {
+      color: var(--gold);
+    }
+
+    .callout-info {
+      background: rgba(120, 160, 255, 0.06);
+      border: 1px solid rgba(120, 160, 255, 0.18);
+      color: #b8c4e0;
+    }
+
+    .callout-info .callout-icon {
+      color: #8aa8ff;
+    }
+
+    .callout strong {
+      color: inherit;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .contact-item:hover {
+      border-color: var(--gold-border);
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .contact-item .ci-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--gold-dim);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+    }
+
+    .contact-item .ci-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .contact-item .ci-value {
+      color: var(--gold);
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    .footer strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .footer .divider {
+      display: inline-block;
+      margin: 0 8px;
+      color: var(--border);
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: var(--gold);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(245, 200, 66, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: var(--transition);
+      z-index: 100;
+      text-decoration: none;
+    }
+
+    .back-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-top:hover {
+      background: var(--gold-soft);
+      transform: translateY(-2px);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .page {
+        padding: 16px 12px 60px;
+      }
+
+      .header {
+        padding: 28px 0 24px;
+        margin-bottom: 28px;
+      }
+
+      .section {
+        padding: 20px 18px 22px;
+        border-radius: 14px;
+      }
+
+      .section h2 {
+        font-size: 1rem;
+      }
+
+      .toc {
+        padding: 18px 16px;
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .price-amount {
+        font-size: 1.2rem;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .back-top {
+        bottom: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== ACCESSIBILITÉ ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--bg-primary);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-border);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="brand">
+        <span class="brand-icon">M</span>
+        MOBVISION
+      </div>
+      <h1>Conditions d'utilisation et de vente</h1>
+      <p class="subtitle">
+        Service de pronostics et d'analyses sportives / PMU — Applicable au Burkina Faso.
+        Veuillez lire attentivement ces conditions avant toute souscription.
+      </p>
+      <span class="badge">Dernière mise à jour : Novembre 2025</span>
+    </header>
+
+    <!-- ===== SOMMAIRE ===== -->
+    <nav class="toc" aria-label="Sommaire">
+      <div class="toc-title">Sommaire</div>
+      <ol>
+        <li><a href="#objet">Objet et acceptation des conditions</a></li>
+        <li><a href="#formules">Formules d'abonnement et tarifs</a></li>
+        <li><a href="#paiement">Modalités de paiement</a></li>
+        <li><a href="#duree">Durée, accès immédiat et non-renouvellement</a></li>
+        <li><a href="#rétractation">Politique de rétractation et remboursement</a></li>
+        <li><a href="#risques">Avertissement sur les risques</a></li>
+        <li><a href="#propriete">Propriété intellectuelle et responsabilité</a></li>
+        <li><a href="#contact">Contact et assistance</a></li>
+      </ol>
+    </nav>
+
+    <!-- ===== 1. OBJET ===== -->
+    <section class="section" id="objet">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Objet et acceptation des conditions d'utilisation</h2>
+      </div>
+      <p>
+        Les présentes Conditions d'utilisation et de vente (ci-après « les Conditions ») régissent
+        l'accès et l'utilisation du service <strong>MOBVISION</strong>, service de pronostics et de
+        contenus d'analyse sportive et PMU, édité par MOBVISION, établi au <strong>Burkina Faso</strong>.
+      </p>
+      <p>
+        En souscrivant à l'une des formules d'abonnement proposées ou en accédant aux contenus,
+        l'utilisateur reconnaît avoir lu, compris et accepté sans réserve l'intégralité des présentes
+        Conditions. Toute utilisation du service implique une acceptation pleine et entière.
+      </p>
+      <p>
+        MOBVISION se réserve le droit de modifier les présentes Conditions à tout moment. Les
+        conditions applicables sont celles en vigueur à la date de la souscription.
+      </p>
+    </section>
+
+    <!-- ===== 2. FORMULES ===== -->
+    <section class="section" id="formules">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Description des formules d'abonnement et tarifs</h2>
+      </div>
+      <p>
+        MOBVISION propose plusieurs formules d'abonnement donnant accès à des pronostics et contenus
+        d'analyse. Les tarifs sont exprimés en <strong>Francs CFA (FCFA)</strong> et sont les suivants :
+      </p>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-duration">3 jours</div>
+          <div class="price-amount">25 000</div>
+          <div class="price-currency">FCFA</div>
+        </div>
+        <div class="price-card">
+          <div class="price-duration">1 semaine</div>
+          <div class="price-amount">35 000</div>
+          <div class="price-currency">FCFA</div>
+        </div>
+        <div class="price-card">
+          <div class="price-duration">2 semaines</div>
+          <div class="price-amount">47 000</div>
+          <div class="price-currency">FCFA</div>
+        </div>
+        <div class="price-card">
+          <div class="price-duration">1 mois</div>
+          <div class="price-amount">75 000</div>
+          <div class="price-currency">FCFA</div>
+        </div>
+      </div>
+
+      <p>
+        Chaque formule donne accès aux contenus pendant la durée indiquée à compter de la validation
+        du paiement. Les tarifs peuvent faire l'objet de promotions temporaires, lesquelles prévalent
+        sur les tarifs ci-dessus pendant leur période de validité.
+      </p>
+    </section>
+
+    <!-- ===== 3. PAIEMENT ===== -->
+    <section class="section" id="paiement">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Modalités de paiement</h2>
+      </div>
+      <p>
+        Le règlement des abonnements s'effectue via les moyens suivants :
+      </p>
+      <ul class="legal-list">
+        <li>
+          <strong>Paiement en ligne</strong> : via notre passerelle sécurisée intégrée, acceptant
+          les paiements par <strong>Mobile Money</strong> et par <strong>carte bancaire</strong>.
+        </li>
+        <li>
+          <strong>Validation via WhatsApp</strong> : après paiement ou pour toute assistance,
+          la confirmation de votre abonnement peut être effectuée directement auprès de notre
+          équipe support sur WhatsApp. Ce canal permet également de finaliser un règlement
+          ou de vérifier le statut de votre accès.
+        </li>
+      </ul>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div>
+          L'accès aux contenus est débloqué après <strong>confirmation effective du paiement</strong>.
+          Aucun frais caché n'est appliqué : le montant affiché correspond au montant total dû.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. DURÉE ===== -->
+    <section class="section" id="duree">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Durée, accès immédiat et non-renouvellement automatique</h2>
+      </div>
+      <p>
+        L'abonnement est souscrit pour la durée choisie (3 jours, 1 semaine, 2 semaines ou 1 mois).
+        <strong>L'accès aux pronostics est immédiat</strong> dès la validation du paiement et se
+        poursuit jusqu'à l'expiration de la période souscrite.
+      </p>
+      <p>
+        <strong>Aucun renouvellement automatique</strong> n'est effectué. À l'issue de la période,
+        l'abonnement prend fin sans prélèvement supplémentaire. L'utilisateur qui souhaite continuer
+        doit procéder à un <strong>nouveau réengagement</strong> et à un nouveau paiement.
+      </p>
+    </section>
+
+    <!-- ===== 5. RÉTRACTATION ===== -->
+    <section class="section" id="rétractation">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Politique de rétractation et remboursement</h2>
+      </div>
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div>
+          <strong>Service numérique à accès immédiat :</strong> conformément aux règles applicables
+          aux contenus numériques fournis immédiatement, l'utilisateur reconnaît que l'accès aux
+          pronostics est débloqué sans délai après paiement.
+        </div>
+      </div>
+      <p>
+        En conséquence, <strong>aucun remboursement ne sera effectué une fois les contenus
+        débloqués</strong>, l'utilisateur ayant expressément accepté l'exécution immédiate du
+        service et renoncé à son droit de rétractation pour les prestations déjà fournies.
+      </p>
+      <p>
+        Tout litige relatif à un paiement non reçu ou à un accès non débloqué doit être signalé
+        dans les <strong>48 heures</strong> via notre support WhatsApp ou par e-mail, afin que nous
+        puissions procéder aux vérifications nécessaires.
+      </p>
+    </section>
+
+    <!-- ===== 6. RISQUES ===== -->
+    <section class="section" id="risques">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Avertissement sur les risques</h2>
+      </div>
+      <p>
+        Les pronostics et analyses sportives sont fournis à titre <strong>informatif et indicatif</strong>.
+        Ils ne constituent en aucun cas une garantie de gain, de résultat ou de performance.
+      </p>
+      <p>
+        Les paris et jeux d'argent comportent des risques financiers. MOBVISION <strong>ne garantit
+        aucun gain à 100 %</strong> et ne saurait être tenu responsable des pertes financières,
+        décisions de pari ou conséquences résultant de l'utilisation des contenus fournis.
+        L'utilisateur reste seul responsable de ses choix et de sa gestion financière.
+      </p>
+      <p>
+        Le service est réservé aux personnes majeures et en capacité juridique. Il est recommandé
+        de parier de manière responsable et de ne jamais engager des sommes dont on ne peut se
+        passer.
+      </p>
+    </section>
+
+    <!-- ===== 7. PROPRIÉTÉ INTELLECTUELLE ===== -->
+    <section class="section" id="propriete">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>Propriété intellectuelle et limitation de responsabilité</h2>
+      </div>
+      <p>
+        <strong>Propriété intellectuelle :</strong> l'ensemble des contenus (analyses, pronostics,
+        textes, éléments graphiques, marques et logos) est la propriété exclusive de MOBVISION ou
+        de ses partenaires. Toute reproduction, diffusion, revente ou exploitation non autorisée
+        est strictement interdite et pourra faire l'objet de poursuites.
+      </p>
+      <p>
+        <strong>Limitation de responsabilité :</strong> MOBVISION met en œuvre les moyens
+        raisonnables pour assurer la disponibilité et la qualité du service, sans garantie
+        d'absence d'interruption ou d'erreur. MOBVISION ne saurait être tenu responsable des
+        dommages indirects, pertes de chance ou préjudices résultant d'une indisponibilité
+        temporaire, d'une erreur de saisie ou d'un usage non conforme des contenus.
+      </p>
+      <p>
+        Les présentes Conditions sont soumises au droit applicable au <strong>Burkina Faso</strong>.
+        Tout litige relatif à leur interprétation ou à leur exécution relève des juridictions
+        compétentes de Ouagadougou, sauf disposition légale impérative contraire.
+      </p>
+    </section>
+
+    <!-- ===== 8. CONTACT ===== -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>Contact support / assistance utilisateur</h2>
+      </div>
+      <p>
+        Pour toute question relative aux présentes Conditions, à votre abonnement ou pour
+        une assistance technique, notre équipe est disponible :
+      </p>
+
+      <div class="contact-grid">
+        <a class="contact-item" href="https://wa.me/22600000000" target="_blank" rel="noopener noreferrer">
+          <span class="ci-icon">💬</span>
+          <span>
+            <span class="ci-label">Assistance WhatsApp</span>
+            <span class="ci-value">+226 00 00 00 00</span>
+          </span>
+        </a>
+        <a class="contact-item" href="mailto:support@mobvision.com">
+          <span class="ci-icon">✉️</span>
+          <span>
+            <span class="ci-label">E-mail support</span>
+            <span class="ci-value">support@mobvision.com</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="callout callout-info" style="margin-top: 18px;">
+        <span class="callout-icon">🕐</span>
+        <div>
+          Support disponible du lundi au dimanche, de <strong>8h00 à 22h00</strong> (heure de
+          Ouagadougou). Pour une demande de vérification de paiement, précisez votre numéro de
+          transaction et votre formule d'abonnement.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <p>
+        <strong>MOBVISION</strong> — Service de pronostics et d'analyses sportives / PMU
+      </p>
+      <p>
+        Éditeur : MOBVISION
+        <span class="divider">|</span>
+        Juridiction : Burkina Faso
+        <span class="divider">|</span>
+        Tarifs en FCFA
+      </p>
+      <p style="margin-top: 8px;">
+        © 2025 MOBVISION. Tous droits réservés.
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <a href="#" class="back-top" id="backTop" aria-label="Retour en haut">↑</a>
+
+  <script>
+    // Affichage du bouton "retour en haut" après défilement
+    (function () {
+      var btn = document.getElementById('backTop');
+      var toggle = function () {
+        if (window.scrollY > 400) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      };
+      window.addEventListener('scroll', toggle, { passive: true });
+      toggle();
+    })();
+  </script>
+
+</body>
+</html>

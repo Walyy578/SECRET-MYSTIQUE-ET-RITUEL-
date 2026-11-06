@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suppression de compte — Djinn Prono</title>
-    <meta name="description" content="Demandez la suppression de votre compte et de vos données personnelles sur Djinn Prono.">
+    <title>Suppression de compte — Oracle Football Pronostics (Ibdev)</title>
+    <meta name="description" content="Procédure officielle pour demander la suppression de votre compte et de vos données personnelles sur l'application Oracle Football Pronostics, développée par Ibdev.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body {
@@ -41,6 +41,9 @@
             font-size: 14px;
             margin-bottom: 32px;
         }
+        .subtitle strong {
+            color: #FFD700;
+        }
         h2 {
             font-size: 18px;
             color: #FFD700;
@@ -51,7 +54,7 @@
         p { margin-bottom: 14px; color: #D0C4E8; font-size: 15px; }
         ul { margin: 12px 0 18px 24px; }
         li { margin-bottom: 8px; color: #D0C4E8; font-size: 15px; }
-        a { color: #9D4EDD; text-decoration: none; }
+        a { color: #9D4EDD; text-decoration: none; font-weight: bold; }
         a:hover { color: #FFD700; text-decoration: underline; }
         .box {
             background: rgba(13, 0, 26, 0.6);
@@ -74,7 +77,7 @@
             box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
             margin-top: 8px;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255, 215, 0, 0.5); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255, 215, 0, 0.5); text-decoration: none; }
         .warning {
             background: rgba(255, 215, 0, 0.1);
             border-left: 4px solid #FFD700;
@@ -97,26 +100,33 @@
 <body>
     <div class="container">
         <h1>Suppression de compte</h1>
-        <p class="subtitle">Application : <strong>Djinn Prono</strong> · Dernière mise à jour : Octobre 2026</p>
+        <p class="subtitle">
+            Application : <strong>Oracle Football Pronostics</strong><br>
+            Développeur / Éditeur : <strong>Ibdev</strong><br>
+            Identifiant technique (Package) : <strong>com.pronostic.parimystique</strong><br>
+            Dernière mise à jour : Novembre 2026
+        </p>
 
-        <h2>1. Données concernées</h2>
-        <p>Lors de la suppression de votre compte Djinn Prono, les données suivantes seront définitivement effacées :</p>
+        <h2>1. Données concernées par la suppression</h2>
+        <p>Lors de la suppression de votre compte sur l'application <strong>Oracle Football Pronostics</strong> (Package : com.pronostic.parimystique) éditée par <strong>Ibdev</strong>, les données suivantes sont définitivement effacées de nos serveurs (Firebase) :</p>
         <ul>
-            <li>Votre adresse e-mail et votre nom (via Firebase Authentication).</li>
-            <li>Votre photo de profil (si vous en avez téléchargé une).</li>
-            <li>Votre historique de pronostics et vos préférences enregistrées dans l'application.</li>
+            <li>Votre compte d'authentification (adresse e-mail et identifiant Firebase Auth).</li>
+            <li>Votre photo de profil (si vous en avez téléchargé une sur Firebase Storage).</li>
+            <li>L'intégralité de vos données de jeu : historique de pronostics, préférences et données enregistrées dans notre base de données (Firebase Firestore).</li>
         </ul>
 
         <h2>2. Comment demander la suppression</h2>
-        <p><strong>Méthode recommandée (la plus rapide) :</strong> supprimez directement votre compte depuis l'application Djinn Prono.</p>
+        <p><strong>Méthode recommandée (suppression immédiate et réelle) :</strong> supprimez directement votre compte depuis l'application.</p>
         <div class="box">
-            <p>Ouvrez l'application → <strong>Paramètres / Profil</strong> → <strong>Supprimer mon compte</strong>. La suppression est immédiate et irréversible.</p>
+            <p>Ouvrez l'application <strong>Oracle Football Pronostics</strong> → <strong>Paramètres / Profil</strong> → <strong>Supprimer mon compte</strong>.<br>
+            Cette action déclenche la suppression immédiate de votre compte Firebase Auth et l'effacement de toutes vos données Firestore/Storage associées.</p>
         </div>
-        <p>Si vous ne pouvez plus accéder à l'application, envoyez une demande par e-mail :</p>
+        
+        <p>Si vous ne pouvez plus accéder à l'application, envoyez une demande de suppression par e-mail au développeur <strong>Ibdev</strong> :</p>
         <div class="box">
-            <p>📧 <strong>E-mail :</strong> <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Djinn%20Prono">muslimwalyy@gmail.com</a></p>
-            <p>Objet : <strong>Demande de suppression de compte — Djinn Prono</strong></p>
-            <p>Indiquez l'adresse e-mail associée à votre compte Google utilisé pour vous connecter.</p>
+            <p>📧 <strong>E-mail :</strong> <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Oracle%20Football%20Pronostics%20(Ibdev)">muslimwalyy@gmail.com</a></p>
+            <p>Objet : <strong>Demande de suppression de compte — Oracle Football Pronostics</strong></p>
+            <p>Indiquez l'adresse e-mail associée à votre compte Google utilisé pour vous connecter. Une vérification manuelle sera effectuée avant la suppression totale de vos données.</p>
         </div>
 
         <h2>3. Délai de traitement</h2>
@@ -128,13 +138,13 @@
         </div>
 
         <div style="text-align: center; margin-top: 32px;">
-            <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Djinn%20Prono" class="btn">
+            <a href="mailto:muslimwalyy@gmail.com?subject=Demande%20de%20suppression%20de%20compte%20-%20Oracle%20Football%20Pronostics%20(Ibdev)" class="btn">
                 📧 Envoyer une demande par e-mail
             </a>
         </div>
 
         <footer>
-            © 2026 Djinn Prono — Tous droits réservés. · 
+            © 2026 Ibdev — Oracle Football Pronostics. Tous droits réservés.<br>
             <a href="/privacyprono">Politique de confidentialité</a>
         </footer>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suppression des données - Lumystic</title>
+    <title>Suppression des données - Géomancie Africaine et Rituel</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -87,24 +87,122 @@
             font-weight: bold;
             font-size: 16px;
         }
+
+        /* === Styles pour la zone de suppression directe === */
+        .delete-zone {
+            background: rgba(255, 60, 60, 0.08);
+            border: 1px solid rgba(255, 60, 60, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .delete-zone h2 { color: #FF6B6B; }
+        .delete-zone input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #E0E0E0;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .delete-zone input:focus { border-color: #FF6B6B; }
+        .btn-delete {
+            background: linear-gradient(135deg, #FF6B6B, #C0392B);
+            color: #fff;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .btn-delete:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 60, 60, 0.4);
+        }
+        .btn-delete:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+        .message.success {
+            display: block;
+            background: rgba(40, 200, 120, 0.15);
+            border-left: 4px solid #28C878;
+            color: #7EEFB0;
+        }
+        .message.error {
+            display: block;
+            background: rgba(255, 60, 60, 0.15);
+            border-left: 4px solid #FF6B6B;
+            color: #FF9E9E;
+        }
+        .message.info {
+            display: block;
+            background: rgba(255, 159, 67, 0.12);
+            border-left: 4px solid #FF9F43;
+            color: #FFD8A8;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .small-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Suppression des données utilisateur</h1>
-        <p><strong>Application :</strong> Lumystic (Géomancie)</p>
+        <p><strong>Application :</strong> Géomancie Africaine et Rituel</p>
         <p><strong>Dernière mise à jour :</strong> 28 octobre 2025</p>
 
         <div class="info-box">
-            <strong>ℹ️ Important :</strong> Vous pouvez demander la suppression de toutes vos données personnelles associées à votre compte Lumystic à tout moment.
+            <strong>ℹ️ Important :</strong> Vous pouvez demander la suppression de toutes vos données personnelles associées à votre compte Géomancie Africaine et Rituel à tout moment.
         </div>
 
-        <h2>Comment supprimer vos données ?</h2>
-        <p>Pour demander la suppression de vos données, suivez ces étapes simples :</p>
+        <!-- ===== SUPPRESSION DIRECTE VIA FIREBASE ===== -->
+        <div class="delete-zone">
+            <h2>🔥 Supprimer mon compte directement</h2>
+            <p>Connectez-vous avec vos identifiants pour supprimer immédiatement et définitivement votre compte et toutes les données associées.</p>
+            <input type="email" id="deleteEmail" placeholder="Adresse email de votre compte" autocomplete="username">
+            <input type="password" id="deletePassword" placeholder="Mot de passe" autocomplete="current-password">
+            <button class="btn-delete" id="btnDelete">
+                <span id="btnText">Supprimer définitivement mon compte</span>
+            </button>
+            <div class="message" id="deleteMessage"></div>
+            <p class="small-note">⚠️ Cette action est irréversible. Vos jetons ne seront pas remboursés.</p>
+        </div>
+
+        <h2>Ou supprimer vos données par email</h2>
+        <p>Si vous ne pouvez pas vous connecter, suivez ces étapes :</p>
         <ol class="steps">
             <li>Envoyez un email à l'adresse suivante : <a href="mailto:support@lumystic-app.com?subject=Demande%20de%20suppression%20de%20donn%C3%A9es" class="email">support@lumystic-app.com</a></li>
             <li>Indiquez dans l'objet : <strong>"Demande de suppression de données"</strong></li>
-            <li>Précisez dans le corps de l'email l'adresse email associée à votre compte Lumystic</li>
+            <li>Précisez dans le corps de l'email l'adresse email associée à votre compte Géomancie Africaine et Rituel</li>
             <li>Nous traiterons votre demande dans un délai de <strong>7 jours ouvrés</strong></li>
         </ol>
 
@@ -127,15 +225,120 @@
         </ul>
 
         <h2>Délai de traitement</h2>
-        <p>Votre demande sera traitée dans les <strong>7 jours ouvrés</strong> suivant sa réception. Vous recevrez un email de confirmation une fois vos données supprimées.</p>
+        <p>La suppression directe est <strong>immédiate</strong>. Pour les demandes par email, votre demande sera traitée dans les <strong>7 jours ouvrés</strong> suivant sa réception.</p>
 
         <div class="info-box">
             <strong>📧 Contact :</strong> Pour toute question concernant la suppression de vos données, contactez-nous à <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a>
         </div>
 
         <div class="footer">
-            © 2025 Lumystic - Tous droits réservés
+            © 2025 Géomancie Africaine et Rituel - Tous droits réservés
         </div>
     </div>
+
+    <!-- ===== SCRIPT FIREBASE + LOGIQUE DE SUPPRESSION ===== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAC80Zy3GpUPrxyMg74EMoUKe4q126SpTo",
+            authDomain: "geomancie-8c5a6.firebaseapp.com",
+            projectId: "geomancie-8c5a6",
+            storageBucket: "geomancie-8c5a6.firebasestorage.app",
+            messagingSenderId: "408284837066",
+            appId: "1:408284837066:web:ee003665359b341354b033",
+            measurementId: "G-DL8SFTBTXE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const btn = document.getElementById('btnDelete');
+        const btnText = document.getElementById('btnText');
+        const msg = document.getElementById('deleteMessage');
+        const emailInput = document.getElementById('deleteEmail');
+        const passInput = document.getElementById('deletePassword');
+
+        function showMessage(type, text) {
+            msg.className = 'message ' + type;
+            msg.textContent = text;
+        }
+
+        async function deleteUserData(user) {
+            // Supprimer les données Firestore associées (adaptez le nom des collections)
+            const collections = ['users', 'consultations', 'dreams', 'oracleChats', 'preferences'];
+            for (const col of collections) {
+                try {
+                    await deleteDoc(doc(db, col, user.uid));
+                } catch (e) {
+                    // Ignore si le document n'existe pas
+                    console.warn(`Doc ${col}/${user.uid} non supprimé :`, e.message);
+                }
+            }
+            // Supprimer le compte Firebase Auth
+            await deleteUser(user);
+        }
+
+        btn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const password = passInput.value;
+
+            if (!email || !password) {
+                showMessage('error', 'Veuillez renseigner votre email et votre mot de passe.');
+                return;
+            }
+
+            const confirmDelete = confirm(
+                "⚠️ ATTENTION :\n\nCette action va supprimer DÉFINITIVEMENT votre compte et toutes vos données.\nVos jetons ne seront pas remboursés.\n\nVoulez-vous vraiment continuer ?"
+            );
+            if (!confirmDelete) return;
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span>Suppression en cours...';
+            showMessage('info', 'Connexion à votre compte...');
+
+            try {
+                // 1. Connexion
+                const cred = await signInWithEmailAndPassword(auth, email, password);
+                const user = cred.user;
+
+                // 2. Réauthentification (obligatoire avant suppression)
+                const authCred = EmailAuthProvider.credential(email, password);
+                await reauthenticateWithCredential(user, authCred);
+
+                // 3. Suppression des données + compte
+                showMessage('info', 'Suppression de vos données...');
+                await deleteUserData(user);
+
+                showMessage('success', '✅ Votre compte et toutes vos données ont été supprimés définitivement. Vous allez être redirigé...');
+                emailInput.value = '';
+                passInput.value = '';
+
+                // Optionnel : redirection après suppression
+                setTimeout(() => {
+                    window.location.href = 'https://geomancie-8c5a6.web.app/';
+                }, 3500);
+
+            } catch (error) {
+                console.error('Erreur suppression :', error);
+                let userMsg = 'Une erreur est survenue. ';
+                switch (error.code) {
+                    case 'auth/invalid-email': userMsg += 'Adresse email invalide.'; break;
+                    case 'auth/user-not-found': userMsg += 'Aucun compte trouvé avec cet email.'; break;
+                    case 'auth/wrong-password':
+                    case 'auth/invalid-credential': userMsg += 'Mot de passe incorrect.'; break;
+                    case 'auth/too-many-requests': userMsg += 'Trop de tentatives. Réessayez plus tard.'; break;
+                    case 'auth/requires-recent-login': userMsg += 'Veuillez vous reconnecter et réessayer.'; break;
+                    default: userMsg += error.message;
+                }
+                showMessage('error', '❌ ' + userMsg);
+                btn.disabled = false;
+                btnText.textContent = 'Supprimer définitivement mon compte';
+            }
+        });
+    </script>
 </body>
 </html>

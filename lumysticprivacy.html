@@ -52,6 +52,20 @@
             margin: 20px 0;
             border-radius: 8px;
         }
+        .rights-box {
+            background: rgba(40, 200, 120, 0.08);
+            border-left: 4px solid #28C878;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .warning-box {
+            background: rgba(255, 60, 60, 0.1);
+            border-left: 4px solid #FF6B6B;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
         .email {
             color: #FF9F43;
             font-weight: bold;
@@ -82,6 +96,16 @@
             background: rgba(255, 159, 67, 0.1);
         }
         strong { color: #FFC078; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .badge-required { background: rgba(255, 60, 60, 0.2); color: #FF9E9E; }
+        .badge-optional { background: rgba(40, 200, 120, 0.2); color: #7EEFB0; }
     </style>
 </head>
 <body>
@@ -91,7 +115,7 @@
         <p><strong>Dernière mise à jour :</strong> 28 octobre 2025</p>
 
         <div class="info-box">
-            Cette politique de confidentialité décrit comment <strong>Géomancie Africaine et Rituel</strong> collecte, utilise et protège vos données personnelles lorsque vous utilisez notre application.
+            Cette politique de confidentialité décrit comment <strong>Géomancie Africaine et Rituel</strong> collecte, utilise, partage et protège vos données personnelles lorsque vous utilisez notre application. Elle est conforme au <strong>Règlement Général sur la Protection des Données (RGPD)</strong>, à la <strong>loi n° 001-2021/AN du Burkina Faso</strong> sur la protection des données à caractère personnel [citation:5][citation:10], ainsi qu'aux exigences de <strong>Google Play</strong> [citation:6][citation:7].
         </div>
 
         <h2>1. Responsable du traitement</h2>
@@ -99,15 +123,18 @@
         <ul>
             <li><strong>Nom :</strong> CONGO IBRAHIM</li>
             <li><strong>Localisation :</strong> Ouagadougou, Burkina Faso</li>
-            <li><strong>Contact :</strong> <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a></li>
+            <li><strong>Contact pour toute question relative à la protection des données :</strong> <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a></li>
         </ul>
 
         <h2>2. Données collectées</h2>
+        <p>Nous collectons uniquement les catégories de données suivantes, conformément à la déclaration effectuée sur Google Play Console :</p>
+
         <h3>2.1 Données d'identification</h3>
         <ul>
-            <li>Adresse email (lors de l'inscription)</li>
-            <li>Nom d'utilisateur</li>
-            <li>Mot de passe (chiffré, jamais visible)</li>
+            <li><strong>Nom d'utilisateur</strong> <span class="badge badge-optional">Facultatif</span> — utilisé pour <strong>personnaliser vos consultations géomantiques</strong>.</li>
+            <li><strong>Adresse e-mail</strong> <span class="badge badge-required">Obligatoire</span> — utilisée pour <strong>l'authentification et la gestion de votre compte</strong>.</li>
+            <li><strong>ID utilisateur</strong> <span class="badge badge-required">Obligatoire</span> — identifiant unique généré par Firebase Auth, utilisé pour la <strong>gestion du compte</strong>, la <strong>prévention de la fraude</strong> et le <strong>fonctionnement de l'application</strong>.</li>
+            <li><strong>Mot de passe</strong> — chiffré (hachage sécurisé), jamais visible par nos équipes.</li>
         </ul>
 
         <h3>2.2 Données d'utilisation</h3>
@@ -120,70 +147,130 @@
 
         <h3>2.3 Données techniques</h3>
         <ul>
-            <li>Identifiant de l'appareil (pour la sécurité)</li>
+            <li><strong>ID de l'appareil</strong> (Android ID / Firebase Installation ID) <span class="badge badge-required">Obligatoire</span> — utilisé pour la <strong>prévention de la fraude</strong> (éviter le cumul de récompenses gratuites à chaque réinstallation) et le <strong>fonctionnement de l'application</strong>.</li>
+            <li><strong>ID publicitaire</strong> — collecté par <strong>Google AdMob</strong> pour l'affichage de publicités personnalisées ou non.</li>
+            <li><strong>Adresse IP</strong> — utilisée pour la <strong>sécurité</strong> et pour <strong>détecter le pays de connexion</strong> afin de proposer l'indicatif téléphonique approprié lors de l'achat de jetons. <em>L'adresse IP n'est pas utilisée pour vous géolocaliser précisément.</em></li>
             <li>Type d'appareil et version d'Android</li>
-            <li>Adresse IP (pour la sécurité)</li>
             <li>Logs d'erreurs anonymes</li>
         </ul>
 
-        <h2>3. Utilisation des données</h2>
-        <p>Vos données sont utilisées pour :</p>
-        <ul>
-            <li>✅ Authentifier votre compte et sécuriser l'accès</li>
-            <li>✅ Générer des interprétations géomantiques personnalisées</li>
-            <li>✅ Traiter vos paiements et créditer vos jetons</li>
-            <li>✅ Améliorer l'expérience utilisateur</li>
-            <li>✅ Vous envoyer des notifications importantes</li>
-            <li>✅ Prévenir la fraude (limite des messages gratuits par appareil)</li>
-        </ul>
+        <div class="info-box">
+            <strong>ℹ️ Aucune localisation :</strong> Notre application <strong>ne collecte pas votre position géographique</strong> (GPS ou position précise/approximative). Le pays utilisé pour l'indicatif téléphonique est déduit uniquement de l'adresse IP, à des fins de commodité lors de l'achat de jetons.
+        </div>
 
-        <h2>4. Partage des données</h2>
-        <p>Vos données <strong>ne sont jamais vendues</strong> à des tiers. Elles peuvent être partagées avec :</p>
+        <h2>3. Base légale du traitement</h2>
+        <p>Conformément à l'article 6 du RGPD et à la loi burkinabè sur la protection des données, le traitement de vos données repose sur les bases légales suivantes :</p>
         <table>
             <tr>
-                <th>Partenaire</th>
                 <th>Finalité</th>
+                <th>Base légale</th>
             </tr>
             <tr>
-                <td>Google Firebase</td>
-                <td>Authentification et base de données</td>
+                <td>Authentification et gestion du compte</td>
+                <td><strong>Exécution du contrat</strong> (Art. 6.1.b RGPD)</td>
             </tr>
             <tr>
-                <td>Google AdMob</td>
-                <td>Affichage des publicités</td>
+                <td>Personnalisation des consultations (nom)</td>
+                <td><strong>Consentement</strong> (Art. 6.1.a RGPD) — le nom est facultatif</td>
             </tr>
             <tr>
-                <td>Chariow</td>
+                <td>Prévention de la fraude (ID appareil)</td>
+                <td><strong>Intérêt légitime</strong> (Art. 6.1.f RGPD) — protéger l'application et les utilisateurs</td>
+            </tr>
+            <tr>
                 <td>Traitement des paiements</td>
+                <td><strong>Exécution du contrat</strong> (Art. 6.1.b RGPD)</td>
             </tr>
             <tr>
-                <td>Google AI</td>
-                <td>Génération des réponses de l'Oracle</td>
+                <td>Publicité (AdMob)</td>
+                <td><strong>Consentement</strong> (Art. 6.1.a RGPD) — via les paramètres de l'appareil</td>
+            </tr>
+            <tr>
+                <td>Conservation des logs techniques</td>
+                <td><strong>Intérêt légitime</strong> (Art. 6.1.f RGPD) — sécurité et débogage</td>
             </tr>
         </table>
 
-        <h2>5. Sécurité des données</h2>
-        <p>Nous utilisons les meilleures pratiques de sécurité :</p>
+        <h2>4. Utilisation des données</h2>
+        <p>Vos données sont utilisées pour les finalités suivantes :</p>
+        <ul>
+            <li>✅ <strong>Authentification</strong> — vérifier votre identité et sécuriser l'accès à votre compte.</li>
+            <li>✅ <strong>Gestion du compte</strong> — créer, maintenir et gérer votre compte utilisateur.</li>
+            <li>✅ <strong>Personnalisation</strong> — adapter les consultations géomantiques à votre nom.</li>
+            <li>✅ <strong>Fonctionnement de l'application</strong> — assurer le bon fonctionnement des services (ID appareil, détection du pays via l'IP pour l'indicatif téléphonique à l'achat).</li>
+            <li>✅ <strong>Prévention de la fraude</strong> — empêcher le cumul abusif de récompenses gratuites et sécuriser les paiements.</li>
+            <li>✅ <strong>Publicité</strong> — afficher des annonces via Google AdMob (avec possibilité de désactiver la personnalisation dans les paramètres de votre appareil).</li>
+            <li>✅ <strong>Traitement des paiements</strong> — créditer vos jetons via notre partenaire Chariow.</li>
+            <li>✅ <strong>Amélioration de l'expérience utilisateur</strong> — analyser les logs anonymes pour corriger les bugs.</li>
+            <li>✅ <strong>Notifications importantes</strong> — vous informer des mises à jour ou incidents.</li>
+        </ul>
+
+        <h2>5. Partage des données</h2>
+        <p>Vos données <strong>ne sont jamais vendues</strong> à des tiers. Elles peuvent être partagées avec les prestataires de services suivants (sous-traitants) :</p>
+        <table>
+            <tr>
+                <th>Partenaire</th>
+                <th>Données partagées</th>
+                <th>Finalité</th>
+                <th>Localisation</th>
+            </tr>
+            <tr>
+                <td>Google Firebase</td>
+                <td>Email, ID utilisateur, nom, historique</td>
+                <td>Authentification, base de données, stockage</td>
+                <td>États-Unis / UE</td>
+            </tr>
+            <tr>
+                <td>Google AdMob</td>
+                <td>ID publicitaire, données techniques</td>
+                <td>Affichage des publicités</td>
+                <td>États-Unis</td>
+            </tr>
+            <tr>
+                <td>Chariow</td>
+                <td>Email, ID utilisateur</td>
+                <td>Traitement des paiements</td>
+                <td>À préciser</td>
+            </tr>
+            <tr>
+                <td>Google AI</td>
+                <td>Contenu des conversations (anonymisé)</td>
+                <td>Génération des réponses de l'Oracle</td>
+                <td>États-Unis</td>
+            </tr>
+        </table>
+
+        <div class="warning-box">
+            <strong>⚠️ Publicité :</strong> Google AdMob peut utiliser l'<strong>ID publicitaire</strong> de votre appareil pour afficher des annonces personnalisées. Vous pouvez désactiver la personnalisation dans <em>Paramètres Android → Google → Annonces</em>.
+        </div>
+
+        <h2>6. Transferts internationaux</h2>
+        <p>Vos données peuvent être stockées sur les serveurs de Google Firebase et Google AI, situés en dehors du Burkina Faso (États-Unis, Union Européenne). Ces transferts sont encadrés par les clauses contractuelles types de la Commission européenne et les garanties appropriées offertes par Google, conformes au RGPD [citation:3].</p>
+
+        <h2>7. Sécurité des données</h2>
+        <p>Nous mettons en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou altération :</p>
         <ul>
             <li>🔒 Chiffrement des mots de passe (hachage sécurisé)</li>
             <li>🔒 Chiffrement des communications (HTTPS/TLS)</li>
             <li>🔒 Firebase App Check (protection anti-fraude)</li>
             <li>🔒 Règles Firestore strictes</li>
             <li>🔒 Aucune donnée sensible stockée en clair</li>
+            <li>🔒 Accès aux données limité aux personnes habilitées</li>
         </ul>
 
-        <h2>6. Conservation des données</h2>
+        <h2>8. Conservation des données</h2>
+        <p>Vos données sont conservées pendant la durée strictement nécessaire aux finalités pour lesquelles elles ont été collectées, conformément à l'article 25 de la loi burkinabè [citation:10] :</p>
         <table>
             <tr>
                 <th>Type de données</th>
                 <th>Durée de conservation</th>
             </tr>
             <tr>
-                <td>Compte utilisateur</td>
+                <td>Compte utilisateur (email, nom, ID)</td>
                 <td>Jusqu'à suppression du compte</td>
             </tr>
             <tr>
-                <td>Historique consultations</td>
+                <td>Historique consultations et conversations</td>
                 <td>Jusqu'à suppression du compte</td>
             </tr>
             <tr>
@@ -191,44 +278,82 @@
                 <td>10 ans (obligation légale)</td>
             </tr>
             <tr>
+                <td>ID de l'appareil (anti-fraude)</td>
+                <td>Jusqu'à suppression du compte</td>
+            </tr>
+            <tr>
+                <td>Adresse IP (sécurité + détection pays)</td>
+                <td>30 jours (logs techniques)</td>
+            </tr>
+            <tr>
                 <td>Logs techniques</td>
                 <td>30 jours</td>
             </tr>
         </table>
 
-        <h2>7. Vos droits</h2>
-        <p>Conformément au RGPD et aux lois sur la protection des données, vous avez le droit de :</p>
-        <ul>
-            <li>📖 <strong>Accéder</strong> à vos données personnelles</li>
-            <li>✏️ <strong>Rectifier</strong> vos données</li>
-            <li>🗑️ <strong>Supprimer</strong> vos données (voir <a href="suppression-donnees.html" class="email">page dédiée</a>)</li>
-            <li>📦 <strong>Exporter</strong> vos données (portabilité)</li>
-            <li>🚫 <strong>Vous opposer</strong> au traitement de vos données</li>
-        </ul>
+        <h2>9. Vos droits</h2>
+        <p>Conformément au RGPD (articles 15 à 22) et à la loi n° 001-2021/AN du Burkina Faso (articles 17 à 22) [citation:10], vous disposez des droits suivants sur vos données personnelles :</p>
 
-        <h2>8. Publicités (AdMob)</h2>
+        <div class="rights-box">
+            <h3>📖 Droit d'accès (Art. 15 RGPD / Art. 17 loi BF)</h3>
+            <p>Vous pouvez obtenir la confirmation que vos données sont traitées et en recevoir une copie.</p>
+
+            <h3>✏️ Droit de rectification (Art. 16 RGPD / Art. 21 loi BF)</h3>
+            <p>Vous pouvez demander la correction de données inexactes ou incomplètes vous concernant.</p>
+
+            <h3>🗑️ Droit à l'effacement / Droit à l'oubli (Art. 17 RGPD / Art. 22 loi BF)</h3>
+            <p>Vous pouvez demander la suppression de vos données. Une <strong>page dédiée</strong> permet une suppression immédiate et directe de votre compte : <a href="suppression-donnees.html" class="email">Accéder à la suppression de compte</a>.</p>
+
+            <h3>📦 Droit à la portabilité (Art. 20 RGPD)</h3>
+            <p>Vous pouvez recevoir vos données dans un format structuré, couramment utilisé et lisible par machine.</p>
+
+            <h3>🚫 Droit d'opposition (Art. 21 RGPD / Art. 20 loi BF)</h3>
+            <p>Vous pouvez vous opposer au traitement de vos données pour des motifs légitimes, notamment pour la prospection commerciale.</p>
+
+            <h3>⏸️ Droit à la limitation du traitement (Art. 18 RGPD)</h3>
+            <p>Vous pouvez demander la suspension du traitement de vos données dans certains cas (contestation de l'exactitude, opposition, etc.).</p>
+
+            <h3>🔕 Droit de retirer votre consentement</h3>
+            <p>Lorsque le traitement repose sur votre consentement (ex. personnalisation, publicité), vous pouvez le retirer à tout moment via les paramètres de l'application ou de votre appareil.</p>
+
+            <h3>📧 Comment exercer vos droits ?</h3>
+            <p>Envoyez votre demande à <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a> en précisant le droit que vous souhaitez exercer. Nous vous répondrons dans un délai maximum de <strong>30 jours</strong> (RGPD) ou <strong>2 mois</strong> (loi burkinabè) [citation:10].</p>
+
+            <h3>⚖️ Droit de réclamation</h3>
+            <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de l'autorité de contrôle compétente :</p>
+            <ul>
+                <li><strong>Burkina Faso :</strong> Commission de l'Informatique et des Libertés (CIL)</li>
+                <li><strong>Union Européenne :</strong> Autorité de protection des données de votre pays de résidence</li>
+            </ul>
+        </div>
+
+        <h2>10. Publicités (AdMob)</h2>
         <p>Notre application affiche des publicités via Google AdMob. AdMob peut collecter :</p>
         <ul>
-            <li>Identifiant publicitaire de l'appareil</li>
-            <li>Données de localisation approximative</li>
+            <li><strong>ID publicitaire</strong> de l'appareil</li>
             <li>Informations sur l'appareil</li>
         </ul>
-        <p>Pour désactiver la personnalisation des annonces, rendez-vous dans les paramètres de votre appareil.</p>
+        <p>Pour désactiver la personnalisation des annonces, rendez-vous dans les paramètres de votre appareil : <em>Paramètres → Google → Annonces → Désactiver la personnalisation des annonces</em>.</p>
+        <p><strong>Note :</strong> L'adresse IP utilisée pour détecter votre pays (indicatif téléphonique) n'est <strong>pas</strong> partagée avec AdMob à des fins de géolocalisation publicitaire.</p>
 
-        <h2>9. Mineurs</h2>
-        <p>L'application est destinée aux personnes âgées de <strong>13 ans et plus</strong>. Nous ne collectons pas sciemment les données d'enfants de moins de 13 ans.</p>
+        <h2>11. Mineurs</h2>
+        <p>L'application est destinée aux personnes âgées de <strong>13 ans et plus</strong>. Nous ne collectons pas sciemment les données d'enfants de moins de 13 ans. Si vous êtes parent ou tuteur et constatez qu'un enfant nous a fourni des données, contactez-nous pour les faire supprimer.</p>
 
-        <h2>10. Modifications</h2>
-        <p>Cette politique peut être mise à jour. La date de dernière mise à jour sera modifiée en conséquence. Nous vous encourageons à la consulter régulièrement.</p>
+        <h2>12. Cookies et technologies similaires</h2>
+        <p>L'application mobile n'utilise pas de cookies au sens strict. Cependant, les SDK tiers (Firebase, AdMob) peuvent utiliser des identifiants techniques et des technologies similaires pour assurer leur fonctionnement. Ces identifiants sont décrits dans la section 2.3.</p>
 
-        <h2>11. Contact</h2>
+        <h2>13. Modifications de la politique</h2>
+        <p>Cette politique peut être mise à jour pour refléter des changements dans nos pratiques ou la réglementation. La date de dernière mise à jour sera modifiée en conséquence. En cas de modification substantielle, nous vous informerons via l'application ou par email. Nous vous encourageons à consulter régulièrement cette page.</p>
+
+        <h2>14. Contact</h2>
         <div class="info-box">
-            Pour toute question concernant cette politique de confidentialité :<br>
+            Pour toute question concernant cette politique de confidentialité, pour exercer vos droits, ou pour toute réclamation :<br>
             📧 <a href="mailto:support@lumystic-app.com" class="email">support@lumystic-app.com</a>
         </div>
 
         <div class="footer">
-            © 2025 Géomancie Africaine et Rituel - Tous droits réservés
+            © 2025 Géomancie Africaine et Rituel - Tous droits réservés<br>
+            Dernière mise à jour : 28 octobre 2025
         </div>
     </div>
 </body>
